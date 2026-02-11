@@ -434,6 +434,11 @@
     \else
       \vskip 10em%
     \fi
+    % Afficher l'institut si défini via les options de classe
+    \ifdefined\institutename
+      \vskip 1em
+        {\large\textbf{\institutename}}\\
+    \fi
     Département \@department\par
     Filière \@faculty\par
     Orientation \@orientation
@@ -690,42 +695,60 @@
 \begin{luacode}
   -- Fonction pour trier les fichiers par ordre naturel (natural sort)
   local function natural_sort(a, b)
-  local function padnum(d) return string.format("%03d", tonumber(d)) end
-  local function tokenize(str)
-  local tokens = {}
-  for c in str:gmatch("(%d+)|(%D+)") do
-  if tonumber(c) then
-  table.insert(tokens, padnum(c))
-  else
-  table.insert(tokens, c)
-  end
-  end
-  return table.concat(tokens)
-  end
-  return tokenize(a) < tokenize(b)
+    local function padnum(d)
+      return string.format("%03d", tonumber(d) or 0)
+    end
+    local function tokenize(str)
+      local tokens = {}
+      for num, text in str:gmatch("(%d+)(%D*)") do
+        table.insert(tokens, padnum(num))
+        if #text > 0 then table.insert(tokens, text) end
+      end
+      return table.concat(tokens)
+    end
+    return tokenize(a) < tokenize(b)
   end
 
   function include_dir(order, dir)
-  local files = {}
-  for file in io.popen('ls ' .. dir .. '/*.tex'):lines() do
-  table.insert(files, file)
-  end
+    -- Vérifier si dir est valide
+    if not dir or #dir == 0 then
+      tex.sprint("% Erreur: répertoire non spécifié")
+      return
+    end
 
-  -- Appliquer le tri si demandé
-  if order == "natural" then
-  table.sort(files, natural_sort)
-  else
-  table.sort(files) -- Tri alphabétique standard par défaut
-  end
+    local files = {}
+    -- Utiliser une commande shell pour lister les fichiers .tex
+    local handle = io.popen('ls -1 "' .. dir .. '"/*.tex 2>/dev/null')
+    if handle then
+      for file in handle:lines() do
+        table.insert(files, file)
+      end
+      handle:close()
+    else
+      tex.sprint("% Erreur: impossible de lire le répertoire " .. dir)
+      return
+    end
 
-  -- Inclure les fichiers
-  for _, file in ipairs(files) do
-  tex.sprint("\\input{" .. file .. "}")
-  end
+    -- Appliquer le tri si demandé
+    if order == "natural" then
+      table.sort(files, natural_sort)
+    else
+      table.sort(files) -- Tri alphabétique standard par défaut
+    end
+
+    -- Inclure les fichiers
+    for _, file in ipairs(files) do
+      tex.sprint("\\input{" .. file .. "}")
+    end
   end
 \end{luacode}
 
 % Commande personnalisée en LaTeX
 \newcommand{\inputdir}[2][]{%
-  \directlua{include_dir([[#1]], [[#2]])}%
+  \directlua{include_dir("#1", "#2")}%
+}
+
+% Commande personnalisée en LaTeX
+\newcommand{\inputdir}[2][]{%
+  \directlua{include_dir("#1", "#2")}%
 }

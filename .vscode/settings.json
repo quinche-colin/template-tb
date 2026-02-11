@@ -1,8 +1,89 @@
 {
-    "latex-workshop.latex.external.build.command": "make",
-    "latex-workshop.latex.outDir": "./build",
-    "files.eol": "\n",
-    "latex-workshop.view.pdf.viewer": "browser",
-    "latex-workshop.formatting.latex": "latexindent",
-    "latex-workshop.latex.clean.command": "make clean",
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+                "-pdf",
+                "-lualatex",
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "lualatex",
+            "command": "lualatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-shell-escape",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "biber",
+            "command": "biber",
+            "args": [
+                "%DOCFILE%"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "LaTeXmk",
+            "tools": [
+                "latexmk"
+            ]
+        },
+        {
+            "name": "LuaLaTeX",
+            "tools": [
+                "lualatex"
+            ]
+        }
+    ],
+    "latex-workshop.latex.clean.fileTypes": [
+        "*.aux",
+        "*.bbl",
+        "*.blg",
+        "*.log",
+        "*.bcf",
+        "*.out",
+        "*.toc",
+        "*.lof",
+        "*.lot",
+        "*.fls",
+        "*.fdb_latexmk",
+        "*.synctex.gz",
+        "*.synctex.gz(busy)",
+        "*.nav",
+        "*.snm",
+        "*.vrb",
+        "*.idx",
+        "*.ilg",
+        "*.ind",
+        "*.nlo",
+        "*.nls",
+        "*.acr",
+        "*.acn",
+        "*.alg",
+        "*.glg",
+        "*.glo",
+        "*.gls",
+        "*.glg",
+        "*.listing",
+        "*.loa",
+        "*.lol",
+        "*.lw",
+        "*.xmpi",
+        "*.pytxcode",
+        "*.pytxmcr"
+    ],
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.latex.outdir": "build",
+    "latex-workshop.latex.autoBuild.run": "never",
+    "latex-workshop.view.pdf.hand": true,
+    "latex-workshop.intellisense.package.enabled": true
 }
