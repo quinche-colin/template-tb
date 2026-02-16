@@ -747,8 +747,3 @@
 \newcommand{\inputdir}[2][]{%
   \directlua{include_dir("#1", "#2")}%
 }
-
-% Commande personnalisée en LaTeX
-\newcommand{\inputdir}[2][]{%
-  \directlua{include_dir("#1", "#2")}%
-}
