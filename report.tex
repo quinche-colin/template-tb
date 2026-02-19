@@ -1,7 +1,7 @@
 \documentclass[
     comatec, % Saisir le nom de l'institut rattaché
     mi, % Saisir le nom de l'orientation
-    %confidential, % Décommentez si le travail est confidentiel
+    confidential, % Décommentez si le travail est confidentiel
 ]{heig-tb}
 
 %% Choix de la police de caractères
@@ -15,25 +15,22 @@
 \usepackage{chemfig} % Si besoin d'insérer des formules chimiques
 \usepackage[version=4]{mhchem} % Si besoin d'insérer des formules chimiques
 \usepackage[
-  nooldvoltagedirection,
+  nooldvoltagedirection, 
   european,
   americaninductors]{circuitikz} % Pour les schémas électriques
 
 % Si vous voulez générer des graphiques avec pgfplots
 \usepackage{pgfplots}
 \usepgfplotslibrary{colormaps}
-\pgfplotsset{width=10cm,compat=1.18}
-
+\pgfplotsset{width=10cm,compat=1.18} 
+ 
 % Types de théorèmes
 \newtheorem{theorem}{Théorème}[section]
 \newtheorem{corollary}{Corollaire}[theorem]
 \newtheorem{lemma}[theorem]{Lemme}
 
-\signature{signature.svg} % Remplacer par votre propre signature vectorielle.
 
-\makenomenclature
-\makenoidxglossaries
-\makeindex
+\signature{signature.pdf}
 
 \addbibresource{bibliography.bib}
 
@@ -42,6 +39,10 @@
 \input{meta}
 
 \surroundwithmdframed{minted}
+
+% Glossaires et index - doivent être dans le préambule
+\makenoidxglossaries
+\makeindex
 
 % Utilisé par la nomenclature
 \renewcommand\nomgroup[1]{%
@@ -62,6 +63,8 @@
 \maketitle
 \frontmatter
 \clearemptydoublepage
+
+\makenomenclature
 
 \inputdir[order=natural]{frontmatter}
 

@@ -7,6 +7,7 @@
 \def\graphicsExt{pdf}
 \def\assetsdir{\builddir/assets/figures}
 \def\assetsdirnotbuilded{./assets/figures}
+\def\signaturedir{\assetsdirnotbuilded}
 
 \RequirePackage{fontspec}
 \RequirePackage[main=french,english]{babel}
@@ -398,7 +399,7 @@
 \def\signature#1{\def\@signature{#1}}
 
 \def\printsignature{\includegraphics[width=4cm]{
-    \assetsdir/\@signature.\graphicsExt}
+    \signaturedir/\@signature}
 }
 
 \newcommand{\thedate}{\@date}
@@ -417,6 +418,9 @@
     \node[anchor=north west,yshift=-1.5cm,xshift=1.5cm]%
     at (current page.north west)
     {\includegraphics[height=2cm]{assets/logos/heig-vd-baseline.pdf}};
+    \node[anchor=north east,yshift=-1.5cm,xshift=-1.5cm]%
+    at (current page.north east)
+    {\includegraphics[height=2cm]{assets/logos/Breitling_logo.pdf}};
     \node[anchor=south east,yshift=1.5cm,xshift=-1.5cm]%
     at (current page.south east)
     {\includegraphics[height=1cm]{assets/logos/hes-so.pdf}};
@@ -428,33 +432,33 @@
     {\usefont{T1}{lmss}{bx}{n}\huge\selectfont\@title\\\vspace{0.5em}
       \large{\@subtitle}\par}%
     \ifdefined\@confidential
-      \vskip 5em%
+      \vskip 2cm%
       \textbf{\MakeUppercase{\@confidential}}
-      \vskip 5em%
+      \vskip 2cm%
     \else
-      \vskip 10em%
+      \vskip 6cm%
     \fi
     % Afficher l'institut si défini via les options de classe
     \ifdefined\institutename
-      \vskip 1em
+      \vskip 1cm
         {\large\textbf{\institutename}}\\
     \fi
     Département \@department\par
     Filière \@faculty\par
     Orientation \@orientation
     {\large
-      \vskip 5em%
+      \vskip 1cm%
       \begin{tabular}[t]{c}%
         \@author%
       \end{tabular}\par}%
-    \vskip 1em%
+    \vskip 1cm%
       {\large \@date}%
-    \vskip 4cm%
+    \vskip 1cm%
     Supervisé par :\\
     \@teacher\\
   \end{center}%
   \par%
-  \vskip 1.5em%
+  \vskip 1cm%
 }
 
 % Abstract

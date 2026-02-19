@@ -1,4 +1,4 @@
-BUILDDIR=build
+BUILDDIR=out
 LATEXMK=latexmk
 INKSCAPE=NO_AT_BRIDGE=1 dbus-run-session inkscape
 FIGDIR=assets/figures
@@ -22,6 +22,7 @@ RESET=\033[0m
 
 all: $(OUT).tex $(FIGS) | $(BUILDDIR)
 	$(LATEXMK) -pdf $<
+	$(LATEXMK) -c
 
 figures: $(FIGS)
 

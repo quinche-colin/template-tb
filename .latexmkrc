@@ -1,5 +1,3 @@
-system("mkdir -p build/figures");
-
 @default_files = ('report.tex');
 
 $pdf_mode = 1;
@@ -7,10 +5,9 @@ $pdflatex = 'lualatex -shell-escape -synctex=1 -interaction=nonstopmode %O %S';
 $biber = 'biber';
 $bibtex_use = 2;
 
-# Tous les fichiers de sortie vont dans build/
+# Tous les fichiers de sortie vont dans out/
 # Note: LuaLaTeX ne supporte pas -aux-directory, donc on utilise seulement out_dir
-$out_dir = 'build';
-#$aux_dir = 'build';
+$out_dir = 'out';
 
 # Nettoyer tous les fichiers temporaires
 $clean_ext .= ' bbl bcf blg aux log glo gls glg nlo nls acr acn alg fdb_latexmk synctex.gz nav out snm vrb toc lof lol lot idx ilg ind run.xml pytxcode pytxmcr';
