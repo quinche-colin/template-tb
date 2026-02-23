@@ -1,14 +1,38 @@
 \chapter{Introduction}
 
+\section{Définitions}
+
+Voici quelques définitions nécessaires à la bonne compréhension du rapport de travail de bachelor :
+
+\begin{itemize}
+    \item \textbf{Réserve de marche} : durée pendant laquelle un mouvement de montre, une fois entièrement remonté (ou chargé), 
+    est capable de fournir le couple nécessaire à son fonctionnement sans être remonté que se soit manuellement ou par le mouvement d'une masse oscillante. 
+    Il s’agit donc du temps pendant lequel la montre continue de fonctionner avant de s’arrêter.
+\end{itemize}
+
 \section{Contexte}
 
-Dans le cadre de son travail de bachelor, l'étudiant a été chargé par l'entreprise Breitling de développer une méthode pour mesurer la réserve de marche d'une montre mécanique. 
-La réserve de marche est la durée pendant laquelle une montre peut fonctionner sans être remontée. 
+Dans le cadre de son travail de bachelor, l'étudiant a été mandaté par l'entreprise Breitling pour concevoir une machine permettant de mesurer la réserve de marche (RM) d’un mouvement de montre mécanique de manière accélérée.\\ 
+
+Afin de réduire les temps de mesure et d’optimiser les ressources de production, l’entreprise souhaite mettre en place une méthode de mesure réduite, basée sur l’analyse des derniers tours de barillet uniquement. 
+Cette approche permettrait de caractériser la réserve de marche de manière plus rapide.
 
 \section{Problématique}
 
-Actuellement, la mesure de la réserve de marche d'un mouvement de montre prend plusieurs jours, ce qui rend le processus long et couteux.
+La mesure classique de la réserve de marche d’un mouvement mécanique consiste à laisser fonctionner la montre jusqu’à son arrêt complet après un remontage total. Cette méthode présente l’inconvénient majeur d’être très chronophage.  
+Par exemple, selon le site internet de Breitling, le modèle « Chronomat Automatic 36 South Sea » \cite{Chronomat_URL} dispose d’une réserve de marche de 42 heures.\\  
+
+Dans un contexte industriel, ces durées de mesure élevées impliquent l’immobilisation prolongée des machines de test, ce qui oblige l’entreprise à multiplier les postes de mesure afin de maintenir un rythme de production acceptable. 
+Cette situation engendre des coûts supplémentaires ainsi qu’une complexification de l’organisation des tests.
 
 \section{Objectifs}
 
-Réaliser une machine capable de mesurer la RM d'une montre de manière accélérée.
+L’objectif principal de ce travail de bachelor est de concevoir une machine capable de mesurer la réserve de marche d’un mouvement de montre mécanique de manière accélérée, tout en conservant une précision suffisante pour une utilisation industrielle.  
+
+Plus précisément, ce travail vise à :
+\begin{itemize}
+    \item concevoir un système permettant de remonter et de dévider le barillet de manière contrôlée ;
+    \item développer un posage adaptable à différents types de mouvements ;
+    \item intégrer un système de détection fiable de l’arrêt du mouvement ;
+    \item proposer une solution globale reproductible et utilisable en environnement industriel.
+\end{itemize}

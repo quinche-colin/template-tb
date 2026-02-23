@@ -1,0 +1,40 @@
+\chapter{Analyse du besoin}
+
+\section{Description du processus de mesure souhaité}
+
+Le client souhaite mettre en place une méthode de mesure accélérée de la réserve de marche d’un mouvement mécanique. 
+Plutôt que de mesurer la durée complète de fonctionnement du mouvement, il est proposé de ne mesurer que les derniers tours du barillet, correspondant à la fin de la réserve de marche.
+
+La séquence de mesure souhaitée est la suivante :
+
+\begin{itemize}
+    \item Le mouvement est placé par l’horloger dans un posage adaptable à différents mouvements (diamètre, position de la tige, présence d’aiguilles ou de cadran).
+    \item La machine remonte le mouvement d’un nombre défini de tours afin de garantir un armage complet du barillet.
+    \item La tige de remontoir est ensuite bloquée en rotation, laissant le mouvement fonctionner librement.
+    \item La machine dévide artificiellement le barillet d’un nombre défini de tours, correspondant à une partie de la réserve de marche totale.
+    \item La tige est à nouveau bloquée et le mouvement est laissé en fonctionnement jusqu’à son arrêt.
+    \item Le moment de l’arrêt est détecté automatiquement afin de déduire la réserve de marche réduite.
+\end{itemize}
+
+\section{Contraintes et exigences}
+
+La machine devra répondre aux contraintes suivantes :
+
+\begin{itemize}
+    \item Compatibilité avec différents calibres de mouvements mécaniques.
+    \item Absence de dégradation du mouvement testé.
+    \item Précision suffisante de la mesure de la réserve de marche réduite.
+    \item Réduction significative du temps de mesure par rapport à une mesure classique.
+    \item Utilisation simple et reproductible par un opérateur.
+\end{itemize}
+
+\section{Critères de performance}
+
+Les critères suivants permettront d’évaluer la qualité de la solution développée :
+
+\begin{itemize}
+    \item Gain de temps obtenu par rapport à une mesure complète de la réserve de marche.
+    \item Répétabilité des mesures.
+    \item Précision sur la détection du moment d’arrêt du mouvement.
+    \item Facilité d’adaptation à différents mouvements.
+\end{itemize}

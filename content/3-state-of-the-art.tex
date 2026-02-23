@@ -1,0 +1,30 @@
+\chapter{État de l'art}
+
+\section{Travaux existants}
+
+La mesure de la réserve de marche des mouvements mécaniques est une problématique bien connue dans l’industrie horlogère. La méthode la plus couramment utilisée consiste à remonter complètement le mouvement, puis à mesurer le temps de fonctionnement jusqu’à l’arrêt complet de la montre. Cette approche, bien que simple et fiable, présente l’inconvénient majeur d’être très chronophage, avec des durées de mesure pouvant atteindre plusieurs dizaines d’heures selon la réserve de marche du calibre.
+
+Dans un contexte industriel, cette méthode est généralement mise en œuvre à l’aide de bancs de test sur lesquels plusieurs mouvements sont placés simultanément. Chaque mouvement est ensuite surveillé jusqu’à son arrêt, soit par observation visuelle, soit à l’aide de systèmes automatisés permettant de détecter l’absence de mouvement des aiguilles ou l’arrêt du balancier. Ces installations permettent de traiter plusieurs montres en parallèle, mais restent coûteuses en termes d’espace, de matériel et de temps de cycle.
+
+Certaines approches alternatives existent dans le domaine de la recherche et du développement, notamment par l’analyse du couple délivré par le barillet en fonction de son état d’armage, ou par la mesure de paramètres dynamiques du mouvement (amplitude du balancier, fréquence, consommation d’énergie). Ces méthodes permettent d’obtenir des informations indirectes sur la réserve de marche, mais nécessitent des équipements de mesure spécifiques et ne sont pas toujours adaptées à une utilisation en production.
+
+À la connaissance de l’auteur, il n’existe pas de solution industrielle standardisée permettant de mesurer uniquement une portion de la réserve de marche par dévidage contrôlé du barillet, comme envisagé dans le cadre de ce projet. La solution proposée s’inscrit donc dans une démarche d’innovation visant à réduire le temps de mesure tout en conservant une information pertinente sur la réserve de marche du mouvement.
+
+\section{Technologies et méthodes existantes}
+
+Plusieurs technologies peuvent être envisagées pour automatiser la mesure de la réserve de marche ou de l’arrêt du mouvement :
+
+\begin{itemize}
+    \item \textbf{Systèmes de remontage motorisés} : des dispositifs motorisés permettent de remonter automatiquement les mouvements via la tige de remontoir ou par simulation de la masse oscillante. Ces systèmes sont utilisés pour standardiser les conditions de remontage et garantir une reproductibilité des tests.
+    
+    \item \textbf{Capteurs acoustiques} : l’analyse du bruit de fonctionnement du mouvement (tic-tac) permet de détecter l’arrêt du mécanisme lorsque ce signal disparaît. Cette méthode présente l’avantage d’être non intrusive, mais peut être sensible au bruit ambiant.
+    
+    \item \textbf{Systèmes optiques} : la prise d’images à intervalles réguliers permet de suivre le déplacement des aiguilles ou d’observer des éléments mobiles du mouvement. L’absence de mouvement entre deux images successives permet de détecter l’arrêt de la montre. Cette méthode est robuste, mais nécessite un traitement d’image et un positionnement précis de la caméra.
+    
+    \item \textbf{Capteurs de vibrations} : des capteurs piézoélectriques ou des accéléromètres peuvent être utilisés pour détecter les micro-vibrations générées par le fonctionnement du mouvement. L’arrêt du mouvement se traduit par une disparition de ces vibrations.
+    
+    \item \textbf{Motorisations et actionneurs} : des moteurs pas à pas ou des servomoteurs peuvent être utilisés pour contrôler précisément le nombre de tours de la tige de remontoir, aussi bien pour le remontage que pour le dévidage contrôlé du barillet.
+\end{itemize}
+
+Les technologies présentées constituent une base de réflexion pour la conception de la machine développée dans ce travail. Le choix final des solutions techniques devra tenir compte des contraintes industrielles, de la précision requise, de la robustesse du système et de la simplicité d’utilisation pour l’opérateur.
+
