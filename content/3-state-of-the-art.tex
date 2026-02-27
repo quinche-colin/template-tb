@@ -12,19 +12,54 @@ Certaines approches alternatives existent dans le domaine de la recherche et du 
 
 \section{Technologies et méthodes existantes}
 
-Plusieurs technologies peuvent être envisagées pour automatiser la mesure de la réserve de marche ou de l’arrêt du mouvement :
+Plusieurs technologies et méthodes existent pour automatiser la mesure de la réserve de marche ainsi que la détection de l’arrêt d’un mouvement horloger. Ces solutions peuvent être regroupées selon leur fonction principale au sein du système : la détection du fonctionnement du mouvement, le remontage automatisé et le contrôle du dévidage du barillet.
+
+\subsection{Méthodes de détection du fonctionnement du mouvement}
+
+La détection de l’état de fonctionnement (marche ou arrêt) du mouvement est une étape clé pour mesurer automatiquement la réserve de marche. Plusieurs approches sont utilisées dans l’industrie et la recherche :
 
 \begin{itemize}
-    \item \textbf{Systèmes de remontage motorisés} : des dispositifs motorisés permettent de remonter automatiquement les mouvements via la tige de remontoir ou par simulation de la masse oscillante. Ces systèmes sont utilisés pour standardiser les conditions de remontage et garantir une reproductibilité des tests.
-    
-    \item \textbf{Capteurs acoustiques} : l’analyse du bruit de fonctionnement du mouvement (tic-tac) permet de détecter l’arrêt du mécanisme lorsque ce signal disparaît. Cette méthode présente l’avantage d’être non intrusive, mais peut être sensible au bruit ambiant.
-    
-    \item \textbf{Systèmes optiques} : la prise d’images à intervalles réguliers permet de suivre le déplacement des aiguilles ou d’observer des éléments mobiles du mouvement. L’absence de mouvement entre deux images successives permet de détecter l’arrêt de la montre. Cette méthode est robuste, mais nécessite un traitement d’image et un positionnement précis de la caméra.
-    
-    \item \textbf{Capteurs de vibrations} : des capteurs piézoélectriques ou des accéléromètres peuvent être utilisés pour détecter les micro-vibrations générées par le fonctionnement du mouvement. L’arrêt du mouvement se traduit par une disparition de ces vibrations.
-    
-    \item \textbf{Motorisations et actionneurs} : des moteurs pas à pas ou des servomoteurs peuvent être utilisés pour contrôler précisément le nombre de tours de la tige de remontoir, aussi bien pour le remontage que pour le dévidage contrôlé du barillet.
+    \item \textbf{Détection acoustique} :  
+    L’analyse du bruit de fonctionnement du mouvement (tic-tac) permet d’identifier la présence ou l’absence d’activité mécanique. L’arrêt du mécanisme se traduit par la disparition du signal acoustique périodique. Cette méthode est non intrusive et simple à mettre en œuvre, mais elle peut être sensible au bruit ambiant et nécessite un environnement relativement contrôlé.
+
+    \item \textbf{Détection optique} :  
+    La prise d’images ou de vidéos à intervalles réguliers permet d’observer le déplacement des aiguilles ou d’éléments mobiles du mouvement. L’absence de variation entre deux images successives indique l’arrêt du mécanisme. Cette approche est robuste et visuelle, mais elle implique un positionnement précis de la caméra, un éclairage constant et un traitement d’image pouvant être complexe.
+
+    \item \textbf{Détection par vibrations} :  
+    Des capteurs piézoélectriques ou des accéléromètres permettent de mesurer les micro-vibrations générées par le fonctionnement du mouvement. Lorsque la montre s’arrête, ces vibrations disparaissent. Cette méthode est relativement compacte et peu intrusive, mais peut nécessiter un filtrage du signal afin de distinguer les vibrations du mouvement de celles dues à l’environnement.
+
+    \item \textbf{Méthodes hybrides} :  
+    Certaines solutions combinent plusieurs types de capteurs (acoustique et vibration, par exemple) afin d’augmenter la fiabilité de la détection et de réduire les faux positifs liés au bruit ou aux perturbations externes.
 \end{itemize}
 
-Les technologies présentées constituent une base de réflexion pour la conception de la machine développée dans ce travail. Le choix final des solutions techniques devra tenir compte des contraintes industrielles, de la précision requise, de la robustesse du système et de la simplicité d’utilisation pour l’opérateur.
+\subsection{Méthodes de remontage automatisé du mouvement}
 
+Pour garantir des conditions de test reproductibles, le remontage du mouvement peut être automatisé à l’aide de différents dispositifs :
+
+\begin{itemize}
+    \item \textbf{Systèmes de remontage motorisés par la tige de remontoir} :  
+    Un moteur entraîne directement la tige de remontoir afin de simuler l’action manuelle de l’utilisateur. Cette solution permet de contrôler précisément le nombre de tours appliqués et de standardiser le niveau de remontage initial.
+
+    \item \textbf{Simulation de la masse oscillante} :  
+    Pour les mouvements automatiques, certains dispositifs reproduisent le mouvement du poignet afin de mettre en rotation la masse oscillante. Cette approche est représentative de l’usage réel, mais elle est plus complexe à mettre en œuvre et moins précise en termes de contrôle du nombre de tours effectivement transmis au barillet.
+
+    \item \textbf{Bancs de remontage industriels} :  
+    Des équipements dédiés, tels que ceux proposés par des fabricants spécialisés comme \textit{:contentReference[oaicite:0]{index=0}"}, permettent de remonter les montres de manière automatisée et répétable dans un contexte de contrôle qualité ou de tests en laboratoire.
+\end{itemize}
+
+\subsection{Méthodes de contrôle du dévidage du barillet}
+
+Le dévidage contrôlé du barillet permet de mesurer la réserve de marche ou d’étudier le comportement du mouvement en fonction de l’état de tension du ressort. Plusieurs technologies sont utilisées pour assurer ce contrôle :
+
+\begin{itemize}
+    \item \textbf{Motorisation par moteur pas à pas} :  
+    Les moteurs pas à pas permettent de contrôler précisément le nombre de tours appliqués à la tige de remontoir ou à un mécanisme intermédiaire. Cette solution offre une bonne répétabilité et un contrôle précis de la position angulaire, ce qui est particulièrement adapté pour des mesures quantitatives de réserve de marche.
+
+    \item \textbf{Motorisation par servomoteur} :  
+    Les servomoteurs permettent un contrôle en position ou en vitesse, avec un retour d’information intégré. Ils sont simples à piloter, mais leur précision angulaire dépend fortement de la résolution de l’encodeur et de la qualité de l’asservissement.
+
+    \item \textbf{Systèmes mécaniques à couple contrôlé} :  
+    Certains dispositifs utilisent des limiteurs de couple ou des mécanismes à ressort afin de reproduire un dévidage progressif et maîtrisé. Ces solutions sont robustes, mais offrent généralement moins de flexibilité que les solutions motorisées pilotées électroniquement.
+\end{itemize}
+
+Les technologies présentées dans cet état de l’art constituent une base de réflexion pour la conception de la machine développée dans ce travail. Le choix final des solutions techniques dépendra des contraintes industrielles, de la précision requise, de la robustesse attendue du système ainsi que de la simplicité d’utilisation pour l’opérateur.

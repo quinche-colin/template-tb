@@ -1,0 +1,40 @@
+\chapter{Dimensionement \& Choix du matériel}
+
+\section{Choix du moteur}
+
+Le choix du moteur constitue un élément central du système, car il doit assurer les fonctions de blocage, de remontée et de vidage du barillet.  
+D’après le tableau de valeurs transmis par l’entreprise mandataire concernant les mouvements du mécanisme, le couple maximal que le barillet peut fournir au système est de $10.8\ \mathrm{N\cdot mm}$. Le moteur doit donc être capable de fournir un couple supérieur à cette valeur afin de garantir un fonctionnement fiable.
+
+Afin de prendre en compte les pertes mécaniques (frottements, inerties des pièces en mouvement, incertitudes liées au montage), une marge de sécurité a été introduite. Le couple nominal visé pour le moteur est ainsi fixé à environ $20\ \mathrm{N\cdot mm}$. Cette valeur permet d’assurer que le moteur fonctionnera dans une plage de fonctionnement confortable, sans être sollicité à sa limite.
+
+Le deuxième critère de sélection concerne la tension d’alimentation. Le système global fonctionnant sous une alimentation de 24~V, le choix d’un moteur compatible avec cette tension permet de simplifier l’architecture électrique et d’éviter l’ajout de convertisseurs de tension supplémentaires. Cette contrainte est également cohérente avec le couple visé pour un moteur de petite taille.
+
+Concernant le type de moteur, un moteur pas à pas a été retenu. Ce choix se justifie par la nécessité de contrôler précisément la position angulaire du rotor. En effet, le système impose un nombre de tours à dévider connu, dont la valeur la plus précise est de 30.26 tours. Il est donc nécessaire de disposer d’une résolution angulaire suffisamment fine pour atteindre cette précision.  
+En considérant une précision minimale de 0.02 tour, soit environ $7.2^\circ$, le moteur doit permettre un pas inférieur ou égal à cette valeur. Le moteur pas à pas répond bien à cette exigence, tout en offrant une commande simple et reproductible du mouvement.
+
+Une fois ces critères définis (couple, tension d’alimentation, type de moteur et résolution angulaire), une recherche a été effectuée dans le catalogue du fabricant \textit{:contentReference[oaicite:0]{index=0}"}, reconnu pour la qualité et la précision de ses micro-moteurs. Le modèle sélectionné répond aux contraintes mécaniques et électriques définies précédemment, tout en offrant une fiabilité adaptée à l’application visée.
+
+\section{Choix du système de commande}
+
+Étant donné que le moteur retenu est un moteur pas à pas, l’utilisation d’un driver dédié est nécessaire afin de générer les signaux de commande appropriés pour l’excitation des phases du moteur. Le driver permet également de gérer le sens de rotation, le nombre de pas effectués et la vitesse de rotation.
+
+Afin de pouvoir piloter le moteur depuis un ordinateur et transmettre les consignes de mouvement (nombre de pas à effectuer et sens de rotation), une carte de microcontrôleur de type \textit{:contentReference[oaicite:1]{index=1}"} a été utilisée. Cette solution présente plusieurs avantages :  
+\begin{itemize}
+    \item une mise en œuvre simple grâce à un environnement de développement accessible ;
+    \item une large documentation et une communauté active ;
+    \item une interface de communication série facilitant l’échange de données avec un logiciel externe.
+\end{itemize}
+
+Ce choix permet de séparer clairement la logique de commande (côté logiciel) de la commande bas niveau du moteur (assurée par le driver), ce qui rend le système plus modulaire et plus facile à faire évoluer.
+
+\section{Choix de l’interface logicielle}
+
+Pour le développement de l’interface logicielle, le langage \textit{:contentReference[oaicite:2]{index=2}"} a été retenu. Ce choix s’explique par plusieurs raisons :
+
+\begin{itemize}
+    \item la simplicité et la lisibilité du langage, facilitant le développement rapide d’une interface de commande ;
+    \item la disponibilité de bibliothèques permettant la communication série avec la carte de commande ;
+    \item la possibilité de créer facilement une interface graphique pour le pilotage du système et la visualisation des informations (état du moteur, nombre de tours effectués, etc.).
+\end{itemize}
+
+L’utilisation de Python permet ainsi de proposer une interface conviviale pour l’utilisateur tout en assurant une communication fiable avec la carte de commande. Ce découplage entre la partie logicielle (ordinateur) et la partie matérielle (microcontrôleur et driver moteur) améliore la maintenabilité et la flexibilité globale du système.
