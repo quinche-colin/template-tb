@@ -16,25 +16,113 @@ La séquence de mesure souhaitée est la suivante :
     \item Le moment de l’arrêt est détecté automatiquement afin de déduire la réserve de marche réduite.
 \end{itemize}
 
-\section{Contraintes et exigences}
 
-La machine devra répondre aux contraintes suivantes :
 
-\begin{itemize}
-    \item Compatibilité avec différents calibres de mouvements mécaniques.
-    \item Absence de dégradation du mouvement testé.
-    \item Précision suffisante de la mesure de la réserve de marche réduite.
-    \item Réduction significative du temps de mesure par rapport à une mesure classique.
-    \item Utilisation simple et reproductible par un opérateur.
-\end{itemize}
+\section{Cahier des charges}
 
-\section{Critères de performance}
+Le cahier des charges détaille les fonctions de service, contraintes et fonctions techniques requises pour la machine.
 
-Les critères suivants permettront d’évaluer la qualité de la solution développée :
+\begin{landscape}
 
-\begin{itemize}
-    \item Gain de temps obtenu par rapport à une mesure complète de la réserve de marche.
-    \item Répétabilité des mesures.
-    \item Précision sur la détection du moment d’arrêt du mouvement.
-    \item Facilité d’adaptation à différents mouvements.
-\end{itemize}
+\subsection{Fonctions de service}
+
+\captionof{table}{Fonctions de service}
+\label{tab:cahier-fs}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{1.5cm}|p{4cm}|p{6cm}|p{6cm}|}
+\toprule
+\textbf{ID} & \textbf{Fonction de service} & \textbf{Description} & \textbf{Exigences} \\
+\midrule
+\endfirsthead
+
+\multicolumn{4}{c}{\tablename\ \thetable{} (suite)} \\
+\toprule
+\textbf{ID} & \textbf{Fonction de service} & \textbf{Description} & \textbf{Exigences} \\
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+
+FS1 & Mesurer la réserve de marche & Déterminer la durée de fonctionnement du mouvement après remontage complet & Mesure automatique ; précision $\leq$15 min ; résultat reproductible \\
+\hline
+FS2 & Remonter le mouvement automatiquement & Entraîner la couronne pour remonter le barillet & Nombre de tours programmable ; rotation contrôlée ; vitesse adaptée ; sens correct \\
+\hline
+FS3 & Permettre le montage du mouvement & Fixer le mouvement sur la machine & Montage simple ; compatibilité avec plusieurs mouvements ; maintien stable ; pas de dommage \\
+\hline
+FS4 & Détecter si le mouvement fonctionne & Vérifier si le mouvement est toujours en marche & Prise d'image automatique ; intervalle 15 min ; détection fiable de l'arrêt \\
+\hline
+FS5 & Interface utilisateur & Permettre le contrôle de la machine & Choix du type de mouvement ; lancement du test ; affichage de la réserve de marche ; interface simple \\
+\hline
+FS6 & Simuler le vieillissement & Entraîner le moteur par pulsation (vitesse, position et accélération contrôlée) & Accélération et vitesse contrôlée \\
+\end{longtable}
+
+
+\newpage
+\subsection{Fonctions de contrainte}
+
+\captionof{table}{Fonctions de contrainte}
+\label{tab:cahier-fc}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{1.5cm}|p{4cm}|p{6cm}|p{6cm}|}
+\toprule
+\textbf{ID} & \textbf{Fonction de contrainte} & \textbf{Description} & \textbf{Exigences} \\
+\midrule
+\endfirsthead
+
+\multicolumn{4}{c}{\tablename\ \thetable{} (suite)} \\
+\toprule
+\textbf{ID} & \textbf{Fonction de contrainte} & \textbf{Description} & \textbf{Exigences} \\
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+
+FC1 & Protection du mouvement & Le mouvement ne doit pas être endommagé & Limitation du couple ; limitation de la vitesse 50 tr/min max ; aucun effort radial ou axial \\
+\hline
+FC2 & Précision de mesure & La mesure de réserve de marche doit être fiable & Intervalle de prise d'image stable ; horloge précise ; enregistrement fiable \\
+\hline
+FC3 & Sécurité & La machine doit être sûre à utiliser & Pas de pièces dangereuses \\
+\hline
+FC4 & Compatibilité des mouvements & La machine doit accepter différents mouvements & Adaptation aux dimensions ; support réglable \\
+\hline
+FC5 & Autonomie du système & Le système doit fonctionner sans intervention pendant toute la mesure & Fonctionnement sur plusieurs jours ; stockage des images ; fonctionnement hors réseau \\
+\hline
+FC6 & Capacité de mesure multiple & La machine doit pouvoir mesurer plusieurs mouvements simultanément & 10 mouvements ; fonctionnement indépendant pour chaque mouvement \\
+\hline
+FC7 & Dimension & La machine ne doit pas être trop grande & Doit pouvoir tenir sur une surface de 80x80cm \\
+\end{longtable}
+
+
+\newpage
+\subsection{Fonctions techniques}
+
+\captionof{table}{Fonctions techniques}
+\label{tab:cahier-ft}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{1.5cm}|p{4cm}|p{6cm}|p{6cm}|}
+\toprule
+\textbf{ID} & \textbf{Fonction technique} & \textbf{Description} & \textbf{Exigences} \\
+\midrule
+\endfirsthead
+
+\multicolumn{4}{c}{\tablename\ \thetable{} (suite)} \\
+\toprule
+\textbf{ID} & \textbf{Fonction technique} & \textbf{Description} & \textbf{Exigences} \\
+\midrule
+\endhead
+
+\bottomrule
+\endfoot
+
+FT1 & Entraîner la tige du mouvement & Transmettre la rotation du moteur à la couronne & Contrôle précis de la rotation ; répétabilité ; sens de rotation contrôlé \\
+\hline
+FT2 & Limiter le couple transmis & Empêcher la transmission d'efforts excessifs & Limiteur de couple ; protection contre surcharge \\
+\hline
+FT3 & Supporter et positionner le mouvement & Maintenir le mouvement pendant la mesure & Position stable ; réglage facile ; protection du mouvement \\
+\hline
+FT4 & Acquérir les images & Prendre automatiquement des photos du mouvement & Prise d'image toutes les 5 minutes ; stockage des images \\
+\hline
+FT5 & Traiter et afficher les résultats & Calculer et afficher la réserve de marche & Calcul automatique ; affichage clair ; sauvegarde des résultats \\
+\end{longtable}
+
+\end{landscape}
+
