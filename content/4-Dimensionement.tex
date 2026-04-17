@@ -1,8 +1,7 @@
 \chapter{Dimensionement \& Choix du matériel}
 
-\newpage
+
 \section{Choix du moteur}
-\newpage
 \subsection{Description technique des modes d'utilisation}
 Le moteur constitue l'actionneur central du banc de test. Il doit
 répondre aux exigences de deux modes de fonctionnement distincts, chacun
@@ -39,9 +38,8 @@ plusieurs raisons propres aux exigences du système~:
 
 \begin{itemize}
     \setlength{\itemsep}{6pt}
-    \item \textbf{Contrôle précis de la position angulaire~:} en mode
-        vieillissement, le nombre de tours par impulsion est imposé avec
-        précision. En considérant une résolution minimale requise de
+    \item \textbf{Contrôle précis de la position angulaire~:} Le nombre de tours est imposé avec
+        précision dans les deux modes de fonctionnement. En considérant une résolution minimale requise de
         $0{,}02\ \mathrm{tr}$, soit $7{,}2^\circ$, le moteur doit disposer
         d'un pas inférieur ou égal à cette valeur. Un moteur pas à pas standard
         à $200\ \mathrm{pas/tr}$ offre un pas de $1{,}8^\circ$, soit une
@@ -59,298 +57,193 @@ plusieurs raisons propres aux exigences du système~:
 \newpage
 \subsubsection{Choix du format}
 
-Parmi les formats normalisés de moteurs pas à pas ayant $200\ \mathrm{pas/tr}$ (NEMA~8, NEMA~11, NEMA~17),
-le format est sélectionné selon un critères principale~: le couple disponible
-à la vitesse nominale.
+Le format est sélectionné selon plusieurs critères principaux~: le couple disponible
+à la vitesse nominale, le couple de détente et l'encombrement du moteur.
+
+On commence par l'encombrement~: parmi les formats normalisés de moteurs pas à pas
+ayant $200\ \mathrm{pas/tr}$, on trouve les formats suivants (NEMA~8, NEMA~11,
+NEMA~17). Afin de rendre la machine la plus compacte possible, on s'intéresse aux
+formats NEMA~11 et plus petits.
 
 D'après les données transmises par l'entreprise mandataire, le couple maximal
-que le barillet peut exercer sur le moteur est de $30\ \mathrm{mN{\cdot}m}$.
-Afin de tenir compte des frottements mécaniques, des incertitudes de montage
-et des éventuelles variations de charge, un facteur de sécurité de~2 est
-appliqué. Le couple minimal requis est donc fixé à~:
+que le barillet peut exercer est de $10{,}2\ \mathrm{mN{\cdot}m}$. Toutefois,
+comme il existe un rapport de $3{,}33$ entre la tige et le barillet, le couple
+que le moteur doit exercer afin de remonter le mouvement est donc de
+$3{,}24\ \mathrm{mN{\cdot}m}$. Afin de tenir compte des frottements mécaniques,
+des incertitudes de montage et des éventuelles variations de charge, une marge
+de sécurité a été appliquée.
+Le couple minimal requis est donc fixé à~:
 
 \begin{equation}
-  C_\text{requis} = 2 \times 30\ \mathrm{mN{\cdot}m} = 60\ \mathrm{mN{\cdot}m}
+  C_\text{requis} = 4\ \mathrm{mN{\cdot}m}
   \label{eq:couple_requis}
 \end{equation}
 
-Le tableau~\ref{tab:comparaison_formats} compare les trois formats candidats
-sur les critères déterminants. La colonne \emph{Couple @ 350 tr/min} correspond
-au couple disponible en régime établi dans le mode vieillissement, qui constitue
-la condition la plus sévère pour le moteur en terme de vitesse. Et la collone \emph{Couple maintien} 
-correspond au couple nécessaire à maintenir la tige bloquer durant les 24 heures d'attente,
- soit le cas le plus critique en terme de durée d'utilisation continu.
+Cette valeur correspond au couple nécessaire pour maintenir le système et éviter
+qu'il se décharge spontanément sous l'effet du ressort.
+
+Si l'on souhaite calculer le couple nécessaire pour remonter le barillet, il faut
+y ajouter le couple requis pour entraîner les différentes inerties du système.
+Le moment d'inertie de la fourche vaut $J_\text{fourche} = 8{,}67\ \mathrm{g{\cdot}cm^2}$
+d'après SolidWorks~; on peut donc estimer le système complet à environ
+$J_\text{système} = 15\ \mathrm{g{\cdot}cm^2}$.
+
+Le couple dynamique requis est~:
+\begin{equation}
+  C_\text{dynamique} = J_\text{système} \cdot \alpha = 15 \times 5000 \approx 0{,}02\ \mathrm{mN{\cdot}m}
+  \label{eq:couple_dynamique}
+\end{equation}
+
+Cette valeur est négligeable au vu de son ordre de grandeur.
+
+Dans notre cas, afin de maintenir le système en position sans alimentation
+électrique, on recherche un moteur présentant un couple de détente supérieur
+à $4\ \mathrm{mN{\cdot}m}$ et capable de répondre aux exigences de vitesse
+demandées.
+
+On retient le moteur \textbf{NEMA11-01} de chez Joy-IT (référence
+\textbf{28SHD4201-20})~\cite{moons_nema11}. Ses caractéristiques principales
+sont récapitulées au tableau~\ref{tab:specs_moteur}:
 
 \begin{table}[H]
   \centering
-  \caption{Comparaison des formats NEMA pour l'application}
-  \label{tab:comparaison_formats}
-  \begin{tabular}{lcccl}
+  \caption{Caractéristiques électriques et mécaniques du moteur NEMA11-01}
+  \label{tab:specs_moteur}
+  \begin{tabular}{ll}
     \toprule
-    \textbf{Format} & \textbf{Couple maintien} & \textbf{Encombrement} \\
+    \textbf{Paramètre} & \textbf{Valeur} \\
     \midrule
-    NEMA~8  & $45\ \mathrm{mN{\cdot}m}$ & $20\times20\ \mathrm{mm}$ \\
-    \textbf{NEMA~11} & $\mathbf{120\ \mathrm{mN{\cdot}m}}$ & $\mathbf{28\times28\ \mathrm{mm}}$ \\
-    NEMA~17 & $590\ \mathrm{mN{\cdot}m}$ & $42\times42\ \mathrm{mm}$ \\
+    Couple de maintien & $55\ \mathrm{mN{\cdot}m}$ \\
+    Couple de détente & $5\ \mathrm{mN{\cdot}m}$ \\
+    Courant nominal & $0{,}42\ \mathrm{A}$ \\
+    Tension nominale & $5{,}0\ \mathrm{V}$ \\
+    Angle de pas & $1{,}8°\ \pm\ 5\%$ \\
+    Résistance de phase & $11{,}9\ \Omega$ \\
+    Inductance de phase & $7{,}8\ \mathrm{mH}$ \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-Le NEMA~8 est éliminé car son couple de maintien est trop faible par conséquent, son couple à $350\ \mathrm{tr/min}$ est inférieur
-au couple requis de $60\ \mathrm{mN{\cdot}m}$. Le NEMA~17 offre des
-performances largement suffisantes mais son encombrement ne fait pas de lui le meilleur  
-candidat en raison des contraintes d'intégration du banc. Le \textbf{NEMA~11} constitue ainsi le
-meilleur compromis~: son couple de maintien dépasse le seuil requis, et son format compact de $28\times28\ \mathrm{mm}$
-s'intègre sans difficulté dans le banc.
+Le fabricant Joy-IT ne fournissant pas de courbe couple-vitesse, il a été
+nécessaire de se référer aux courbes publiées par MOONS'~\cite{moons_nema10, moons_nema11},
+fabricant de moteurs pas à pas aux caractéristiques similaires. En effet, des moteurs
+présent ant des spécifications électriques et mécaniques proches offrent des performances
+comparables.
 
-\newpage
-\subsection{Vérification de la compatibilité du moteur retenu}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{assets/figures/Dimensionement/graphe courbe couple vitesse moteur.png}
+    \caption{Courbes couple-vitesse des moteurs NEMA}
+    \label{fig:couple_vitesse}
+\end{figure}
+
+\subsection{Choix du driver}
+
+Le choix du driver a été guidé par trois critères principaux~: la compatibilité
+mécanique avec le moteur retenu, la plage de courant adaptée, et la capacité
+à piloter plusieurs axes de manière indépendante depuis un ordinateur.
 
 
-Le moteur retenu est le \textbf{NEMA~11 — 02}, dont les
-caractéristiques sont présentées au tableau~\ref{tab:nema11}.
+\paragraph{Compatibilité mécanique.}
+Le moteur retenu est au format NEMA~11 ($28 \times 28\ \mathrm{mm}$). On
+s'intéresse donc aux modules montables directement à l'arrière d'un tel moteur,
+ce qui élimine notamment le TMCM-1210, prévu pour le format NEMA~8
+($20 \times 20\ \mathrm{mm}$), et le TMCM-1070, dimensionné pour le NEMA~17.
+
+\paragraph{Plage de courant.}
+Le courant nominal du moteur étant de $0{,}42\ \mathrm{A}$, on cherche un driver
+dont le courant maximum est le plus proche possible de cette valeur, afin de
+maximiser le nombre de niveaux de courant utiles et donc la précision de
+limitation du couple. En effet, le courant est réglable sur 32 niveaux (0 à 31)
+correspondant à $0$ à $100\%$ du courant maximum du driver. La précision de
+couple est ainsi directement liée au rapport entre le courant du moteur et le
+courant maximum du driver.
+
+Le TMCM-1270, qui dispose d'une interface CAN et d'un courant maximum de
+$1{,}2\ \mathrm{A}$, ne permet d'exploiter qu'environ 7 niveaux utiles, soit
+une précision de couple de l'ordre de $7\ \mathrm{mN{\cdot}m}$, insuffisante
+pour l'application.
+
+Le \textbf{TMCM-1021} est finalement retenu. Ses caractéristiques principales
+sont présentées au tableau~\ref{tab:specs_driver}:
 
 \begin{table}[H]
   \centering
-  \caption{Caractéristiques techniques du moteur NEMA~11 — 02}
-  \label{tab:nema11}
-  \begin{tabular}{lll}
+  \caption{Caractéristiques du driver TMCM-1021}
+  \label{tab:specs_driver}
+  \begin{tabular}{ll}
     \toprule
-    \textbf{Paramètre} & \textbf{Valeur} & \textbf{Unité} \\
+    \textbf{Paramètre} & \textbf{Valeur} \\
     \midrule
-    Dimensions (L $\times$ l $\times$ h)  & $28 \times 28 \times 32$ & mm \\
-    Nombre de pas par tour                & 200            & pas/tr \\
-    Angle de pas                          & $1{,}8$        & \si{\degree/pas} \\
-    Couple de maintien statique           & 120            & mN$\cdot$m \\
-    Courant nominal (par phase)           & $0{,}67$       & A \\
-    Résistance de phase                   & $9{,}7$        & $\Omega$ \\
-    Inductance de phase                   & 6{,}8          & mH \\
-    Tension nominale                      & $6{,}5$        & V \\
-    Moment d'inertie du rotor             & 8              & g$\cdot$cm\textsuperscript{2} \\
-    Masse                                 & 120            & g \\
+    Format & $28 \times 28\ \mathrm{mm}$ (NEMA~11) \\
+    Plage de courant basse & $0{,}7\ \mathrm{A~RMS}$ (programmable) \\
+    Tension d'alimentation & $9$ à $28\ \mathrm{V}$ \\
+    Interface de communication & RS485 (protocole TMCL) \\
+    Capteur intégré & SensOstep (encodeur magnétique) \\
+    Fonctionnalités avancées & stallGuard2, coolStep, stealthChop \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\newpage
-\subsubsection{Vérification en mode vieillissement}
-
-Durant les impulsions du mode vieillissement, le couple total requis est la
-somme du couple résistant avec facteur de sécurité et du couple d'inertie
-nécessaire pour accélérer le rotor~:
+\paragraph{Précision de limitation du couple.}
+Avec le TMCM-1021 en plage basse ($0{,}7\ \mathrm{A}$), le driver dispose de 32 niveaux
+de courant (0 à 31). L'échelon de courant minimal vaut~:
 
 \begin{equation}
-  C_\text{total} = C_\text{requis} + J \cdot \alpha
-  \label{eq:couple_total}
+  \Delta I = \frac{0{,}7\ \mathrm{A}}{31} \approx 22{,}6\ \mathrm{mA}
+  \label{eq:echelon_courant}
 \end{equation}
 
-L'accélération angulaire correspondant à $5000\ \mathrm{tr/min^2}$ est
-obtenue par conversion des unités~:
+Le nombre de niveaux utiles jusqu'au courant nominal du moteur ($I_\text{nom} = 0{,}42\ \mathrm{A}$) est~:
 
 \begin{equation}
-  \alpha = \frac{5000\ \mathrm{[tr/min^2]} \times 2\pi\ \mathrm{[rad/tr]}}
-                {\left(60\ \mathrm{[s/min]}\right)^2}
-         = \frac{5000 \times 2\pi}{3600}
-         \approx 8{,}73\ \mathrm{rad/s^2}
+  N_\text{utiles} = \left\lfloor \frac{I_\text{nom}}{\Delta I} \right\rfloor = \left\lfloor \frac{0{,}42}{22{,}6 \times 10^{-3}} \right\rfloor \approx 18\ \text{niveaux}
+  \label{eq:niveaux_utiles}
 \end{equation}
 
-Le couple d'inertie associé au rotor est alors~:
+En tenant compte du couple de maintien du moteur ($C_\text{maintien} = 55\ \mathrm{mN{\cdot}m}$),
+la précision de limitation du couple est~:
 
 \begin{equation}
-  C_\text{inertie} = J \cdot \alpha
-  = 9 \times 10^{-6}\ \mathrm{kg{\cdot}m^2}
-    \times 8{,}73\ \mathrm{rad/s^2}
-  \approx 7{,}9 \times 10^{-5}\ \mathrm{N{\cdot}m}
-  = 0{,}079\ \mathrm{mN{\cdot}m}
+  \Delta C = \frac{C_\text{maintien}}{N_\text{utiles}} = \frac{55\ \mathrm{mN{\cdot}m}}{18} \approx 3\ \mathrm{mN{\cdot}m}
+  \label{eq:precision_couple}
 \end{equation}
 
-Ce terme est négligeable devant $C_\text{requis} = 60\ \mathrm{mN{\cdot}m}$,
-soit un rapport de $760$ entre les deux valeurs. Le couple total requis se
-réduit donc à~:
+Cette précision de $\pm 3\ \mathrm{mN{\cdot}m}$ demeure suffisante pour l'application visée.
 
-\begin{equation}
-  C_\text{total} \approx C_\text{requis} = 60\ \mathrm{mN{\cdot}m}
-\end{equation}
+\paragraph{Pilotage multi-axes.}
+Le bus RS485 permet de connecter jusqu'à 255 modules sur un seul câble à deux
+fils. Chaque driver se voit attribuer une adresse unique, ce qui permet au script
+Python de les commander indépendamment via un simple adaptateur USB/RS485. Cette
+architecture est donc parfaitement adaptée à une évolution vers un système
+multi-axes.
 
-Les calculs précédents sont effectués en considérant uniquement l'inertie du
-rotor du moteur. En pratique, la charge entraînée contribue également au couple
-d'inertie, mais compte tenu de la légèreté du mécanisme horloger, cette
-contribution reste du même ordre de grandeur et ne remet pas en cause la
-conclusion.
+\paragraph{Interface de communication.}
+Afin de pouvoir contrôler le driver directement depuis un script Python sans
+recourir à un microcontrôleur intermédiaire (tel qu'un Arduino), on s'oriente
+vers des modules disposant d'une interface série. Le fabricant Trinamic (ADI)
+propose une gamme de modules tout-en-un intégrant le contrôleur, le driver et
+la communication, programmables via le langage \textbf{TMCL} et la bibliothèque
+Python \texttt{PyTrinamic}~\cite{trinamic_pytrinamic}.
 
-La vérification du couple disponible à la vitesse nominale de $350\
-\mathrm{tr/min}$ nécessite de prendre en compte les effets inductifs des
-bobinages. La fréquence des pas à cette vitesse est~:
+\section{Synthèse des choix et validation}
 
-\begin{equation}
-  f_\text{pas} = \frac{n \times N_\text{pas}}{60}
-               = \frac{350 \times 200}{60}
-               \approx 1167\ \mathrm{Hz}
-\end{equation}
-
-Chaque pas correspond à une demi-période électrique, la fréquence électrique
-est donc~:
-
-\begin{equation}
-  f_e = \frac{f_\text{pas}}{2} = \frac{1167}{2} \approx 583\ \mathrm{Hz}
-\end{equation}
-
-La pulsation électrique correspondante vaut~:
-
-\begin{equation}
-  \omega_e = 2\pi \cdot f_e = 2\pi \times 583 \approx 3665\ \mathrm{rad/s}
-\end{equation}
-
-En supposant une alimentation en tension continue à la tension nominale du
-moteur $V_\text{nom} = 6{,}5\ \mathrm{V}$, le courant de phase à $350\
-\mathrm{tr/min}$ serait~:
-
-\begin{equation}
-  I_{350} = \frac{V_\text{nom}}{\sqrt{R^2 + (L \cdot \omega_e)^2}}
-          = \frac{6{,}5}{\sqrt{9{,}7^2 + (6{,}8\times10^{-3} \times 3665)^2}}
-          \approx 0{,}24\ \mathrm{A}
-\end{equation}
-
-Le couple étant proportionnel au courant, le couple disponible serait~:
-
-\begin{equation}
-  C_{350} = \frac{I_{350}}{I_\text{nominal}} \times C_0
-          = \frac{0{,}24}{0{,}67} \times 120\ \mathrm{mN{\cdot}m}
-          \approx 43\ \mathrm{mN{\cdot}m}
-\end{equation}
-
-Cette valeur est inférieure au couple requis de $60\ \mathrm{mN{\cdot}m}$
-— une alimentation en tension continue est donc insuffisante pour ce mode
-de fonctionnement.
-
-En pratique, le moteur est piloté par un driver TMC2208 fonctionnant en
-régulation de courant par découpage (PWM). Le driver applique une tension
-d'alimentation $V_\text{driver}$ par impulsions, et coupe dès que le courant
-de consigne est atteint. Tant que la tension d'alimentation est suffisante
-pour compenser la réactance inductive, le courant nominal est maintenu
-indépendamment de la vitesse. La vitesse limite jusqu'à laquelle le driver
-peut maintenir le courant nominal à $V_\text{driver} = 24\ \mathrm{V}$
-est obtenue en cherchant $\omega_e$ tel que~:
-
-\begin{equation}
-  V_\text{driver} = I_\text{nominal} \times \sqrt{R^2 + (L \cdot \omega_e)^2}
-\end{equation}
-
-\begin{equation}
-  \omega_{e,\text{lim}} = \frac{1}{L}\sqrt{\left(\frac{V_\text{driver}}{I_\text{nominal}}\right)^2 - R^2}
-  = \frac{1}{6{,}8\times10^{-3}}\sqrt{\left(\frac{24}{0{,}67}\right)^2 - 9{,}7^2}
-  \approx 5071\ \mathrm{rad/s}
-\end{equation}
-
-\begin{equation}
-  n_\text{lim} = \frac{\omega_{e,\text{lim}}}{2\pi} \times 2 \times \frac{60}{N_\text{pas}}
-               = \frac{5071}{2\pi} \times 2 \times \frac{60}{200}
-               \approx 484\ \mathrm{tr/min}
-\end{equation}
-
-En dessous de $484\ \mathrm{tr/min}$, le courant nominal est maintenu et le
-couple vaut $120\ \mathrm{mN{\cdot}m}$. Au-delà, le driver applique
-$V_\text{driver}$ en continu sans pouvoir réguler, et le courant effectif
-devient~:
-
-\begin{equation}
-  I_{350} = \frac{V_\text{driver}}{\sqrt{R^2 + (L \cdot \omega_e)^2}}
-          = \frac{24}{26{,}74}
-          \approx 0{,}90\ \mathrm{A}
-\end{equation}
-
-Le couple disponible à $350\ \mathrm{tr/min}$ sous $24\ \mathrm{V}$ est
-donc~:
-
-\begin{equation}
-  C_{350} = \frac{I_{350}}{I_\text{nominal}} \times C_0
-          = \frac{0{,}90}{0{,}67} \times 120\ \mathrm{mN{\cdot}m}
-          \approx 161\ \mathrm{mN{\cdot}m}
-\end{equation}
-
-La marge par rapport au couple requis est~:
-
-\begin{equation}
-  k_\text{vieillissement} = \frac{C_{350}}{C_\text{requis}}
-                          = \frac{161}{60}
-                          \approx 2{,}7
-\end{equation}
-
-Le moteur NEMA~11 alimenté via le driver TMC2208 sous $24\ \mathrm{V}$ est
-donc compatible avec le mode vieillissement à $350\ \mathrm{tr/min}$, avec
-une marge de $2{,}3$ sur le couple requis. Par ailleurs, la vitesse maximale
-à laquelle le moteur peut encore fournir le couple requis de
-$60\ \mathrm{mN{\cdot}m}$ est obtenue en cherchant $n$ tel que
-$C(n) = C_\text{requis}$, soit $I(n) = I_\text{nominal} \times
-\frac{C_\text{requis}}{C_0} = 0{,}67 \times \frac{60}{200} \approx
-0{,}201\ \mathrm{A}$~:
-
-\begin{equation}
-  \omega_{e,\text{max}} = \frac{1}{L}\sqrt{\left(\frac{V_\text{driver}}{I(n)}\right)^2 - R^2}
-  = \frac{1}{6{,}8\times10^{-3}}\sqrt{\left(\frac{24}{0{,}335}\right)^2 - 9{,}7^2}
-  \approx 10439\ \mathrm{rad/s}
-\end{equation}
-
-\begin{equation}
-  n_\text{max} = \frac{\omega_{e,\text{max}}}{2\pi} \times 2 \times \frac{60}{N_\text{pas}}
-               = \frac{10439}{2\pi} \times 2 \times \frac{60}{200}
-               \approx 997\ \mathrm{tr/min}
-\end{equation}
-
-Le moteur est donc utilisable jusqu'à $997\ \mathrm{tr/min}$ tout en
-conservant une marge supérieure à~1 sur le couple requis. La vitesse cible
-de $350\ \mathrm{tr/min}$ est ainsi largement en dessous de cette limite. En
-conséquence, l'alimentation du driver fixée à $24\ \mathrm{V}$ semble être un bon choix.
-
-\newpage
-\subsubsection{Vérification en mode réserve de marche — phase d'entraînement}
-
-En mode réserve de marche,  la vitesse de $50\ \mathrm{tr/min}$ étant nettement inférieure à la vitesse
-maximale du moteur, les effets inductifs y sont limités et la valeur réelle
-du couple disponible sera proche du couple de maintien statique. La marge
-effective est donc bien supérieure à celle calculée en mode vieillissement.
-
-\newpage
-\subsubsection{Vérification en mode réserve de marche — phase de blocage}
-
-En phase de blocage statique, le moteur est à l'arrêt et le couple de maintien
-statique s'applique pleinement. La marge est~:
-
-\begin{equation}
-  k_\text{blocage} = \frac{C_\text{maintien}}{C_\text{requis}}
-  = \frac{120\ \mathrm{mN{\cdot}m}}{60\ \mathrm{mN{\cdot}m}}
-  \approx 2{,}0
-\end{equation}
-
-Cette marge est largement suffisante pour garantir le moteur puisse bloquer la tige. 
-Il serait même préférable de diminué le couple du moteur à l'aide d'une limitation de courant 
-afin d'éviter les surchauffes et consommation inutiles.
-
-\newpage
-\section{Choix du système de commande}
-
-Étant donné que le moteur retenu est un moteur pas à pas, l’utilisation d’un driver dédié est nécessaire afin de générer les signaux de commande appropriés pour l’excitation des phases du moteur. Le driver permet également de gérer le sens de rotation, le nombre de pas effectués et la vitesse de rotation.
-
-Afin de pouvoir piloter le moteur depuis un ordinateur et transmettre les consignes de mouvement (nombre de pas à effectuer et sens de rotation), une carte de microcontrôleur de type \textit{:contentReference[oaicite:1]{index=1}"} a été utilisée. Cette solution présente plusieurs avantages :  
-\begin{itemize}
-    \item une mise en œuvre simple grâce à un environnement de développement accessible ;
-    \item une large documentation et une communauté active ;
-    \item une interface de communication série facilitant l’échange de données avec un logiciel externe.
-\end{itemize}
-
-Ce choix permet de séparer clairement la logique de commande (côté logiciel) de la commande bas niveau du moteur (assurée par le driver), ce qui rend le système plus modulaire et plus facile à faire évoluer.
-\newpage\section{Choix de l’interface logicielle}
-
-Pour le développement de l’interface logicielle, le langage \textit{:contentReference[oaicite:2]{index=2}"} a été retenu. Ce choix s’explique par plusieurs raisons :
+Le dimensionnement global du système d'entraînement a conduit à la sélection
+de deux composants principaux~:
 
 \begin{itemize}
-    \item la simplicité et la lisibilité du langage, facilitant le développement rapide d’une interface de commande ;
-    \item la disponibilité de bibliothèques permettant la communication série avec la carte de commande ;
-    \item la possibilité de créer facilement une interface graphique pour le pilotage du système et la visualisation des informations (état du moteur, nombre de tours effectués, etc.).
+  \item \textbf{Moteur pas à pas NEMA11-01} (Joy-IT, réf. 28SHD4201-20), dont le couple
+    de maintien ($55\ \mathrm{mN{\cdot}m}$) satisfait les exigences de maintien statique
+    du barillet ($C_\text{requis} = 4\ \mathrm{mN{\cdot}m}$) avec une large marge de sécurité.
+    
+  \item \textbf{Driver TMCM-1021} (Trinamic/ADI), offrant une plage de courant adaptée
+    ($0{,}7\ \mathrm{A}$) et une précision de couple de $\pm 3\ \mathrm{mN{\cdot}m}$,
+    jugée suffisante pour l'application.
 \end{itemize}
-L’utilisation de Python permet ainsi de proposer une interface conviviale pour l’utilisateur tout en assurant une communication fiable avec la carte de commande. Ce découplage entre la partie logicielle (ordinateur) et la partie matérielle (microcontrôleur et driver moteur) améliore la maintenabilité et la flexibilité globale du système.
 
-
-
-
-
+Les courbes couple-vitesse issues de MOONS'~\cite{moons_nema10, moons_nema11} confirment
+que ce couple de maintien reste disponible aux deux régimes nominaux
+(50 et 350~$\mathrm{tr/min}$) requis par les modes de fonctionnement.
+Enfin, l'interface RS485 et la bibliothèque PyTrinamic permettent une commande
+aisée depuis un script Python, simplifiant l'intégration et l'évolution future
+du système vers un contrôle multi-axes.
