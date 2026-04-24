@@ -27,8 +27,8 @@ Le cahier des charges détaille les fonctions de service, contraintes et fonctio
 \subsection{Fonctions de service}
 
 \captionof{table}{Fonctions de service}
-\label{tab:cahier-fs}
-\begin{longtable}{|>{\raggedright\arraybackslash}p{1.5cm}|p{4cm}|p{6cm}|p{6cm}|}
+\label{tab:cahier-fs-v2}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{1.5cm}|p{4cm}|p{6cm}|p{8cm}|}
 \toprule
 \textbf{ID} & \textbf{Fonction de service} & \textbf{Description} & \textbf{Exigences} \\
 \midrule
@@ -43,17 +43,29 @@ Le cahier des charges détaille les fonctions de service, contraintes et fonctio
 \bottomrule
 \endfoot
 
-FS1 & Mesurer la réserve de marche & Déterminer la durée de fonctionnement du mouvement après remontage complet & Mesure automatique ; précision $\leq$15 min ; résultat reproductible \\
+FS1 & Mesurer la réserve de marche
+    & Déterminer la durée de fonctionnement du mouvement après remontage complet
+    & La mesure est déclenchée automatiquement après remontage~; précision $\leq 15\ \mathrm{min}$~; résultat reproductible à $\pm 15\ \mathrm{min}$ sur 3 mesures consécutives dans les mêmes conditions \\
 \hline
-FS2 & Remonter le mouvement automatiquement & Entraîner la couronne pour remonter le barillet & Nombre de tours programmable ; rotation contrôlée ; vitesse adaptée ; sens correct \\
+FS2 & Remonter le mouvement automatiquement
+    & Entraîner la couronne pour remonter le barillet
+    & Nombre de tours paramétrable~; vitesse $\leq 50\ \mathrm{tr/min}$~; sens de rotation sélectionnable (horaire / anti-horaire)~; remontage s'arrête automatiquement en fin de cycle \\
 \hline
-FS3 & Permettre le montage du mouvement & Fixer le mouvement sur la machine & Montage simple ; compatibilité avec plusieurs mouvements ; maintien stable ; pas de dommage \\
+FS3 & Permettre le montage du mouvement
+    & Fixer le mouvement sur la machine pour la durée du test
+    & Compatible avec les 7 mouvements du tableau fabricant~; montage effectué en $< 2\ \mathrm{min}$ sans outillage spécial~; aucune marque laissée sur le mouvement après démontage \\
 \hline
-FS4 & Détecter si le mouvement fonctionne & Vérifier si le mouvement est toujours en marche & Prise d'image automatique ; intervalle 15 min ; détection fiable de l'arrêt \\
+FS4 & Détecter si le mouvement fonctionne
+    & Vérifier automatiquement si le mouvement est toujours en marche
+    & Prise d'image toutes les $15\ \mathrm{min} \pm 30\ \mathrm{s}$~; arrêt détecté dans les $15\ \mathrm{min}$ suivant l'arrêt effectif~; aucune fausse détection d'arrêt sur mouvement en marche \\
 \hline
-FS5 & Interface utilisateur & Permettre le contrôle de la machine & Choix du type de mouvement ; lancement du test ; affichage de la réserve de marche ; interface simple \\
+FS5 & Fournir une interface utilisateur
+    & Permettre le contrôle et le suivi de la machine depuis un ordinateur
+    & Les 7 types de mouvements (tableau fabricant) sont sélectionnables sur l'interface~; test lancé en $\leq 3$ actions utilisateur~; réserve de marche affichée en heures et minutes \\
 \hline
-FS6 & Simuler le vieillissement & Entraîner le moteur par pulsation (vitesse, position et accélération contrôlée) & Accélération et vitesse contrôlée \\
+FS6 & Simuler le vieillissement
+    & Solliciter le mouvement par impulsions répétées pour reproduire un usage quotidien
+    & Impulsions $< 2\ \mathrm{tr}$~; vitesse $350\ \mathrm{tr/min}$~; accélération $\leq 5000\ \mathrm{tr/min^2}$~; profil (accélération, vitesse, pause) configurable via l'interface \\
 \end{longtable}
 
 
@@ -61,8 +73,8 @@ FS6 & Simuler le vieillissement & Entraîner le moteur par pulsation (vitesse, p
 \subsection{Fonctions de contrainte}
 
 \captionof{table}{Fonctions de contrainte}
-\label{tab:cahier-fc}
-\begin{longtable}{|>{\raggedright\arraybackslash}p{1.5cm}|p{4cm}|p{6cm}|p{6cm}|}
+\label{tab:cahier-fc-v2}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{1.5cm}|p{4cm}|p{6cm}|p{8cm}|}
 \toprule
 \textbf{ID} & \textbf{Fonction de contrainte} & \textbf{Description} & \textbf{Exigences} \\
 \midrule
@@ -77,27 +89,34 @@ FS6 & Simuler le vieillissement & Entraîner le moteur par pulsation (vitesse, p
 \bottomrule
 \endfoot
 
-FC1 & Protection du mouvement & Le mouvement ne doit pas être endommagé & Limitation du couple ; limitation de la vitesse 50 tr/min max ; aucun effort radial ou axial \\
+FC1 & Protéger le mouvement
+    & Empêcher tout dommage mécanique pendant le test
+    & Couple limité par contrôle du courant moteur (valeur minimale issue du tableau fabricant)~; vitesse $\leq 50\ \mathrm{tr/min}$ en mode réserve de marche et $\leq 350\ \mathrm{tr/min}$ en mode vieillissement~; aucun effort radial ou axial exercé sur la tige \\
 \hline
-FC2 & Précision de mesure & La mesure de réserve de marche doit être fiable & Intervalle de prise d'image stable ; horloge précise ; enregistrement fiable \\
+FC2 & Assurer la précision de mesure
+    & Garantir la fiabilité de la mesure de réserve de marche
+    & Intervalle entre deux prises d'image stable à $\pm 30\ \mathrm{s}$~; horloge interne dérive $\leq 1\ \mathrm{s/jour}$~; images enregistrées sans perte sur toute la durée du test \\
 \hline
-FC3 & Sécurité & La machine doit être sûre à utiliser & Pas de pièces dangereuses \\
+FC3 & Garantir la sécurité de l'opérateur
+    & La machine ne présente pas de risque lors de l'utilisation
+    & Les couples appliqués et les formes des pièces ne peuvent pas blesser l'opérateur \\
 \hline
-FC4 & Compatibilité des mouvements & La machine doit accepter différents mouvements & Adaptation aux dimensions ; support réglable \\
+FC4 & Assurer la compatibilité des mouvements
+    & Accepter les différents calibres sans modification majeure
+    & Dimensions et caractéristiques acceptées conformes au tableau fabricant pour les 7 mouvements~; support réglable sans outillage \\
 \hline
-FC5 & Autonomie du système & Le système doit fonctionner sans intervention pendant toute la mesure & Fonctionnement sur plusieurs jours ; stockage des images ; fonctionnement hors réseau \\
+FC5 & Fonctionner de manière autonome
+    & Effectuer la mesure complète sans intervention de l'opérateur
+    & Fonctionnement continu $\geq 30\ \mathrm{h}$ sans intervention~; stockage local d'au moins 1\,200 images (10 mouvements $\times$ 120 images)~; fonctionnement assuré hors réseau \\
 \hline
-FC6 & Capacité de mesure multiple & La machine doit pouvoir mesurer plusieurs mouvements simultanément & 10 mouvements ; fonctionnement indépendant pour chaque mouvement \\
+FC6 & Mesurer plusieurs mouvements simultanément
+    & Permettre des tests en parallèle
+    & 10 mouvements testés simultanément~; chaque emplacement fonctionne indépendamment (l'arrêt de l'un n'interrompt pas les autres) \\
 \hline
-FC7 & Dimension & La machine ne doit pas être trop grande & Doit pouvoir tenir sur une surface de 80x80cm \\
+FC7 & Respecter un encombrement maximal
+    & La machine tient sur un plan de travail standard
+    & Dimensions hors tout $\leq 800\ \mathrm{mm} \times 800\ \mathrm{mm}$ au sol et $\leq 2000\ \mathrm{mm}$ en hauteur \\
 \end{longtable}
-
-
-\newpage
-\subsection{Fonctions techniques}
-
-\captionof{table}{Fonctions techniques}
-\label{tab:cahier-ft}
 \begin{longtable}{|>{\raggedright\arraybackslash}p{1.5cm}|p{4cm}|p{6cm}|p{6cm}|}
 \toprule
 \textbf{ID} & \textbf{Fonction technique} & \textbf{Description} & \textbf{Exigences} \\

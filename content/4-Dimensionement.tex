@@ -102,7 +102,7 @@ Dans notre cas, afin de maintenir le système en position sans alimentation
 demandées.
 
 On retient le moteur \textbf{NEMA11-01} de chez Joy-IT (référence
-\textbf{28SHD4201-20})~\cite{moons_nema11}. Ses caractéristiques principales
+\textbf{28SHD4201-20}) \cite{moons_nema11, joytechnik_nema11_01}. Ses caractéristiques principales
 sont récapitulées au tableau~\ref{tab:specs_moteur}:
 
 \begin{table}[H]
@@ -236,7 +236,7 @@ de deux composants principaux~:
     de maintien ($55\ \mathrm{mN{\cdot}m}$) satisfait les exigences de maintien statique
     du barillet ($C_\text{requis} = 4\ \mathrm{mN{\cdot}m}$) avec une large marge de sécurité.
     
-  \item \textbf{Driver TMCM-1021} (Trinamic/ADI), offrant une plage de courant adaptée
+  \item \textbf{Driver TMCM-1021} (Trinamic/ADI) \cite{trinamic_tmcm_1021}, offrant une plage de courant adaptée
     ($0{,}7\ \mathrm{A}$) et une précision de couple de $\pm 3\ \mathrm{mN{\cdot}m}$,
     jugée suffisante pour l'application.
 \end{itemize}
@@ -247,3 +247,72 @@ que ce couple de maintien reste disponible aux deux régimes nominaux
 Enfin, l'interface RS485 et la bibliothèque PyTrinamic permettent une commande
 aisée depuis un script Python, simplifiant l'intégration et l'évolution future
 du système vers un contrôle multi-axes.
+
+\section{Dimensionnement de la caméra}
+
+\subsection{Résolution spatiale minimale}
+
+L'élément le plus fin à détecter est la largeur de l'aiguille des secondes, estimée à \SI{0.15}{mm}.
+Pour garantir une détection fiable par traitement d'image, il est nécessaire de disposer d'au
+moins 5 pixels sur cette dimension minimale. La résolution spatiale requise est donc :
+
+\[
+R = \frac{d_{\min}}{N_{\min}} = \frac{0{,}15 \text{ mm}}{5 \text{ px}} = 0{,}030 \text{ mm/px}
+\]
+
+soit environ \textbf{33 px/mm}.
+
+\subsection{Résolution de capteur requise}
+
+La zone de travail est de \SI{40}{mm} $\times$ \SI{40}{mm}, ce qui impose une résolution minimale
+du capteur de :
+
+\[
+N_{\text{capteur}} = \frac{Z}{R} = \frac{40 \text{ mm}}{0{,}030 \text{ mm/px}} \approx 1333 \text{ px}
+\]
+
+dans chaque dimension, soit un capteur d'au moins $1333 \times 1333$ pixels (\textbf{$\approx$ 1,8 MP}).
+Une caméra \textbf{2 MP} (résolution typique $1600 \times 1200$ px) constitue le minimum acceptable ;
+une caméra \textbf{5 MP} est recommandée pour disposer d'une marge de confort.
+
+\subsection{Besoins fonctionnels}
+
+Le système de capture doit répondre aux exigences suivantes :
+
+\begin{itemize}
+    \item \textbf{Fréquence d'acquisition :} une photographie toutes les \SI{15}{minutes},
+    soit 96 acquisitions par jour. Ce rythme est largement suffisant pour suivre l'évolution
+    de la position de l'aiguille des secondes et détecter un arrêt du mouvement.
+
+    \item \textbf{Éclairage par flash :} un flash intégré ou synchronisé est utilisé à chaque
+    prise de vue afin de s'affranchir des variations d'éclairage ambiant (jour, nuit, nuages).
+    Cette condition garantit des images homogènes et reproductibles quelle que soit l'heure
+    d'acquisition, condition indispensable à la robustesse du traitement d'image.
+
+    \item \textbf{Objectif macro ou à mise au point fixe :} la faible profondeur de champ
+    nécessaire pour une zone de \SI{40}{mm} $\times$ \SI{40}{mm} impose l'utilisation d'un
+    objectif adapté à la mise au point rapprochée, avec une distance de travail fixe et
+    reproductible.
+\end{itemize}
+
+\subsection{Récapitulatif}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ll}
+\hline
+\textbf{Paramètre} & \textbf{Valeur} \\
+\hline
+Largeur minimale à détecter & \SI{0.15}{mm} \\
+Pixels minimum sur la largeur & 5 px \\
+Résolution spatiale requise & \SI{0.030}{mm/px} (33 px/mm) \\
+Zone de travail & \SI{40}{mm} $\times$ \SI{40}{mm} \\
+Résolution capteur minimale & $1333 \times 1333$ px ($\approx$ 1,8 MP) \\
+Résolution capteur recommandée & $\geq$ 2 MP (5 MP conseillé) \\
+Fréquence d'acquisition & 1 image / 15 min \\
+Éclairage & Flash synchronisé \\
+\hline
+\end{tabular}
+\caption{Récapitulatif du dimensionnement caméra}
+\label{tab:camera}
+\end{table}
