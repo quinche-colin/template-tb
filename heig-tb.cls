@@ -315,8 +315,8 @@
 \RequirePackage[
   backref=true,
   backend=biber,
-  style=alphabetic,
-  sorting=ynt
+  style=numeric,
+  sorting=none
 ]{biblatex}
 
 \RequirePackage[

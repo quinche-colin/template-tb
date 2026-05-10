@@ -55,5 +55,48 @@ Le dévidage contrôlé du barillet permet de mesurer la réserve de marche ou d
     \item \textbf{Systèmes mécaniques à couple contrôlé} :  
     Certains dispositifs utilisent des limiteurs de couple ou des mécanismes à ressort afin de reproduire un dévidage progressif et maîtrisé. Ces solutions sont robustes, mais offrent généralement moins de flexibilité que les solutions motorisées pilotées électroniquement.
 \end{itemize}
+\subsection{Solutions commerciales existantes : Chronoscope RDM}
 
+Le Chronoscope RDM (Réserve De Marche) de Witschi Electronic est une solution commerciale dédiée à la mesure automatique et contrôlée de la réserve de marche des mouvements et montres mécaniques. Cet appareil représente l'état de l'art en matière de test automatisé de réserve de marche dans l'industrie horlogère.
+
+\subsubsection{Caractéristiques et principes de fonctionnement}
+
+Le Chronoscope RDM effectue un test entièrement automatique permettant de mesurer la réserve de marche d'un mouvement avec une précision à la minute près \cite{Witschi_Chronoscope_RDM}. Le système embarque un écran tactile résistif de 4,3 pouces offrant une interface utilisateur claire, avec affichage en temps réel de l'avancement du test et des résultats. L'appareil peut mesurer des réserves de marche jusqu'à 999 heures sans intervention manuelle, ce qui en fait une solution particulièrement adaptée aux mouvements à longue autonomie.
+
+Une caractéristique notable du Chronoscope RDM est son design empilable, qui permet de tester plusieurs mouvements simultanément tout en minimisant l'encombrement horizontal. De plus, l'appareil offre une grande flexibilité opérationnelle : les mouvements qui n'atteignent pas la réserve de marche attendue peuvent être retirés en cours de test sans interrompre l'évaluation des autres montres. Cette fonctionnalité est particulièrement utile en contexte de production ou de contrôle qualité, où les cadences de travail sont élevées.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\textwidth]{assets/figures/Etat de l'art/MachineRM_Witschi_1.png}
+    \hfill
+    \includegraphics[width=0.45\textwidth]{assets/figures/Etat de l'art/MachineRM_Witschi_2.png}
+    \caption{Chronoscope RDM de Witschi Electronic \cite{Witschi_Chronoscope_RDM}}
+    \label{fig:chronoscope_rdm}
+\end{figure}
+
+\subsubsection{Avantages}
+
+Le Chronoscope RDM présente plusieurs avantages significatifs :
+
+\begin{itemize}
+    \item \textbf{Mesure compacte} : Le design empilable permet de tester jusqu'à 10 mouvements simultanément en minimisant l'espace occupé sur le plan de travail, ce qui est un atout majeur pour les laboratoires et les ateliers ayant une place limitée.
+    
+    \item \textbf{Compatibilité large} : L'appareil peut traiter jusqu'à 10 mouvements d'origines et de types différents, offrant ainsi une grande flexibilité pour les ateliers traitant une variété de montres et de mouvements.
+    
+    \item \textbf{Mesure contrôlée et précise} : La précision à la minute près et le contrôle automatisé du test garantissent des résultats reproductibles et fiables, essentiels pour le contrôle qualité industriel.
+    
+    \item \textbf{Autonomie opérationnelle} : Le système fonctionne de manière entièrement automatique, permettant aux opérateurs de relâcher les mouvements à la minute juste à n'importe quelle heure, y compris en dehors des heures de travail classiques.
+\end{itemize}
+
+\subsubsection{Inconvénients}
+
+Malgré ses atouts, le Chronoscope RDM présente également certaines limitations :
+
+\begin{itemize}
+    \item \textbf{Attente de la réserve de marche complète} : L'appareil mesure la totalité de la réserve de marche du mouvement. Cela signifie que pour un mouvement avec une réserve de 80 heures, le test complet dure 80 heures, ce qui représente un temps d'immobilisation considérable. Cette contrainte rend impératif une planification minutieuse de la production et limite l'agilité des tests rapides.
+    
+    \item \textbf{Investissement initial important} : Comme solution commerciale de haut de gamme, cet équipement représente un coût d'acquisition significatif, pouvant être un frein pour les petits ateliers ou les laboratoires aux budgets limités.
+\end{itemize}
+
+Malgré ces limitations, le Chronoscope RDM reste une référence industrielle pour les entreprises et laboratoires ayant besoin d'une mesure complète et certifiée de la réserve de marche. La machine proposée dans ce travail s'inscrit comme une alternative ou un complément, notamment pour les applications nécessitant une mesure partielle ou accélérée de la réserve de marche.
 Les technologies présentées dans cet état de l’art constituent une base de réflexion pour la conception de la machine développée dans ce travail. Le choix final des solutions techniques dépendra des contraintes industrielles, de la précision requise, de la robustesse attendue du système ainsi que de la simplicité d’utilisation pour l’opérateur.

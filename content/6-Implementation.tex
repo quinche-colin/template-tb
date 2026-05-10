@@ -1,0 +1,76 @@
+\chapter{Implémentation}
+
+\section{Analyse mécanique de la tige porte-masse}
+
+\subsection{Données du problème}
+
+La masse rapportée en bout de tige est un cylindre de fonte grise ($\rho = 7{,}2\ \text{g/cm}^3$) d'un volume de $825{,}35\ \text{mm}^3$, ce qui donne une masse de :
+
+\[
+  m = \rho \cdot V = 7{,}2 \times 10^{-3} \times 825{,}35 \times 10^{-3} = 5{,}94\ \text{g}
+\]
+
+La tige est modélisée comme une poutre encastrée-libre en acier inoxydable ($E = 200\ \text{GPa}$), de diamètre $d = 1{,}2\ \text{mm}$ et de longueur $L = 10{,}75\ \text{mm}$.
+
+\subsection{Propriétés de la section transversale}
+
+Le moment quadratique et le module de résistance d'une section circulaire pleine sont :
+
+\[
+  I = \frac{\pi d^4}{64} = \frac{\pi \times 1{,}2^4}{64} \approx 0{,}1018\ \text{mm}^4
+  \qquad
+  W = \frac{\pi d^3}{32} \approx 0{,}1696\ \text{mm}^3
+\]
+
+\subsection{Efforts générés}
+
+La force appliquée en bout correspond au poids de la masse :
+
+\[
+  F = m \cdot g = 5{,}94 \times 10^{-3} \times 9{,}81 \approx 58{,}3\ \text{mN}
+\]
+
+Le moment fléchissant maximal, situé à l'encastrement, vaut :
+
+\[
+  M_{max} = F \cdot L = 58{,}3 \times 10^{-3} \times 10{,}75 \approx 0{,}627\ \text{N{\cdot}mm}
+\]
+
+\subsection{Flèche en bout de tige}
+
+En appliquant la formule de la poutre encastrée chargée en bout :
+
+\[
+  f = \frac{F L^3}{3EI}
+  = \frac{58{,}3 \times 10^{-3} \times 10{,}75^3}{3 \times 200\,000 \times 0{,}1018}
+  \approx 3{,}8 \times 10^{-3}\ \mu\text{m}
+\]
+
+La déflexion est donc de l'ordre du \textbf{nanomètre}, ce qui est négligeable au regard de toute tolérance mécanique en horlogerie.
+
+\subsection{Contrainte de flexion}
+
+La contrainte normale maximale, à l'encastrement, est :
+
+\[
+  \sigma_{max} = \frac{M_{max}}{W} = \frac{0{,}627}{0{,}1696} \approx 3{,}7 \times 10^{-3}\ \text{MPa}
+\]
+
+La limite élastique d'un acier inoxydable courant étant de l'ordre de $300\ \text{MPa}$, la marge de sécurité est supérieure à $\times 80\,000$. La tige ne présente \textbf{aucun risque de déformation plastique}.
+
+\subsection{Conclusion}
+
+Pour un diamètre de tige de $1{,}2\ \text{mm}$, la masse de fonte de $825{,}35\ \text{mm}^3$ ne génère pas d'efforts significatifs. La flèche statique est inférieure à $0{,}004\ \mu\text{m}$ et la contrainte de flexion est négligeable devant la limite élastique du matériau. Cette configuration est mécaniquement saine.
+
+
+
+\section{Allignement}
+8.73−4.1=4.63\\
+7.23−2.8=4.43\\
+6.63−2.2=4.43\\
+8.63−4.2=4.43\\
+3.80−1.5=2.30\\
+3.05−1.0=2.05\\
+9.33−4.1=5.23\\
+
+donc un désalignement maximale de 5.23-2.05= 3.18mm

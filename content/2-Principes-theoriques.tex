@@ -1,0 +1,27 @@
+\chapter{Principes théoriques de base}
+\label{chap:principes-theoriques}
+
+\section{Fonctionnement d'un mouvement de montre} 
+
+Une montre mécanique est un système complexe qui convertit l'énergie stockée dans un ressort spiral. Au cœur de ce mécanisme se trouve le barillet, qui joue un rôle fondamental.
+
+Le barillet est un ressort hélicoïdal enroulé sur lui-même, stockant l'énergie mécanique fournie lors du remontage de la montre grâce a une rotation de la couronne ou un mouvement de la masse oscillation. À mesure que le ressort se détend, il libère progressivement cette énergie à travers un système d'engrenages et de leviers, ce qui alimente les aiguilles de la montre. Ce ressort se détent sur une période de plusieurs heures.
+
+Le couple fourni par le barillet varie en fonction du temps comme le montre le graphe : 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=1\textwidth]{assets/figures/Principes théoriques/graphe couple barillet.png}
+  \caption{Évolution du couple fourni par le barillet en fonction du temps}
+  \label{fig:couple_barillet}
+\end{figure}
+
+\section{Mesure accélérée de la réserve de marche par dévalement}
+
+La réserve de marche correspond au temps pendant lequel la montre peut fonctionner après un remontage complet, avant que le couple du barillet ne soit insuffisant pour maintenir l'oscillation du régulateur. Traditionnellement, mesurer la réserve de marche complète demande d'attendre plusieurs dizaines d'heures, ce qui n'est pas pratique en atelier.
+
+Une technique de mesure accélérée consiste à enlever le \textbf{cliquet d'armage} (la pièce qui retient le barillet remonte et empêche le ressort de se dérouler prématurément) et à laisser le barillet se dévaler en tournant librement. En comptant le nombre de tours ou de fractions de tours que le barillet effectue avant d'arrêter, on peut établir une relation directe avec la réserve de marche réelle.
+
+Le principe physique est simple : sans le cliquet d'armage et en l'absence de charge du régulateur, le barillet se détend beaucoup plus rapidement, suivant une loi énergétique identique mais comprimée dans le temps. Le nombre de tours de barillet correspond à une portion de l'énergie totale stockée. En mesurant cette quantité de tours et en la comparant à la géométrie du barillet et aux caractéristiques du ressort, on obtient une mesure fiable et rapide de la réserve de marche, pouvant être complétée en quelques minutes au lieu de plusieurs heures.
+
+Cette approche est particulièrement utile pour le contrôle de qualité en production ou pour l'ajustement des ressorts de barillet lors de la maintenance des montres.
