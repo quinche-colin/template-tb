@@ -2,39 +2,26 @@
 
 \section{Description du processus de mesure souhaité}
 
-Le client souhaite mettre en place une méthode de mesure accélérée de la réserve de marche d’un mouvement mécanique.
-Plutôt que de mesurer la durée complète de fonctionnement du mouvement, il est proposé de ne mesurer que les derniers tours du barillet, correspondant à la fin de la réserve de marche.
-
-\subsection{Principe de la mesure accélérée et justification}
-
-Le barillet libère l’énergie stockée par le ressort moteur au fur et à mesure de son dévidage. Le couple transmis au train d’engrenages dépend donc de l’état de tension du ressort, et évolue au cours du temps.
-
-L’idée de la mesure accélérée consiste à ne s’intéresser qu’à une portion de la cinématique correspondant à la fin de la réserve de marche : sur cette zone, l’évolution du couple en fonction du temps (ou du nombre de tours dévidés) devient suffisamment \textit{régulière} pour que la dynamique du mouvement puisse être approchée par une relation quasi-linéaire. Concrètement, cela signifie que, pour les derniers tours dévidés, le couple varie de manière faible ou de façon suffisamment monotone pour que le temps mesuré sur cette fenêtre soit directement exploitable pour estimer la réserve de marche complète.
-
-Cette hypothèse est confirmée par l’analyse du graphe \textit{couple} en fonction du temps : les points appartenant au régime de fin de dévidage présentent une tendance linéaire (pente quasi constante). L’écart par rapport à la linéarité, évalué sur la fenêtre sélectionnée, permet de quantifier l’erreur d’extrapolation. En choisissant judicieusement le nombre de tours dévidés \textit{N}, on garantit un compromis entre : (i) une fenêtre suffisamment large pour réduire le bruit de mesure et (ii) un intervalle situé dans la zone où l’approximation linéaire reste valable.
-
-En pratique, la machine dévide le barillet d’un nombre de tours paramétrable, puis mesure le temps de fonctionnement restant jusqu’à l’arrêt détecté automatiquement. Le traitement des données (interpolation/extrapolation) repose alors sur l’hypothèse que, pour les derniers tours, la relation temps--couple est (quasi) linéaire, ce qui rend l’estimation reproductible et conforme à la précision attendue.
-
 La séquence de mesure souhaitée est la suivante :
 
 \begin{itemize}
-    \item Le mouvement est placé par l’horloger dans un posage adaptable à différents mouvements (diamètre, position de la tige, présence d’aiguilles ou de cadran).
+    \item Le mouvement est placé par l’horloger dans un posage adaptable à différents mouvements (diamètre, position de la tige).
     \item La machine remonte le mouvement d’un nombre défini de tours afin de garantir un armage complet du barillet.
     \item La tige de remontoir est ensuite bloquée en rotation, laissant le mouvement fonctionner librement.
     \item La machine dévide artificiellement le barillet d’un nombre défini de tours, correspondant à une partie de la réserve de marche totale.
     \item La tige est à nouveau bloquée et le mouvement est laissé en fonctionnement jusqu’à son arrêt.
-    \item Le moment de l’arrêt est détecté automatiquement afin de déduire la réserve de marche réduite.
+    \item Le moment de l’arrêt est détecté automatiquement et le système en déduit la réserve de marche.
+    \item La machine dévide les derniers tours de barillet afin de s'assurer que la pression restante dans le ressort n'endommage le mouvement lors du démontage.
 \end{itemize}
 
-\section{Cahier des charges}
 
 \begin{landscape}
-
+\section{Cahier des charges}
 \subsection{Fonctions de service}
 
 \captionof{table}{Fonctions de service}
 \label{tab:cahier-fs}
-\begin{longtable}{|>{\raggedright\arraybackslash}p{1.5cm}|p{4cm}|p{6cm}|p{8cm}|}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{1cm}|p{4cm}|p{6cm}|p{8.5cm}|}
 \toprule
 \textbf{ID} & \textbf{Fonction de service} & \textbf{Description} & \textbf{Exigences} \\
 \midrule
@@ -80,7 +67,7 @@ FS6 & Simuler le vieillissement
 
 \captionof{table}{Fonctions de contrainte}
 \label{tab:cahier-fc}
-\begin{longtable}{|>{\raggedright\arraybackslash}p{1.5cm}|p{4cm}|p{6cm}|p{8cm}|}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{1cm}|p{4cm}|p{6cm}|p{8.5cm}|}
 \toprule
 \textbf{ID} & \textbf{Fonction de contrainte} & \textbf{Description} & \textbf{Exigences} \\
 \midrule
