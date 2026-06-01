@@ -299,6 +299,9 @@
 % Meilleur control des itemize enumerate et description
 \RequirePackage{enumitem}
 
+% Correction du décalage des listes au passage de pages twoside
+\setlist{nosep,leftmargin=*}
+
 % Gestion des unités SI
 \RequirePackage{siunitx}
 
@@ -324,7 +327,7 @@
   top=2.5cm,
   bottom=2.5cm,
   left=3cm,
-  right=4cm,
+  right=3cm,
   headheight=6mm,
   headsep=5mm,
   marginparwidth=3cm,
