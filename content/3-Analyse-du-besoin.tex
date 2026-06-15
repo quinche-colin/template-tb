@@ -5,13 +5,13 @@
 La séquence de mesure souhaitée est la suivante :
 
 \begin{itemize}
-    \item Le mouvement est placé par l’horloger dans un posage adaptable à différents mouvements (diamètre, position de la tige).
+    \item Le mouvement sans cliquet d'armage et avec la configuration de mesure souhaitée est placé manuellement par un horloger dans un posage adaptable à différents mouvements.
     \item La machine remonte le mouvement d’un nombre défini de tours afin de garantir un armage complet du barillet.
     \item La tige de remontoir est ensuite bloquée en rotation, laissant le mouvement fonctionner librement.
-    \item La machine dévide artificiellement le barillet d’un nombre défini de tours, correspondant à une partie de la réserve de marche totale.
-    \item La tige est à nouveau bloquée et le mouvement est laissé en fonctionnement jusqu’à son arrêt.
+    \item La machine dévide artificiellement le barillet d’un nombre défini de tours, correspondant à la partie linéaire de la réserve de marche totale.
+    \item La tige est à nouveau bloquée laissant le mouvement fonctionner jusqu’à son arrêt.
     \item Le moment de l’arrêt est détecté automatiquement et le système en déduit la réserve de marche.
-    \item La machine dévide les derniers tours de barillet afin de s'assurer que la pression restante dans le ressort n'endommage le mouvement lors du démontage.
+    \item La machine dévide les derniers tours de barillet afin de s'assurer que la pression restante dans le ressort n'endommage pas le mouvement lors du démontage.
 \end{itemize}
 
 
@@ -36,29 +36,56 @@ La séquence de mesure souhaitée est la suivante :
 \bottomrule
 \endfoot
 
-FS1 & Mesurer la réserve de marche
-    & Déterminer la durée de fonctionnement du mouvement après remontage complet
-    & La mesure est déclenchée automatiquement après remontage~; précision $\leq 15\ \mathrm{min}$ (intervalle photo)~; résultat reproductible à $\pm 15\ \mathrm{min}$ sur 3 mesures consécutives dans les mêmes conditions \\
+\multirow{3}{*}{FS1} & \multirow{3}{4cm}{Mesurer la réserve de marche} & \multirow{3}{6cm}{Déterminer la durée de fonctionnement du mouvement après remontage complet}
+    & La mesure est déclenchée automatiquement après remontage \\
+\cline{4-4}
+ & & & Précision $\leq 15\ \mathrm{min}$ (intervalle photo) \\
+\cline{4-4}
+ & & & Résultat reproductible à $\pm 15\ \mathrm{min}$ sur 3 mesures consécutives dans les mêmes conditions \\
 \hline
-FS2 & Remonter le mouvement automatiquement
-    & Entraîner la couronne pour remonter le barillet
-    & Nombre de pas paramétrable~; vitesse $\leq 50\ \mathrm{tr/min}$~; sens de rotation sélectionnable (horaire / anti-horaire)~; remontage s'arrête automatiquement en fin de cycle \\
+
+\multirow{4}{*}{FS2} & \multirow{4}{4cm}{Remonter le mouvement automatiquement} & \multirow{4}{6cm}{Entraîner la couronne pour remonter le barillet}
+    & Nombre de pas paramétrable \\
+\cline{4-4}
+ & & & Vitesse $\leq 50\ \mathrm{tr/min}$ \\
+\cline{4-4}
+ & & & Sens de rotation sélectionnable (horaire / anti-horaire) \\
+\cline{4-4}
+ & & & Remontage s'arrête automatiquement en fin de cycle \\
 \hline
-FS3 & Permettre le montage du mouvement
-    & Fixer le mouvement sur la machine pour la durée du test
-    & Compatible avec les 7 mouvements du tableau fabricant~; montage effectué en $< 2\ \mathrm{min}$~; aucune marque laissée sur le mouvement après démontage \\
+
+\multirow{3}{*}{FS3} & \multirow{3}{4cm}{Permettre le montage du mouvement} & \multirow{3}{6cm}{Fixer le mouvement sur la machine pour la durée du test}
+    & Compatible avec les 7 mouvements du tableau fabricant \\
+\cline{4-4}
+ & & & Montage effectué en $< 2\ \mathrm{min}$ \\
+\cline{4-4}
+ & & & Aucune marque laissée sur le mouvement après démontage \\
 \hline
-FS4 & Détecter si le mouvement fonctionne
-    & Vérifier automatiquement si le mouvement est toujours en marche
-    & Prise d'image toutes les $15\ \mathrm{min} \pm 30\ \mathrm{s}$~; arrêt du mouvement détecté dans les $15\ \mathrm{min}$ suivant l'arrêt effectif~; aucune fausse détection d'arrêt sur mouvement en marche \\
+
+\multirow{3}{*}{FS4} & \multirow{3}{4cm}{Détecter si le mouvement fonctionne} & \multirow{3}{6cm}{Vérifier automatiquement si le mouvement est toujours en marche}
+    & Prise d'image toutes les $15\ \mathrm{min} \pm 30\ \mathrm{s}$ \\
+\cline{4-4}
+ & & & Arrêt du mouvement détecté dans les $15\ \mathrm{min}$ suivant l'arrêt effectif \\
+\cline{4-4}
+ & & & Aucune fausse détection d'arrêt sur mouvement en marche \\
 \hline
-FS5 & Fournir une interface utilisateur
-    & Permettre le contrôle et le suivi de la machine depuis un ordinateur
-    & Les 7 types de mouvements (tableau fabricant) sont sélectionnables sur l'interface~; Le mode de test est selectionnable(Réserve de marche ou Viellissement)~; la réserve de marche est affichée en heures et minutes \\
+
+\multirow{3}{*}{FS5} & \multirow{3}{4cm}{Fournir une interface utilisateur} & \multirow{3}{6cm}{Permettre le contrôle et le suivi de la machine depuis un ordinateur}
+    & Les 7 types de mouvements (tableau fabricant) sont sélectionnables sur l'interface \\
+\cline{4-4}
+ & & & Le mode de test est sélectionnable (Réserve de marche ou Vieillissement) \\
+\cline{4-4}
+ & & & La réserve de marche est affichée en heures et minutes \\
 \hline
-FS6 & Simuler le vieillissement
-    & Solliciter le mouvement par impulsions de rotation répétées pour reproduire un remontage à la main
-    & Impulsions $< 2\ \mathrm{tr}$~; vitesse $350\ \mathrm{tr/min}$~; accélération $\leq 5000\ \mathrm{tr/min^2}$ \\
+
+\multirow{3}{*}{FS6} & \multirow{3}{4cm}{Simuler le vieillissement} & \multirow{3}{6cm}{Solliciter le mouvement par impulsions de rotation répétées pour reproduire un remontage à la main}
+    & Impulsions $< 2\ \mathrm{tr}$ \\
+\cline{4-4}
+ & & & Vitesse $350\ \mathrm{tr/min}$ \\
+\cline{4-4}
+ & & & Accélération $\leq 5000\ \mathrm{tr/min^2}$ \\
+\hline
+
 \end{longtable}
 
 
@@ -82,37 +109,56 @@ FS6 & Simuler le vieillissement
 \bottomrule
 \endfoot
 
-FC1 & Protéger le mouvement
-    & Empêcher tout dommage mécanique pendant le test
-    & Couple limité par contrôle du courant moteur (valeur min. issue du tableau fabricant et valeur maximum de 15mNm)~; vitesse $\leq 50\ \mathrm{tr/min}$ en mode réserve de marche, $\leq 350\ \mathrm{tr/min}$ en mode vieillissement~; aucun effort radial ou axial exercé sur la tige \\
+\multirow{3}{*}{FC1} & \multirow{3}{4.5cm}{Protéger le mouvement} & \multirow{3}{5.5cm}{Empêcher tout dommage mécanique pendant le test}
+    & Couple limité par contrôle du courant moteur (valeur min. issue du tableau fabricant et valeur maximum de 15\,mN\,m) \\
+\cline{4-4}
+ & & & Vitesse $\leq 50\ \mathrm{tr/min}$ en mode réserve de marche, $\leq 350\ \mathrm{tr/min}$ en mode vieillissement \\
+\cline{4-4}
+ & & & Aucun effort radial ou axial exercé sur la tige \\
 \hline
-FC2 & Assurer la précision de mesure
-    & Garantir la fiabilité de la mesure de réserve de marche
-    & Intervalle entre deux prises d'image stable à $\pm 30\ \mathrm{s}$~; horloge interne dérive $\leq 1\ \mathrm{s/jour}$~; images enregistrées sans perte sur toute la durée du test \\
+
+\multirow{3}{*}{FC2} & \multirow{3}{4.5cm}{Assurer la précision de mesure} & \multirow{3}{5.5cm}{Garantir la fiabilité de la mesure de réserve de marche}
+    & Intervalle entre deux prises d'image stable à $\pm 30\ \mathrm{s}$ \\
+\cline{4-4}
+ & & & Horloge interne dérive $\leq 1\ \mathrm{s/jour}$ \\
+\cline{4-4}
+ & & & Images enregistrées sans perte sur toute la durée du test \\
 \hline
-FC3 & Garantir la sécurité de l'opérateur
-    & La machine ne présente pas de risque lors de l'utilisation
+
+\multirow{1}{*}{FC3} & \multirow{1}{4.5cm}{Garantir la sécurité de l'opérateur} & \multirow{1}{5.5cm}{La machine ne présente pas de risque lors de l'utilisation}
     & Les couples appliqués et les formes des pièces ne peuvent pas blesser l'opérateur \\
 \hline
-FC4 & Assurer la compatibilité des mouvements
-    & Accepter les différents calibres sans modification majeure
-    & Les dimensions sont compatibles avec les 7 mouvements du tableau donnée par le fabricant; support réglable sans outillage \\
+
+\multirow{2}{*}{FC4} & \multirow{2}{4.5cm}{Assurer la compatibilité des mouvements} & \multirow{2}{5.5cm}{Accepter les différents calibres sans modification majeure}
+    & Dimensions compatibles avec les 7 mouvements du tableau donné par le fabricant \\
+\cline{4-4}
+ & & & Support réglable sans outillage \\
 \hline
-FC5 & Fonctionner de manière autonome
-    & Effectuer la mesure complète sans intervention de l'opérateur
-    & Fonctionnement continu $\geq 30\ \mathrm{h}$ sans intervention~; stockage local d'au moins 1\,200 images (10 mouvements $\times$ 120 images)~; fonctionnement assuré hors réseau \\
+
+\multirow{3}{*}{FC5} & \multirow{3}{4.5cm}{Fonctionner de manière autonome} & \multirow{3}{5.5cm}{Effectuer la mesure complète sans intervention de l'opérateur}
+    & Fonctionnement continu $\geq 30\ \mathrm{h}$ sans intervention \\
+\cline{4-4}
+ & & & Stockage local d'au moins 1\,200 images (10 mouvements $\times$ 120 images) \\
+\cline{4-4}
+ & & & Fonctionnement assuré hors réseau \\
 \hline
-FC6 & Mesurer plusieurs mouvements simultanément
-    & Permettre des tests en parallèle
-    & 10 mouvements testés simultanément~; chaque emplacement fonctionne indépendamment (l'arrêt de l'un n'interrompt pas les autres) \\
+
+\multirow{2}{*}{FC6} & \multirow{2}{4.5cm}{Mesurer plusieurs mouvements simultanément} & \multirow{2}{5.5cm}{Permettre des tests en parallèle}
+    & 10 mouvements testés simultanément \\
+\cline{4-4}
+ & & & Chaque emplacement fonctionne indépendamment (l'arrêt de l'un n'interrompt pas les autres) \\
 \hline
-FC7 & Respecter un encombrement maximal
-    & La machine tient sur un plan de travail standard
-    & Dimensions $\leq 800\ \mathrm{mm} \times \leq 800\ \mathrm{mm}$ et $\leq 1000\ \mathrm{mm}$ en hauteur~; L'utilisateur ne doit pas avoir besoin d'acceder à des élement disposer à plus de $700\ \mathrm{mm}$ au dessus de la table \\
+
+\multirow{2}{*}{FC7} & \multirow{2}{4.5cm}{Respecter un encombrement maximal} & \multirow{2}{5.5cm}{La machine tient sur un plan de travail standard}
+    & Dimensions $\leq 800\ \mathrm{mm} \times 800\ \mathrm{mm}$ et $\leq 1000\ \mathrm{mm}$ en hauteur \\
+\cline{4-4}
+ & & & L'utilisateur ne doit pas avoir besoin d'accéder à des éléments disposés à plus de $700\ \mathrm{mm}$ au-dessus de la table \\
 \hline
-FC8 & Assurer un éclairage indépendant du milieu
-    & Garantir que les photos prises soit utilisable peut importe les conditions de l'atelier
-    & Les images sont utilisable par toutes les luminosités \\ 
+
+\multirow{1}{*}{FC8} & \multirow{1}{4.5cm}{Assurer un éclairage indépendant du milieu} & \multirow{1}{5.5cm}{Garantir que les photos prises soient utilisables quelles que soient les conditions de l'atelier}
+    & Les images sont utilisables à toutes les luminosités \\
+\hline
+
 \end{longtable}
 
 \end{landscape}
