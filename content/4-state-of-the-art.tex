@@ -25,7 +25,7 @@ L'entreprise a transmis des tableaux de référence détaillant les caractérist
         Mvt07 & Ronde & 30 & 9,33 & 4,1 & 10,75 \\
         \hline
     \end{tabular}
-    \caption{Caractéristiques dimensionnelles des mouvements. Ø : diamètre ; H. Totale : hauteur totale ; H. Tige : hauteur de la tige depuis appui cadran ; L. Tige : longueur de tige.}
+    \caption{Caractéristiques dimensionnelles des mouvements \cite{breitling_donnees_internes}. Ø : diamètre ; H. Totale : hauteur totale ; H. Tige : hauteur de la tige depuis appui cadran ; L. Tige : longueur de tige.}
     \label{tab:dimensions_mouvements}
 \end{table}
 
@@ -46,7 +46,7 @@ L'entreprise a transmis des tableaux de référence détaillant les caractérist
         Mvt07 & — & — & 3,33 & — & — \\
         \hline
     \end{tabular}
-    \caption{Caractéristiques fonctionnelles des mouvements. Rés. Marche : réserve de marche totale ; Rapport : ratio entre tige et barillet ; Tours 24h : nombre de tours à dévider pour conserver 24 heures de réserve.}
+    \caption{Caractéristiques fonctionnelles des mouvements \cite{breitling_donnees_internes}. Rés. Marche : réserve de marche totale ; Rapport : ratio entre tige et barillet ; Tours 24h : nombre de tours à dévider pour conserver 24 heures de réserve.}
     \label{tab:caracteristiques_mouvements}
 \end{table}
 
@@ -59,7 +59,7 @@ Le Chronoscope RDM (Réserve De Marche) de Witschi Electronic est un appareil co
 
 Le Chronoscope RDM effectue un test automatique de la réserve de marche avec une précision à la minute près \cite{Witschi_Chronoscope_RDM}. Il est équipé d'un écran tactile résistif de 4,3 pouces affichant l'avancement du test et les résultats en temps réel. L'appareil peut mesurer des réserves de marche jusqu'à 999 heures sans intervention manuelle.\\
 
-L'appareil adopte un format empilable permettant de tester jusqu'à 10 mouvements simultanément par module. Il est possible de retirer individuellement un mouvement en cours de test sans interrompre les autres.
+L'appareil adopte un format empilable permettant de tester jusqu'à 10 mouvements simultanément par module. Il est possible de retirer individuellement un mouvement en cours de test sans interrompre les autres \cite{Witschi_Chronoscope_RDM}.
 
 \begin{figure}[H]
     \centering
@@ -106,7 +106,7 @@ L'appareil intègre une base de données interne pour la gestion des calibres et
 \subsubsection{Avantages}
 
 \begin{itemize}
-    \item \textbf{Capacité de test simultané} : jusqu'à 20 mouvements en parallèle.
+    \item \textbf{Capacité de test simultané} : jusqu'à 20 mouvements en parallèle \cite{Icoflex_Chrono_RMV}.
 
     \item \textbf{Détection optique sans contact} : la méthode vidéo n'implique aucune interaction mécanique avec le mouvement pendant la mesure.
 
@@ -158,42 +158,29 @@ La machine permet le remontage automatique de 1 à 10 montres par l'entraînemen
 
 \section{Technologies et méthodes existantes}
 
-Cette section présente les technologies disponibles pour les trois fonctions principales du système : la détection du fonctionnement du mouvement, le remontage automatisé et le contrôle du dévidage du barillet.
+L'analyse des solutions industrielles de la section précédente, combinée à une revue des principes d'ingénierie applicables, a permis d'identifier les approches disponibles pour chacune des deux fonctions principales du système.
 
 \subsection{Méthodes de détection du fonctionnement du mouvement}
 
+Deux méthodes se distinguent pour détecter l'arrêt d'un mouvement horloger :
+
 \begin{itemize}
     \item \textbf{Détection acoustique} :
-    Le fonctionnement du mouvement génère un signal sonore périodique (tic-tac) dont la disparition indique l'arrêt. Cette méthode ne nécessite pas de contact avec le mouvement, mais sa fiabilité dépend du niveau de bruit ambiant.
+    Le fonctionnement du mouvement génère un signal sonore périodique dont la disparition indique l'arrêt. Elle ne nécessite pas de contact avec le mouvement, mais sa fiabilité dépend du niveau de bruit ambiant \cite{Witschi_Chronoscope_RDM}.
 
     \item \textbf{Détection optique} :
-    L'acquisition d'images à intervalles réguliers permet de détecter le déplacement des aiguilles ou d'éléments mobiles. L'absence de variation entre deux images successives indique l'arrêt. Cette méthode requiert un positionnement fixe de la caméra et un éclairage stable.
-
-    \item \textbf{Détection par vibrations} :
-    Des capteurs piézoélectriques ou des accéléromètres mesurent les micro-vibrations générées par le mouvement. L'arrêt se traduit par la disparition de ces vibrations. Un filtrage du signal est nécessaire pour s'affranchir des vibrations environnantes.
-
-    \item \textbf{Méthodes hybrides} :
-    La combinaison de plusieurs types de capteurs (acoustique et vibratoire, par exemple) permet de réduire les faux positifs liés aux perturbations extérieures.
+    L'acquisition d'images à intervalles réguliers permet de détecter le déplacement des aiguilles ou d'éléments mobiles. L'absence de variation entre deux images successives indique l'arrêt. Elle requiert un positionnement fixe de la caméra et un éclairage stable, mais est insensible au bruit ambiant \cite{Icoflex_Chrono_RMV}.
 \end{itemize}
 
-\subsection{Méthodes de remontage automatisé du mouvement}
+\subsection{Méthodes de remontage/dévidage automatisé du mouvement}
+
+Deux approches sont envisageables pour entraîner mécaniquement un mouvement horloger :
 
 \begin{itemize}
     \item \textbf{Entraînement motorisé par la tige de remontoir} :
-    Un moteur entraîne directement la tige de remontoir. Cette approche permet de contrôler le nombre de tours appliqués et d'obtenir des conditions initiales reproductibles.
+    Un moteur entraîne directement la tige de remontoir. Cette approche permet de contrôler précisément le nombre de tours appliqués et d'obtenir des conditions initiales reproductibles \cite{UNIMEC_Remontage}.
 
     \item \textbf{Simulation de la masse oscillante} :
     Pour les mouvements automatiques, un dispositif met le mouvement en déplacement afin d'entraîner la masse oscillante. Cette méthode ne permet pas un contrôle précis du nombre de tours effectivement transmis au barillet.
 \end{itemize}
 
-\subsection{Méthodes de contrôle du dévidage du barillet}
-
-Le dévidage contrôlé s'effectue de manière analogue au remontage, par entraînement de la tige du mouvement. Deux types de motorisation sont applicables :
-
-\begin{itemize}
-    \item \textbf{Moteur pas à pas} :
-    Permet un contrôle de la position angulaire par comptage de pas, sans capteur de retour. La répétabilité dépend de l'absence de perte de pas.
-
-    \item \textbf{Servomoteur} :
-    Intègre un encodeur permettant un asservissement en position ou en vitesse. La précision angulaire dépend de la résolution de l'encodeur.
-\end{itemize}

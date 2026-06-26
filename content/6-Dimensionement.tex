@@ -93,10 +93,128 @@ La courbe couple-vitesse a été établie en se référant aux données du fabri
 \subsection{Choix du driver}
 \subsubsection{Critères de sélection}
 Le driver doit satisfaire trois critères~: la compatibilité mécanique avec le moteur, une plage de courant adaptée à la précision requise, et la capacité à piloter plusieurs axes depuis un ordinateur.
-\subsubsection{Compatibilité mécanique et plage de courant}
+\subsubsection{Compatibilité mécanique}
 Le moteur NEMA 11 a des dimensions de 28 x 28 mm. 
-Le driver doit être montable directement à l'arrière d'un tel moteur. 
-Le courant nominal du moteur est de 0,42 A, donc un driver avec une plage de courant basse offrant une meilleure précision de limitation du couple est souhaité.
+Le driver doit être montable directement à l'arrière d'un tel moteur.
+\subsubsection{Calculs des couples}
+
+Plusieurs couples distincts interviennent dans le dimensionnement du système de motorisation. Il est important de bien les distinguer pour configurer correctement les niveaux de courant du driver et garantir la sécurité du mouvement.
+
+\noindent\textbf{Couple de détente} $C_{\text{détente}}$\\
+Couple résistif généré par les aimants permanents du moteur, présent qu'il soit alimenté ou non. Il s'oppose à toute rotation et représente le seuil minimal à franchir pour que l'arbre du moteur commence à tourner, donné par la datasheet du moteur :
+\begin{equation}
+    C_{\text{détente}} = 5 \text{ mN·m}
+    \label{eq:couple_detente}
+\end{equation}
+
+\noindent\textbf{Couple requis} $C_{\text{requis}}$\\
+Couple net additionnel (au-delà de $C_{\text{détente}}$) que le moteur doit transmettre à la tige pour entraîner le mouvement, c'est-à-dire vaincre le couple du barillet ramené sur la tige. La valeur exacte est calculée pour chaque mouvement, puis arrondie à l'entier supérieur en mN·m. Cet arrondi fournit naturellement une marge sur les frottements et simplifie la configuration du driver :
+\begin{equation}
+    C_{\text{requis},i} = \left\lceil \frac{C_{\text{barillet},i}}{r_i} \right\rceil
+    \label{eq:couple_requis_formule}
+\end{equation}
+\noindent où $C_{\text{barillet},i}$ est le couple maximal du barillet du mouvement $i$ et $r_i$ le rapport de réduction tige/barillet. Le tableau~\ref{tab:couple_requis} présente les résultats pour l'ensemble des mouvements.
+
+\begin{table}[H]
+  \centering
+  \caption{Couple requis calculé pour chaque mouvement}
+  \label{tab:couple_requis}
+  \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    \textbf{Mouvement} & $\boldsymbol{C_{\text{barillet}}}$ \textbf{[mN·m]} & $\boldsymbol{r}$ \textbf{(tige/bar.)} & $\boldsymbol{C_{\text{barillet}}/r}$ \textbf{[mN·m]} & $\boldsymbol{C_{\text{requis}}}$ \textbf{[mN·m]} \\
+    \hline
+    Mvt19    & 6,7  & 3,33 & 2,01 & 3 \\
+    \textbf{Mvt01}    & \textbf{10,8} & \textbf{3,33} & \textbf{3,24} & \textbf{4} \\
+    Mvt200   & 7,9  & 3,33 & 2,37 & 3 \\
+    Mvt200.1 & 7,9  & 3,33 & 2,37 & 3 \\
+    Mvt110   & 6,81 & 2,84 & 2,40 & 3 \\
+    Mvt111   & 4,06 & 2,96 & 1,37 & 2 \\
+    Mvt07    & —    & 3,33 & —    & — \\
+    \hline
+  \end{tabular}
+\end{table}
+
+Le cas critique est le \textbf{Mvt01} ($C_{\text{barillet}} = 10{,}8$ mN·m, $r = 3{,}33$), qui donne la valeur exacte la plus élevée et donc le $C_{\text{requis}}$ le plus contraignant :
+\begin{equation}
+    C_{\text{requis}} = \left\lceil \frac{C_{\text{barillet,max}}}{r} \right\rceil
+    = \left\lceil \frac{10{,}8}{3{,}33} \right\rceil
+    = \lceil 3{,}24 \rceil
+    = 4 \text{ mN·m}
+    \label{eq:couple_requis_calc}
+\end{equation}
+
+\noindent\textbf{Couple maximal admissible sur la tige} $C_{\text{max,tige}}$\\
+Couple maximal autorisé sur la tige de remontoir, imposé par le cahier des charges( FC1, E1) afin d'éviter tout dommage mécanique au mouvement :
+\begin{equation}
+    C_{\text{max,tige}} = 15 \text{ mN·m}
+    \label{eq:couple_max_tige}
+\end{equation}
+
+\noindent\textbf{Couple de maintien moteur} $C_{\text{maintien}}$\\
+Couple maximal développé par le moteur lorsqu'il est alimenté au courant nominal à vitesse nulle, donné par la datasheet :
+\begin{equation}
+    C_{\text{maintien}} = 55 \text{ mN·m}
+    \label{eq:couple_maintien_moteur}
+\end{equation}
+
+À partir de ces valeurs, deux régimes de courant sont définis pour le driver, séparés par une zone morte entre 0 et $C_{\text{détente}}$ où aucun mouvement n'est possible~:
+\begin{itemize}
+    \item \textbf{Régime accouplement} ($C_{\text{détente}} < C < C_{\text{détente}} + C_{\text{requis}}$, soit entre 5 et 9 mN·m)~: le couple moteur dépasse le seuil de détente, l'arbre tourne, mais le couple net transmis à la tige reste inférieur à $C_{\text{requis}}$. Le moteur s'accouple mécaniquement sans entraîner le mouvement.
+    \item \textbf{Régime remontage / dévidage} ($C_{\text{détente}} + C_{\text{requis}} < C < C_{\text{max,tige}}$, soit entre 9 et 15 mN·m)~: le couple net transmis dépasse $C_{\text{requis}}$ et le moteur entraîne activement la tige, permettant le remontage ou le dévidage contrôlé du barillet.
+\end{itemize}
+
+La figure~\ref{fig:plages_couples} illustre la position de chaque valeur et les plages correspondant aux deux régimes.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\small]
+  % Positions (échelle non proportionnelle) :
+  % 0→0,  5→2.5,  9→5.0,  15→8.5,  55→13
+  \fill[gray!30]   (0,   0.35) rectangle (2.5,  0.95);
+  \fill[orange!30] (2.5, 0.35) rectangle (5.0,  0.95);
+  \fill[green!25]  (5.0, 0.35) rectangle (8.5,  0.95);
+  \fill[red!15]    (8.5, 0.35) rectangle (13.0, 0.95);
+  \draw (0,   0.35) rectangle (2.5,  0.95);
+  \draw (2.5, 0.35) rectangle (5.0,  0.95);
+  \draw (5.0, 0.35) rectangle (8.5,  0.95);
+  \draw (8.5, 0.35) rectangle (13.0, 0.95);
+
+  % Étiquettes des zones
+  \node[align=center] at (1.25, 0.65) {\tiny Aucun mouvement};
+  \node[align=center] at (3.75, 0.65) {\tiny Accouplement};
+  \node[align=center] at (6.75, 0.65) {\tiny Remontage};
+  \node[align=center] at (10.75,0.65) {\tiny Zone interdite};
+
+  % Axe
+  \draw[->, thick] (0, 0) -- (14, 0) node[right] {Couple [mN·m]};
+
+  % Graduations
+  \foreach \xpos/\lab in {0/0, 2.5/5, 5.0/9, 8.5/15, 13.0/55}{
+    \draw (\xpos, 0.15) -- (\xpos, -0.15);
+    \node[below] at (\xpos, -0.2) {\lab};
+  }
+
+  % Annotations au-dessus
+  \draw[dashed, gray] (2.5, 0.95) -- (2.5, 1.7);
+  \node[above, align=center] at (2.5, 1.7) {$C_{\text{détente}}$};
+
+  \draw[dashed, gray] (5.0, 0.95) -- (5.0, 1.7);
+  \node[above, align=center] at (5.0, 1.7) {$C_{\text{détente}}+\,C_{\text{requis}}$};
+
+  \draw[dashed, gray] (8.5, 0.95) -- (8.5, 1.7);
+  \node[above, align=center] at (8.5, 1.7) {$C_{\text{max,tige}}$};
+
+  \draw[dashed, gray] (13.0, 0.95) -- (13.0, 1.7);
+  \node[above, align=center] at (13.0, 1.7) {$C_{\text{maintien}}$};
+
+  % Note d'échelle
+  \node[gray] at (6.5, -1) {\tiny (échelle non proportionnelle)};
+\end{tikzpicture}
+\caption{Plages de couple et régimes de fonctionnement du moteur}
+\label{fig:plages_couples}
+\end{figure}
+
+Ces régimes ne sont réalisables que si la résolution du driver est suffisante pour positionner le couple dans chaque plage sans risque de chevauchement. Il est donc nécessaire de calculer la précision de notre limitation de couple.
 Avec 32 niveaux de courant (0 à 31), l'échelon de courant minimal vaut :
 \begin{equation}
     \Delta I = \frac{I_{\text{max}}}{31} = \frac{0,7}{31} \approx 22,6 \text{ mA}
@@ -115,6 +233,7 @@ En tenant compte du couple de maintien du moteur, la précision de limitation du
     \label{eq:precision_couple}
 \end{equation}
 \noindent où $C_{\text{maintien}} = 55$ mN·m (couple de maintien du moteur) et $N_{\text{utiles}} = 18$ niveaux. Cette précision de $\pm 3$ mN·m est suffisante pour l'application visée.
+
 \subsubsection{Driver sélectionné : TMCM-1021}
 Le \textbf{TMCM-1021} a été retenu. Ses caractéristiques principales sont présentées au tableau~\ref{tab:specs_driver}:
 \begin{table}[H]
@@ -311,3 +430,122 @@ Les composants optiques de filtration sélectionnés sont présentés au tableau
 \end{table}
 \textbf{Résumé de l'acquisition~:} Le système optique offre une résolution de 15,4 $\mu$m/pixel sur un champ de 40 x 40 mm, avec une distance de travail de 300 mm et un éclairage rasant homogène. 
 Ces caractéristiques permettent une détection fiable et reproductible du mouvement.
+
+
+
+\section{Système d'accouplement fourche–T}
+
+L'accouplement entre la tige du mouvement horloger et l'arbre moteur est réalisé au moyen d'un système à ergots de type fourche–T.
+D'un côté, une pièce en forme de T solidaire de l'arbre moteur vient s'engager dans une fourche à deux ergots espacés de 25 mm, montée sur la tige du mouvement.
+Ce principe d'accouplement à jeu angulaire transmet le couple de rotation tout en découplant les axes radiaux : les forces parasites susceptibles d'endommager le mouvement (charges radiales, bending) ne sont pas transmises, et une certaine tolérance au désalignement angulaire et radial est assurée naturellement par le jeu entre les ergots et le T.
+
+\subsection{Analyse de la saccade due au désalignement}
+
+En revanche, un désalignement résiduel entre les deux axes introduit une variation périodique du rapport de transmission instantané, se traduisant par une légère saccade superposée au profil de vitesse théorique. 
+Pour un profil trapézoïdal 1/3–1/3–1/3 (accélération, vitesse constante, décélération), cette saccade se manifeste principalement en début et en fin de mouvement, là où la dérivée de vitesse est non nulle. 
+Afin de maintenir l'erreur de vitesse en dessous de 5 \%, le défaut d'alignement radial maximal admissible doit être rigoureusement contrôlé lors du montage.
+
+\subsubsection{Profil de vitesse avec saccade de désalignement}
+
+La \autoref{fig:profil_saccade} illustre la superposition de la saccade périodique sur le profil de vitesse trapézoïdal théorique pour un accouplement fourche–T. 
+Le désalignement radial a été dimensionné pour que l'erreur de vitesse n'excède jamais 5 \%.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.85\textwidth]{assets/figures/Implementation/profil de vitesse trapezoidale avec saccade.png}
+  \caption{Profil de vitesse trapézoïdal 1/3–1/3–1/3 avec saccade périodique due au désalignement de l'accouplement fourche–T.}
+  \label{fig:profil_saccade}
+\end{figure}
+
+\subsubsection{Dimensionnement du désalignement maximal admissible}
+
+La relation reliant l'erreur relative de vitesse $\varepsilon$ au désalignement $e$ et au rayon effectif $R_{\text{eff}}$ est donnée par :
+
+\[
+  \varepsilon_{\text{max}} = \frac{e^2}{2R_{\text{eff}}^2} \times 100\ (\%)
+\]
+
+En inversant cette formule, on obtient le désalignement maximal admissible pour un seuil d'erreur de 5 \% et un rayon effectif $R_{\text{eff}} = 11{,}5\ \text{mm}$ :
+
+\[
+  e_{\text{max}} = R_{\text{eff}} \sqrt{2 \cdot \frac{\varepsilon_{\text{seuil}}}{100}} = 11{,}5 \times \sqrt{2 \times 0{,}05} \approx 3{,}64\ \text{mm}
+\]
+
+\subsubsection{Analyse des tolérances de montage entre mouvements}
+
+Les différents mouvements n'ayant pas les mêmes dimensions la hauteur de la tige peut varier lors du montage dépendamment du mouvement.
+\begin{align*}
+  \text{Mouvement 1} &: 8{,}73 - 4{,}1 = 4{,}63\ \text{mm} \\
+  \text{Mouvement 2} &: 7{,}23 - 2{,}8 = 4{,}43\ \text{mm} \\
+  \text{Mouvement 3} &: 6{,}63 - 2{,}2 = 4{,}43\ \text{mm} \\
+  \text{Mouvement 4} &: 8{,}63 - 4{,}2 = 4{,}43\ \text{mm} \\
+  \text{Mouvement 5} &: 3{,}80 - 1{,}5 = 2{,}30\ \text{mm} \\
+  \text{Mouvement 6} &: 3{,}05 - 1{,}0 = 2{,}05\ \text{mm} \\
+  \text{Mouvement 7} &: 9{,}33 - 4{,}1 = 5{,}23\ \text{mm}
+\end{align*}
+
+La différence entre la hauteur maximale (Mouvement 7 : $5{,}23\ \text{mm}$) et minimale (Mouvement 6 : $2{,}05\ \text{mm}$) s'élève à :
+
+\[
+  \Delta h = 5{,}23 - 2{,}05 = 3{,}18\ \text{mm}
+\]
+
+Cette variation de \SI{3.18}{\mm} entre les différents mouvements étant inférieur au \SI{3.64}{\mm} de désalignement acceptable pour ne pas dépasser les 5 \% d'erreur, cette méthode de montage ne constitue donc pas un problème majeur pour le système.
+
+\subsection{Analyse des contraintes et déformations}
+
+\subsubsection{Données du problème}
+
+La masse rapportée en bout de tige est un cylindre de fonte grise ($\rho = 7{,}2\ \text{g/cm}^3$) d'un volume de $825{,}35\ \text{mm}^3$, ce qui donne une masse de :
+
+\[
+  m = \rho \cdot V = 7{,}2 \times 10^{-3} \times 825{,}35 \times 10^{-3} = 5{,}94\ \text{g}
+\]
+
+La tige est modélisée comme une poutre encastrée-libre en acier inoxydable ($E = 200\ \text{GPa}$), de diamètre $d = 1{,}2\ \text{mm}$ et de longueur $L = 10{,}75\ \text{mm}$.
+
+\subsubsection{Propriétés de la section transversale}
+
+Le moment quadratique et le module de résistance d'une section circulaire pleine sont :
+
+\[
+  I = \frac{\pi d^4}{64} = \frac{\pi \times 1{,}2^4}{64} \approx 0{,}1018\ \text{mm}^4
+  \qquad
+  W = \frac{\pi d^3}{32} \approx 0{,}1696\ \text{mm}^3
+\]
+
+\subsubsection{Efforts générés}
+
+La force appliquée en bout correspond au poids de la masse :
+
+\[
+  F = m \cdot g = 5{,}94 \times 10^{-3} \times 9{,}81 \approx 58{,}3\ \text{mN}
+\]
+
+Le moment fléchissant maximal, situé à l'encastrement, vaut :
+
+\[
+  M_{max} = F \cdot L = 58{,}3 \times 10^{-3} \times 10{,}75 \approx 0{,}627\ \text{N{\cdot}mm}
+\]
+
+\subsubsection{Flèche en bout de tige}
+
+En appliquant la formule de la poutre encastrée chargée en bout :
+
+\[
+  f = \frac{F L^3}{3EI}
+  = \frac{58{,}3 \times 10^{-3} \times 10{,}75^3}{3 \times 200\,000 \times 0{,}1018}
+  \approx 3{,}8 \times 10^{-3}\ \mu\text{m}
+\]
+
+La déflexion est donc de l'ordre du \textbf{nanomètre}, ce qui est négligeable au regard de toute tolérance mécanique en horlogerie.
+
+\subsubsection{Contrainte de flexion}
+
+La contrainte normale maximale, à l'encastrement, est :
+
+\[
+  \sigma_{max} = \frac{M_{max}}{W} = \frac{0{,}627}{0{,}1696} \approx 3{,}7 \times 10^{-3}\ \text{MPa}
+\]
+
+La limite élastique d'un acier inoxydable courant étant de l'ordre de $300\ \text{MPa}$, la marge de sécurité est supérieure à $\times 80\,000$. La tige ne présente \textbf{aucun risque de déformation plastique}.

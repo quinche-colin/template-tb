@@ -1,19 +1,26 @@
 \chapter{Principes théoriques de base}
 \label{chap:principes-theoriques}
-
 \section{Définitions}
 
 Voici quelques définitions nécessaires à la bonne compréhension du rapport de travail de bachelor :
 
-\paragraph{la réserve de marche :\\}
-C'est la durée pendant laquelle un mouvement de montre, une fois entièrement remonté (ou chargé), 
-est capable de fournir le couple nécessaire à son fonctionnement sans être remonté que se soit manuellement ou par le mouvement d'une masse oscillante. 
-Il s’agit donc du temps pendant lequel la montre continue de fonctionner avant de s’arrêter.
+\paragraph{La réserve de marche :\\}
+Durée pendant laquelle un mouvement de montre, une fois complètement remonté, continue de fonctionner sans apport d'énergie supplémentaire.
+
+\paragraph{La couronne :\\}
+Roue généralement dentée située sur le côté du boîtier. Elle permet de remonter le ressort moteur et de mettre la montre à l'heure.
+
+\paragraph{La tige de remontoir :\\}
+Axe reliant la couronne aux mécanismes internes du mouvement.
 
 \paragraph{Le barillet :\\}  
-C'est un organe du mouvement horloger qui contient le ressort moteur. 
-Il sert à stocker l’énergie mécanique lors du remontage de la montre et à la restituer progressivement au train de rouages pour assurer le fonctionnement du mouvement pendant la durée de la réserve de marche. 
-Le barillet est généralement constitué d’un tambour cylindrique, de son couvercle et de son arbre.
+Organe du mouvement contenant le ressort moteur et visible sur la figure \ref{fig:image_barillet}. Il est constitué d'un tambour cylindrique, d'un couvercle, d'un ressort et d'un arbre. Il stocke de l'énergie lors du remontage et la restitue ensuite progressivement au train de rouages.
+
+\paragraph{Le ressort du barillet :\\}
+Ressort en forme de spiral et logé dans le barillet. Il est enroulé autour de l'arbre lors du remontage. C'est sa détente progressive qui fournit l'énergie au mouvement.
+
+\paragraph{La bride glissante :\\}
+Mécanisme de fixation du ressort présent à l'intérieur du tambour du barillet. Il a pour utilité de protéger le mouvement contre un surarmage.
 
 \begin{figure}[H]
   \centering
@@ -22,44 +29,27 @@ Le barillet est généralement constitué d’un tambour cylindrique, de son cou
   \label{fig:image_barillet}
 \end{figure}
 
-\paragraph{La couronne :\\}
-C'est l'organe de commande externe de la montre, généralement situé sur le côté du boîtier.
-Elle permet d'actionner manuellement le remontage du ressort moteur ainsi que la mise à l'heure.
-La couronne est solidaire de la tige de remontoir qui transmet le mouvement vers les mécanismes internes du mouvement.
-
-\paragraph{La tige de remontoir :\\}
-C'est l'axe métallique reliant la couronne aux mécanismes internes du mouvement.
-Elle transmet la rotation de la couronne soit au système de remontage du barillet, soit au mécanisme de mise à l'heure, selon la position axiale dans laquelle elle est engagée.
-La tige coopère avec un système de bascule ou de tirette permettant de sélectionner le mode de fonctionnement actif.
-
 \paragraph{Le rochet :\\}
-C'est une roue dentée solidaire de l'arbre du barillet, dont le profil asymétrique des dents coopère avec le cliquet d'armage.
-Il constitue l'organe récepteur de l'effort de remontage et permet la rotation de l'arbre du barillet dans un seul sens, assurant ainsi l'accumulation progressive de l'énergie dans le ressort moteur.
+Roue dentée fixée sur l'arbre du barillet. Ses dents asymétriques coopèrent avec le cliquet d'armage pour que l'arbre ne puisse tourner que dans un seul sens lors du remontage.
 
-\paragraph{Le ressort du barillet:\\}
-C'est un ressort spiral en acier logé à l'intérieur du barillet, dont la déformation élastique constitue la source d'énergie du mouvement.
-Lors du remontage, il est enroulé autour de l'arbre du barillet. En se détendant progressivement, il entraîne la rotation du tambour du barillet et alimente ainsi le train de rouages.
-
-\paragraph{L'échappement :\\}
-C'est le mécanisme qui fait le lien entre le rouage alimenté par le ressort de barillet et le balancier. 
-Il remplit deux rôles :
-\begin{enumerate}
-    \item Laisser avancer le rouage d'un pas à chaque oscillation du balancier.
-    \item Entretenir l'oscillation du balancier en lui transmettant une petite impulsion à chaque passage.
-\end{enumerate}
-
-\paragraph{Le balancier :\\}
-Le balancier est l'organe régulateur d'un mouvement mécanique. Couplé au spiral, il oscille à fréquence constante et libère l'échappement à chaque battement, divisant ainsi le temps en intervalles égaux.
-
-\paragraph{Le spiral :\\}
-Le spiral est un ressort très fin enroulé en spirale, fixé au balancier. Il lui fournit la force de rappel qui le fait revenir en arrière à chaque oscillation, assurant ainsi la régularité de sa fréquence.
+\paragraph{Le cliquet d'armage :\\}
+Pièce qui bloque le rochet créant un mécanisme d'anti-retour, empêchant le ressort du barillet de se détendre dans le mauvais sens.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=1\textwidth]{assets/figures/Principes théoriques/Balancier-spiral.jpg}
-  \caption{Illustration d'un balancier et du spiral trouvé sur le site de Elégance et précision \cite{Elegance_precision}}
-  \label{fig:image_barillet}
+  \includegraphics[width=1\textwidth]{assets/figures/Principes théoriques/Mécanisme du remontoir image.png}
+  \caption{Illustration du mécanisme de remontage trouvé sur le site Horopedia \cite{Horopedia_rochet}}
+  \label{fig:cliquet_armage}
 \end{figure}
+
+\paragraph{L'échappement :\\}
+Mécanisme situé entre le train de rouages et le balancier. Il laisse avancer le rouage d'un pas à chaque oscillation du balancier, et lui transmet en retour une petite impulsion qui entretient son mouvement.
+
+\paragraph{Le balancier :\\}
+Organe régulateur du mouvement. Couplé au spiral, il oscille à fréquence constante et commande l'échappement à chaque battement, ce qui divise le temps en intervalles égaux.
+
+\paragraph{Le spiral :\\}
+Ressort fin enroulé en spirale, fixé au balancier. Il fournit la force de rappel qui le ramène à chaque oscillation, assurant la régularité de sa fréquence.
 
 \begin{figure}[H]
   \centering
@@ -68,24 +58,17 @@ Le spiral est un ressort très fin enroulé en spirale, fixé au balancier. Il l
   \label{fig:image_echappement}
 \end{figure}
 
-\paragraph{Cliquet d'armage :\\}
-C'est un mécanisme anti-retour associé au système de remontage. 
-Il permet de transmettre l’effort de remontage au barillet tout en empêchant celui-ci de se détendre en sens inverse. 
-Le cliquet d’armage agit comme un dispositif de verrouillage unidirectionnel, garantissant que l’énergie accumulée dans le ressort moteur ne se libère que par le train de rouages.
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=1\textwidth]{assets/figures/Principes théoriques/Mécanisme du remontoir image.png}
-  \caption{Illustration du mécanisme de remontage trouvé sur le site Horopedia \cite{Horopedia_rochet}}
-  \label{fig:cliquet_armage}
-\end{figure}
-
 \section{Fonctionnement d'un mouvement de montre} 
 
-Une montre mécanique est une montre qui n'utilise pas de pile pour fonctionner. Par conséquent,l'énergie nécesaire au bon fonctionnement du mouvement provient d'un système complexe qui convertit l'énergie stockée dans un ressort.
+Une montre mécanique n'utilise pas de pile mais un ressort pour fonctionner, qui une fois remonté se détend progressivement afin de libérer l'énergie nécessaire pour entraîner le mouvement.
 
-Au cœur du mouvement, se trouve le barillet, un ressort hélicoïdal enroulé sur lui-même, stockant l'énergie mécanique fournie lors du remontage de la montre grâce a une rotation de la couronne ou un mouvement de la masse oscillation. À mesure que le ressort se détend, il libère progressivement cette énergie à travers un système d'engrenages et de leviers, ce qui alimente les aiguilles de la montre. Ce ressort se détend sur une période de plusieurs heures jusqu'à l'arrêt du mouvement.
+Le remontage se fait en actionnant la couronne, qui transmet sa rotation à la tige de remontoir, puis au rochet. Les dents asymétriques du rochet, combinées au cliquet d'armage, ne laissent tourner l'arbre du barillet que dans un sens. Ce qui permet ainsi de comprimé le ressort du barillet autour de cet arbre, tandis que le cliquet empêche tout retour en arrière. Si la montre est entièrement remontée, la bride glissante laisse le ressort glisser plutôt que de forcer, ce qui protège le mécanisme.
 
-Le couple fourni par le barillet varie en fonction du temps avec une allure similaire à la courbe théorique presenté sur le graphe \ref{fig:couple_barillet}: 
+Une fois remonté, le ressort se détend progressivement et entraîne le tambour du barillet, qui restitue l'énergie au train de rouages. Ce dernier l'amène jusqu'à l'échappement, qui la libère pas par pas au rythme du balancier. En effet, à chaque oscillation, il laisse avancer le rouage d'un cran et transmet en retour une petite impulsion qui entretient le mouvement du balancier. Maintenu en oscillation régulière par le spiral, le balancier impose ainsi sa fréquence constante à l'ensemble du mécanisme, ce qui permet de diviser le temps en intervalles égaux et d'entraîner les aiguilles.
+
+Cette détente du ressort dure plusieurs heures et correspond à la réserve de marche du mouvement, jusqu'à ce que de l'énergie stockée ne suffisent plus à vaincre les inerties et les frottements du mécanisme entrainant un arrêt de la montre.
+
+Le couple fourni par le barillet varie en fonction du temps avec une allure similaire à la courbe théorique présentée sur le graphe \ref{fig:couple_barillet} :
 
 \begin{figure}[H]
   \centering
