@@ -108,9 +108,9 @@ Couple résistif généré par les aimants permanents du moteur, présent qu'il 
 \end{equation}
 
 \noindent\textbf{Couple requis} $C_{\text{requis}}$\\
-Couple net additionnel (au-delà de $C_{\text{détente}}$) que le moteur doit transmettre à la tige pour entraîner le mouvement, c'est-à-dire vaincre le couple du barillet ramené sur la tige. La valeur exacte est calculée pour chaque mouvement, puis arrondie à l'entier supérieur en mN·m. Cet arrondi fournit naturellement une marge sur les frottements et simplifie la configuration du driver :
+Couple net additionnel (au-delà de $C_{\text{détente}}$) que le moteur doit transmettre à la tige pour entraîner le mouvement, c'est-à-dire vaincre le couple du barillet ramené sur la tige. La valeur est calculée pour chaque mouvement :
 \begin{equation}
-    C_{\text{requis},i} = \left\lceil \frac{C_{\text{barillet},i}}{r_i} \right\rceil
+    C_{\text{requis},i} = \frac{C_{\text{barillet},i}}{r_i}
     \label{eq:couple_requis_formule}
 \end{equation}
 \noindent où $C_{\text{barillet},i}$ est le couple maximal du barillet du mouvement $i$ et $r_i$ le rapport de réduction tige/barillet. Le tableau~\ref{tab:couple_requis} présente les résultats pour l'ensemble des mouvements.
@@ -119,27 +119,25 @@ Couple net additionnel (au-delà de $C_{\text{détente}}$) que le moteur doit tr
   \centering
   \caption{Couple requis calculé pour chaque mouvement}
   \label{tab:couple_requis}
-  \begin{tabular}{|c|c|c|c|c|}
+  \begin{tabular}{|c|c|c|c|}
     \hline
-    \textbf{Mouvement} & $\boldsymbol{C_{\text{barillet}}}$ \textbf{[mN·m]} & $\boldsymbol{r}$ \textbf{(tige/bar.)} & $\boldsymbol{C_{\text{barillet}}/r}$ \textbf{[mN·m]} & $\boldsymbol{C_{\text{requis}}}$ \textbf{[mN·m]} \\
+    \textbf{Mouvement} & $\boldsymbol{C_{\text{barillet}}}$ \textbf{[mN·m]} & $\boldsymbol{r}$ \textbf{(tige/bar.)} & $\boldsymbol{C_{\text{requis}}}$ \textbf{[mN·m]} \\
     \hline
-    Mvt19    & 6,7  & 3,33 & 2,01 & 3 \\
-    \textbf{Mvt01}    & \textbf{10,8} & \textbf{3,33} & \textbf{3,24} & \textbf{4} \\
-    Mvt200   & 7,9  & 3,33 & 2,37 & 3 \\
-    Mvt200.1 & 7,9  & 3,33 & 2,37 & 3 \\
-    Mvt110   & 6,81 & 2,84 & 2,40 & 3 \\
-    Mvt111   & 4,06 & 2,96 & 1,37 & 2 \\
-    Mvt07    & —    & 3,33 & —    & — \\
+    Mvt19    & 6,7  & 3,33 & 2,01 \\
+    \textbf{Mvt01}    & \textbf{10,8} & \textbf{3,33} & \textbf{3,24} \\
+    Mvt200   & 7,9  & 3,33 & 2,37 \\
+    Mvt200.1 & 7,9  & 3,33 & 2,37 \\
+    Mvt110   & 6,81 & 2,84 & 2,40 \\
+    Mvt111   & 4,06 & 2,96 & 1,37 \\
     \hline
   \end{tabular}
 \end{table}
 
-Le cas critique est le \textbf{Mvt01} ($C_{\text{barillet}} = 10{,}8$ mN·m, $r = 3{,}33$), qui donne la valeur exacte la plus élevée et donc le $C_{\text{requis}}$ le plus contraignant :
+Le cas critique est le \textbf{Mvt01} ($C_{\text{barillet}} = 10{,}8$ mN·m, $r = 3{,}33$), qui donne le $C_{\text{requis}}$ le plus élevé :
 \begin{equation}
-    C_{\text{requis}} = \left\lceil \frac{C_{\text{barillet,max}}}{r} \right\rceil
-    = \left\lceil \frac{10{,}8}{3{,}33} \right\rceil
-    = \lceil 3{,}24 \rceil
-    = 4 \text{ mN·m}
+    C_{\text{requis}} = \frac{C_{\text{barillet,max}}}{r}
+    = \frac{10{,}8}{3{,}33}
+    \approx 3{,}24 \text{ mN·m}
     \label{eq:couple_requis_calc}
 \end{equation}
 
@@ -159,8 +157,8 @@ Couple maximal développé par le moteur lorsqu'il est alimenté au courant nomi
 
 À partir de ces valeurs, deux régimes de courant sont définis pour le driver, séparés par une zone morte entre 0 et $C_{\text{détente}}$ où aucun mouvement n'est possible~:
 \begin{itemize}
-    \item \textbf{Régime accouplement} ($C_{\text{détente}} < C < C_{\text{détente}} + C_{\text{requis}}$, soit entre 5 et 9 mN·m)~: le couple moteur dépasse le seuil de détente, l'arbre tourne, mais le couple net transmis à la tige reste inférieur à $C_{\text{requis}}$. Le moteur s'accouple mécaniquement sans entraîner le mouvement.
-    \item \textbf{Régime remontage / dévidage} ($C_{\text{détente}} + C_{\text{requis}} < C < C_{\text{max,tige}}$, soit entre 9 et 15 mN·m)~: le couple net transmis dépasse $C_{\text{requis}}$ et le moteur entraîne activement la tige, permettant le remontage ou le dévidage contrôlé du barillet.
+    \item \textbf{Régime accouplement} ($C_{\text{détente}} < C < C_{\text{détente}} + C_{\text{requis}}$)~: le couple moteur dépasse le seuil de détente, l'arbre tourne, mais le couple net transmis à la tige reste inférieur à $C_{\text{requis}}$. Le moteur s'accouple mécaniquement sans entraîner le mouvement.
+    \item \textbf{Régime remontage / dévidage} ($C_{\text{détente}} + C_{\text{requis}} < C < C_{\text{max,tige}}$)~: le couple net transmis dépasse $C_{\text{requis}}$ et le moteur entraîne activement la tige, permettant le remontage ou le dévidage contrôlé du barillet.
 \end{itemize}
 
 La figure~\ref{fig:plages_couples} illustre la position de chaque valeur et les plages correspondant aux deux régimes.
@@ -168,8 +166,8 @@ La figure~\ref{fig:plages_couples} illustre la position de chaque valeur et les 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[font=\small]
-  % Positions (échelle non proportionnelle) :
-  % 0→0,  5→2.5,  9→5.0,  15→8.5,  55→13
+  % Positions (échelle non proportionnelle, cas critique Mvt01) :
+  % 0→0,  5→2.5,  8,24→5.0,  15→8.5,  55→13
   \fill[gray!30]   (0,   0.35) rectangle (2.5,  0.95);
   \fill[orange!30] (2.5, 0.35) rectangle (5.0,  0.95);
   \fill[green!25]  (5.0, 0.35) rectangle (8.5,  0.95);
@@ -189,10 +187,12 @@ La figure~\ref{fig:plages_couples} illustre la position de chaque valeur et les 
   \draw[->, thick] (0, 0) -- (14, 0) node[right] {Couple [mN·m]};
 
   % Graduations
-  \foreach \xpos/\lab in {0/0, 2.5/5, 5.0/9, 8.5/15, 13.0/55}{
+  \foreach \xpos/\lab in {0/0, 2.5/5, 8.5/15, 13.0/55}{
     \draw (\xpos, 0.15) -- (\xpos, -0.15);
     \node[below] at (\xpos, -0.2) {\lab};
   }
+  \draw (5.0, 0.15) -- (5.0, -0.15);
+  \node[below] at (5.0, -0.2) {8{,}24};
 
   % Annotations au-dessus
   \draw[dashed, gray] (2.5, 0.95) -- (2.5, 1.7);

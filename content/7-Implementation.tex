@@ -1,0 +1,404 @@
+\chapter{Implémentation logicielle}
+
+% ─── 1. FIXATION ────────────────────────────────────────────────────────────
+
+\section{Gestion du posage et sélection du mouvement}
+
+\subsection{Saisie des informations de test}
+
+Avant de lancer une mesure, l'opérateur renseigne dans l'interface quatre
+informations obligatoires : la référence du test, le numéro de série de la
+montre, le nom de l'opérateur et le type de mouvement horloger. Le bouton
+de démarrage reste désactivé tant que les trois premiers champs textuels ne
+sont pas remplis, empêchant tout lancement sans identification complète du
+test. Ces informations sont ensuite intégrées au rapport PDF généré en fin
+de mesure.
+
+\subsection{Base de données des mouvements}
+
+Les paramètres mécaniques de chaque mouvement sont centralisés dans une
+base de données de configuration. À chaque référence de mouvement correspond
+un ensemble de quatre paramètres :
+
+\begin{itemize}
+    \item $N_{\text{total}}$ : nombre de tours du barillet nécessaires pour
+          atteindre la pleine charge du ressort moteur ;
+    \item $r$ : rapport de transmission entre l'axe d'entraînement et le
+          barillet ;
+    \item $N_{24\text{h}}$ : nombre de tours de l'axe d'entraînement à
+          dévider pour qu'il ne reste que 24~heures de réserve de marche ;
+    \item $C_{\text{max}}$ : couple maximal du barillet (mN$\cdot$m),
+          utilisé pour calculer le couple moteur à appliquer.
+\end{itemize}
+
+Le tableau~\ref{tab:mouvements} présente les valeurs configurées pour les
+mouvements actuellement disponibles dans le système.
+
+\begin{table}[h]
+    \centering
+    \caption{Paramètres des mouvements horlogers configurés dans le système}
+    \label{tab:mouvements}
+    \begin{tabular}{lcccc}
+        \hline
+        \textbf{Mouvement} &
+        $N_{\text{total}}$ (tr) &
+        $r$ &
+        $N_{24\text{h}}$ (tr) &
+        $C_{\text{max}}$ (mN$\cdot$m) \\
+        \hline
+        Mvt19    & 14{,}15 & 3{,}33 & 35{,}8  & 6{,}70 \\
+        Mvt01    & 10{,}30 & 3{,}33 & 24{,}0  & 10{,}80 \\
+        Mvt200   & 13{,}20 & 3{,}33 & 32{,}3  & 7{,}90 \\
+        Mvt200.1 & 13{,}20 & 3{,}33 & 32{,}3  & 7{,}90 \\
+        Mvt110   & 24{,}00 & 2{,}84 & 51{,}7  & 6{,}81 \\
+        Mvt111   & 14{,}00 & 2{,}96 & 30{,}26 & 4{,}06 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Chargement automatique des paramètres}
+
+Lorsque l'opérateur sélectionne un mouvement dans la liste déroulante,
+l'identifiant du mouvement est immédiatement enregistré dans l'état interne
+du module. Les paramètres associés ne sont pas affichés à l'écran mais sont
+chargés automatiquement au moment du lancement du test, à la demande des
+étapes de remontage et de dévidage décrites à la section précédente.
+
+Ce mécanisme de chargement à la demande garantit que les calculs de tours
+et de couple sont toujours cohérents avec le mouvement sélectionné au
+moment du démarrage, sans risque de décalage si l'opérateur modifie sa
+sélection après une première tentative.
+
+La liste des mouvements disponibles peut être étendue par l'opérateur
+directement depuis l'interface, via la fenêtre de paramètres. Les mouvements
+ainsi ajoutés sont persistés dans un fichier de configuration JSON et
+rechargés automatiquement à chaque démarrage de l'application, au même
+titre que les mouvements intégrés.
+
+
+% ─── 2. ACCOUPLEMENT ET MOTORISATION ────────────────────────────────────────
+
+\section{Séquence de remontage et de dévidage}
+\label{sec:motorisation}
+
+\subsection{Vue d'ensemble de la séquence}
+
+Avant de démarrer la phase de mesure, le système exécute une séquence
+préparatoire en trois étapes successives : l'accouplement, le remontage et
+le dévidage. Ces étapes sont pilotées par un moteur pas à pas TMCM-1021
+(Trinamic) connecté au système via une liaison RS485.
+
+\subsection{Étape 1 : accouplement}
+
+L'accouplement est une phase préliminaire dont le but est d'engager
+mécaniquement le moteur avec le mécanisme de remontoir de la montre avant
+d'appliquer un couple significatif. Le moteur effectue une rotation horaire
+de 0{,}5 tour à vitesse réduite (10~tr/min) et à faible couple
+($\approx 6$~mN$\cdot$m), insuffisant pour entraîner le barillet mais
+suffisant pour engager le mécanisme d'accouplement.
+
+Cette précaution évite un choc mécanique lors du démarrage du remontage, qui
+pourrait endommager l'accouplement, mais surtout cela garanti que le nombre de tours effectué par le moteur soit le même que celui effectué par la tige du mouvement.
+
+\subsection{Étape 2 : remontage du barillet}
+
+Le remontage consiste à remonter le ressort moteur (barillet) jusqu'à son niveau maximal.
+Le moteur effectue une rotation horaire dont l'amplitude est définie à partir des caractéristiques mécaniques du
+mouvement sélectionné :
+
+\begin{equation}
+    \theta_{\text{remontage}} = N_{\text{total}} \times r
+    \label{eq:remontage}
+\end{equation}
+
+où $N_{\text{total}}$ est le nombre de tours du barillet nécessaires pour
+atteindre la pleine charge et $r$ le rapport de transmission entre l'axe
+d'entraînement et le barillet. Ces paramètres sont définis pour chaque
+référence de mouvement dans la base de données de configuration du système.
+
+Le couple appliqué lors du remontage est calculé dynamiquement à partir du
+couple maximal du barillet et du rapport de transmission, puis plafonné à
+une valeur de sécurité de 15~mN$\cdot$m afin de protéger le mouvement :
+
+\begin{equation}
+    C_{\text{moteur}} = \min\!\left(
+        \frac{C_{\text{barillet}}}{r} + C_{\text{détente}},\;
+        C_{\text{max}}
+    \right)
+    \label{eq:couple}
+\end{equation}
+
+où $C_{\text{détente}} = 5$~mN$\cdot$m est le couple résistif magnétique à
+vaincre et $C_{\text{max}} = 15$~mN$\cdot$m la limite de sécurité.
+La vitesse de rotation est fixée à 50~tr/min pour tous les mouvements.
+
+\subsection{Étape 3 : dévidage partiel du barillet}
+
+À l'issue du remontage, une pause de 5~secondes est observée pour laisser
+le mécanisme se stabiliser. Le moteur effectue ensuite une rotation
+anti-horaire afin de consommer une partie de l'énergie stockée dans le
+barillet, de manière à ce qu'il reste exactement 24~heures de réserve de
+marche :
+
+\begin{equation}
+    \theta_{\text{dévidage}} = N_{24\text{h}}
+    \label{eq:devidage}
+\end{equation}
+
+où $N_{24\text{h}}$ est le nombre de tours de l'axe d'entraînement à
+dévider pour qu'il ne reste que 24~heures de réserve de marche.
+Ce paramètre est défini pour chaque référence de mouvement dans la base
+de données de configuration.
+
+Le couple et la vitesse appliqués lors du dévidage sont identiques à ceux
+du remontage.
+
+\subsection{Profil de mouvement trapézoïdal}
+
+Pour les deux phases de rotation (remontage et dévidage), le contrôleur
+moteur applique un profil de vitesse trapézoïdal : le moteur accélère
+linéairement jusqu'à sa vitesse nominale, maintient cette vitesse sur la
+majeure partie du déplacement, puis décélère symétriquement avant de
+s'arrêter. Ce profil permet de limiter les à-coups mécaniques transmis
+au mouvement horloger tout en minimisant la durée totale de la séquence.
+
+La durée théorique de chaque phase est estimée par le système selon :
+
+\begin{equation}
+    t_{\text{total}} =
+    \begin{cases}
+        2\,t_{\text{acc}} + t_{\text{cst}}
+            & \text{si } d > 2\,d_{\text{acc}} \\[4pt]
+        2\sqrt{d / a}
+            & \text{sinon}
+    \end{cases}
+    \label{eq:trapeze}
+\end{equation}
+
+où $t_{\text{acc}} = v_{\text{max}} / a$ est la durée de la phase
+d'accélération, $d_{\text{acc}} = \tfrac{1}{2}\,a\,t_{\text{acc}}^2$
+la distance parcourue pendant cette phase, $t_{\text{cst}}$ la durée
+à vitesse constante, $d$ le déplacement total et $a$ l'accélération.
+Cette estimation est utilisée pour afficher la progression en temps réel
+dans l'interface.
+
+\subsection{Démarrage de la mesure}
+
+À l'issue du dévidage, le moteur est mis hors tension. L'accouplement
+fourche–T reste en place et la tige du mouvement demeure solidaire de l'arbre
+moteur. C'est le couple de détente du moteur (5~mN$\cdot$m) qui suffit à
+maintenir la tige bloquée en rotation, empêchant le barillet de se dévider
+spontanément pendant la durée du test. La phase de mesure démarre
+immédiatement.
+
+% ─── 3. ACQUISITION OPTIQUE ─────────────────────────────────────────────────
+
+\section{Pilotage du système d'acquisition optique}
+
+\subsection{Initialisation de la caméra}
+
+La caméra utilisée est une Daheng VEN-505-36U3C, pilotée via le SDK
+Galaxy (\texttt{gxipy}). Son initialisation est effectuée au démarrage
+de l'application et configure les paramètres suivants :
+
+\begin{itemize}
+    \item \textbf{Résolution :} $2592 \times 1944$~pixels (résolution
+          maximale du capteur), afin de disposer du niveau de détail
+          le plus élevé possible pour la comparaison d'images ;
+    \item \textbf{Temps d'exposition :} 15\,000~µs, réglé
+          expérimentalement pour obtenir une image correctement exposée
+          dans les conditions d'éclairage contrôlé du banc de mesure ;
+    \item \textbf{Gain :} 10~dB, choisi en complément du temps
+          d'exposition pour équilibrer luminosité et bruit numérique ;
+    \item \textbf{Balance des blancs :} mode \textit{Once}, déclenchée
+          une seule fois à l'initialisation. Ce mode permet au capteur
+          d'effectuer une compensation automatique des couleurs sur la
+          première image, puis de figer ces coefficients pour toutes
+          les captures suivantes, garantissant ainsi une cohérence
+          colorimétrique entre images successives.
+\end{itemize}
+
+En l'absence de la caméra ou du SDK, l'application bascule
+automatiquement en mode simulation : des images de test synthétiques
+sont générées, ce qui permet de développer et tester le logiciel sans
+matériel connecté.
+
+\subsection{Contrôle de l'éclairage par GPIO}
+
+L'éclairage du banc est piloté directement via le GPIO de la caméra
+(broche Line2), configurée en sortie numérique. Ce choix présente deux
+avantages : il n'nécessite aucun câblage supplémentaire ni
+microcontrôleur dédié, et il garantit une synchronisation exacte entre
+l'allumage de l'éclairage et la séquence d'acquisition, puisque les
+deux sont pilotés par la même interface logicielle.
+
+L'éclairage est activé uniquement pendant la durée nécessaire à chaque
+capture, puis immédiatement éteint. Cette stratégie réduit l'exposition
+thermique du mouvement horloger à la chaleur dégagée par la source
+lumineuse et évite tout éclairement parasite entre deux captures.
+
+\subsection{Séquence d'acquisition et délais de stabilisation}
+
+Chaque capture suit une séquence rigoureuse destinée à garantir la
+qualité et la reproductibilité des images :
+
+\begin{enumerate}
+    \item Allumage de l'éclairage via le GPIO ;
+    \item Attente de stabilisation de 500~ms, permettant à l'exposition
+          automatique résiduelle de converger et à l'éclairage
+          d'atteindre son régime permanent ;
+    \item Vidage du buffer d'acquisition (\textit{flush\_queue}),
+          afin d'éliminer les trames accumulées pendant le délai de
+          stabilisation et de s'assurer que l'image capturée correspond
+          bien à l'instant courant ;
+    \item Acquisition de l'image brute depuis le flux de la caméra,
+          avec jusqu'à 10 tentatives espacées de 50~ms en cas d'échec ;
+    \item Conversion de l'image du format Raw SDK vers un tableau
+          NumPy en espace colorimétrique BGR ;
+    \item Extinction de l'éclairage.
+\end{enumerate}
+
+Le délai de stabilisation de 500~ms a été retenu comme compromis entre
+la qualité d'image et la durée totale de la séquence de capture. Il
+constitue le principal facteur limitant pour la fréquence minimale
+d'acquisition.
+
+\subsection{Horodatage et sauvegarde sur disque}
+
+Immédiatement après l'acquisition, l'heure exacte de la prise de vue
+est gravée directement dans l'image sous la forme d'un bandeau
+semi-transparent en haut du cadre, affichant la date et l'heure au
+format \texttt{JJ/MM/AAAA HH:MM:SS}. Cette information est ainsi
+indissociable de l'image elle-même, quelle que soit la façon dont
+elle est consultée ultérieurement.
+
+L'image est ensuite sauvegardée sur disque au format JPEG selon la
+convention de nommage suivante :
+
+\begin{center}
+    \texttt{module\{id\}\_\{AAAAMMJJ\}\_\{HHMMSS\}.jpg}
+\end{center}
+
+où \texttt{\{id\}} est l'identifiant numérique du module de test et
+\texttt{\{AAAAMMJJ\}\_\{HHMMSS\}} l'horodatage de la capture. Ce
+nommage permet un tri chronologique naturel des fichiers et l'extraction
+automatique de l'heure de prise de vue à partir du nom de fichier seul,
+sans métadonnées supplémentaires.
+
+L'ensemble des images d'un test est regroupé dans un répertoire
+\texttt{captures/} situé à la racine de l'application. Aucune
+organisation par sous-dossier n'est appliquée : le préfixe
+\texttt{module\{id\}} dans le nom de fichier suffit à distinguer les
+captures issues de modules différents lorsque plusieurs mouvements
+sont testés en parallèle.
+
+\section{Détection de l'arrêt du mouvement}
+\label{sec:detection}
+
+\subsection{Principe général}
+
+La détection de l'arrêt du mouvement repose sur la comparaison d'images successives.
+Le système capture une photographie du cadran à intervalles réguliers, et la compare à la précédente.
+Tant que le mouvement est en marche, les aiguilles se déplacent entre les deux captures et par conséquent, les images diffèrent.
+Lorsque le mouvement s'arrête, les aiguilles restent immobiles et les images deviennent donc quasiment identiques.
+Cette différence peut être calculée et quantifiée par une métrique mathématique appelée MSE (\textit{Mean Squared Error}, erreur quadratique moyenne).
+
+\subsection{Métrique de comparaison : le MSE}
+
+Le MSE est une mesure de la différence pixel par pixel entre deux images.
+Pour deux images $I_1$ et $I_2$ de $N$ pixels, le MSE est défini par :
+
+\begin{equation}
+    \text{MSE} = \frac{1}{N} \sum_{i=1}^{N} \bigl(I_1(i) - I_2(i)\bigr)^2
+    \label{eq:mse}
+\end{equation}
+
+Le programme effectue également une conversion préalable en niveaux de gris.
+Cette dernière élimine les variations de teinte liées aux légères fluctuations d'éclairage, tout
+en conservant suffisamment d'informations pour détecter le déplacement
+des aiguilles.
+
+Un MSE élevé indique que les deux images sont significativement différentes.
+En revanche, un MSE proche de zéro indique que les images sont quasiment identiques.
+
+\subsection{Séquence de mesure}
+
+La phase de mesure démarre immédiatement après la phase de dévidage. Le
+système effectue une première capture à $t = 0$, qui sert de référence
+initiale. À chaque intervalle de capture, une nouvelle image est acquise et
+comparée à la précédente selon la séquence suivante :
+
+\begin{enumerate}
+    \item Allumage de l'éclairage ;
+    \item Attente de stabilisation de l'exposition ;
+    \item Capture d'une image en résolution maximale ($2592 \times 1944$~px) ;
+    \item Conversion en niveaux de gris et calcul du MSE avec l'image précédente selon l'équation~\eqref{eq:mse} ;
+    \item Estampillage horodaté et sauvegarde de l'image ;
+    \item Extinction de l'éclairage.
+\end{enumerate}
+
+Si le MSE calculé est inférieur au seuil de détection, l'arrêt est confirmé
+et la réserve de marche est enregistrée. Sinon, l'image courante devient la
+nouvelle référence pour la prochaine comparaison.
+
+\subsection{Intervalle de capture : compromis entre précision et consommation}
+
+Le choix de l'intervalle entre deux captures résulte d'un compromis entre
+deux exigences antagonistes. D'une part, un intervalle court améliore la
+précision temporelle de la mesure : l'erreur maximale sur la réserve de
+marche est directement égale à la durée d'un intervalle. D'autre part, un
+intervalle court implique un allumage fréquent de l'éclairage et une
+sollicitation régulière de la caméra et du processeur, ce qui augmente la
+consommation du système et peut poser problème lors de tests de longue durée.
+
+En pratique, des intervalles de l'ordre de 10 à 15~minutes constituent un
+bon équilibre : pour une réserve de marche typique de 40 à 70~heures,
+l'erreur de mesure reste inférieure à 0,4~\%, ce qui est largement suffisant
+pour caractériser un mouvement horloger.
+
+\subsection{Détermination du temps de réserve de marche}
+
+L'arrêt du mouvement est détecté lorsque la comparaison entre l'image actuelle $I_n$ et l'image précédente $I_{n-1}$ donne un MSE inférieur au seuil fixé.
+Cela signifie que les aiguilles occupent la même position à $t_n$ et à $t_{n-1}$, ce qui signifie que la montre s'est arrêtée dans l'intervalle $[t_{n-2},\, t_{n-1}]$.
+Par conséquent, le seul instant pour lequel le système peut garantir avec certitude que le mouvement fonctionnait encore est $t_{n-2}$.
+
+La réserve de marche mesurée est donc définie par :
+
+\begin{equation}
+    R = t_{n-2} - t_0
+    \label{eq:reserve_marche}
+\end{equation}
+
+où $t_0$ est l'instant où la mesure a débuté.
+
+\subsection{Choix et calibration du seuil de détection}
+
+Le seuil de détection (paramètre \texttt{MOVEMENT\_DETECTION\_THRESHOLD})
+est la valeur critique du MSE en dessous de laquelle deux images consécutives
+sont considérées comme identiques. Sa calibration répond à deux exigences
+contradictoires :
+
+\begin{itemize}
+    \item \textbf{Seuil trop élevé :} risque de faux positifs. Un déplacement
+          d'aiguille faible, par exemple lorsque la trotteuse est proche de
+          sa position de la capture précédente, pourrait produire un MSE
+          inférieur au seuil et déclencher une détection d'arrêt erronée.
+
+    \item \textbf{Seuil trop faible :} risque de faux négatifs. Le bruit
+          numérique du capteur de la caméra et les micro-vibrations
+          environnementales génèrent un MSE résiduel non nul, même lorsque
+          la scène est parfaitement immobile.
+\end{itemize}
+
+La valeur retenue a été déterminée expérimentalement à partir de plusieurs
+essais.
+
+\subsection{Robustesse et limites}
+
+La méthode est robuste aux variations d'exposition grâce à la
+conversion en niveaux de gris et à l'éclairage contrôlé et reproductible.
+Une limite a néanmoins été identifiée : des vibrations mécaniques extérieures
+importantes, provoquées par exemple par un choc ou une machine voisine,
+peuvent modifier légèrement la position relative du cadran dans le champ de
+la caméra et élever artificiellement le MSE, masquant temporairement un arrêt
+réel.

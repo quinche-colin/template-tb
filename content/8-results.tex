@@ -1,0 +1,259 @@
+\chapter{Validation de la solution}
+
+% ─── 1. POSAGE ───────────────────────────────────────────────────────────────
+
+\section{\texorpdfstring{\textcolor{red}{Validation du posage et de la fixation mécanique}}{Validation du posage et de la fixation mécanique}}
+\label{sec:valid-posage}
+
+\textcolor{red}{%
+Cette section valide les fonctions de service FS3 (permettre le montage du
+mouvement) et la fonction de contrainte FC4 (compatibilité des mouvements).
+Elle doit couvrir les points suivants :
+\begin{itemize}
+    \item \textbf{FS3-E8 / FC4-E8} : montrer expérimentalement que le posage est
+          compatible avec les 7 calibres du tableau fabricant ; présenter un
+          tableau récapitulatif indiquant pour chaque mouvement si le montage a
+          pu être réalisé sans modification du posage ;
+    \item \textbf{FS3-E9} : mesurer le temps effectif de montage et de démontage
+          pour un ou plusieurs calibres et vérifier qu'il reste inférieur à
+          2 minutes ;
+    \item \textbf{FS3-E10} : décrire la procédure d'inspection visuelle réalisée
+          après démontage pour s'assurer qu'aucune marque ou rayure n'a été
+          laissée sur le mouvement ; indiquer les résultats obtenus ;
+    \item \textbf{FC4-E9} : confirmer que le réglage en hauteur et en position du
+          support s'effectue sans outillage (à la main).
+\end{itemize}
+}
+
+% ─── 2. MOTORISATION ─────────────────────────────────────────────────────────
+
+\section{Validation du système de motorisation}
+\label{sec:valid-moteur}
+
+\subsection{\texorpdfstring{\textcolor{red}{Conformité de la séquence de commande}}{Conformité de la séquence de commande}}
+
+\textcolor{red}{%
+Cette sous-section valide les exigences de la fonction de service FS2
+(remontage automatique) et de la fonction de contrainte FC1 (protection du
+mouvement). Elle doit démontrer les points suivants :
+\begin{itemize}
+    \item \textbf{FS2-E4} : montrer que le nombre de tours de remontage et de
+          dévidage est bien chargé depuis la base de données de configuration
+          et correspond aux valeurs du tableau fabricant pour chaque mouvement
+          testé ;
+    \item \textbf{FS2-E5 / FC1-E2} : mesurer la vitesse effective du moteur
+          pendant la phase de remontage et confirmer qu'elle ne dépasse pas
+          50 tr/min ;
+    \item \textbf{FS2-E6} : vérifier que le sens de rotation est correctement
+          appliqué (horaire pour le remontage, anti-horaire pour le dévidage)
+          par observation directe ou par relevé de la commande envoyée au
+          driver ;
+    \item \textbf{FS2-E7} : confirmer que la séquence complète
+          (accouplement → remontage → dévidage) s'arrête automatiquement sans
+          intervention de l'opérateur.
+\end{itemize}
+}
+
+\subsection{\texorpdfstring{\textcolor{red}{Validation de la protection du mouvement}}{Validation de la protection du mouvement}}
+
+\textcolor{red}{%
+Cette sous-section valide la fonction de contrainte FC1 (protéger le mouvement).
+Elle doit couvrir :
+\begin{itemize}
+    \item \textbf{FC1-E1} : présenter la valeur de courant appliquée pour chaque
+          mouvement testé et montrer qu'elle correspond bien au couple calculé
+          selon l'équation~\eqref{eq:couple}, en restant dans la plage
+          $[C_{\text{min}},\, 15\ \mathrm{mN{\cdot}m}]$ définie au cahier des
+          charges ;
+    \item \textbf{FC1-E3} : décrire comment la conception mécanique de
+          l'accouplement (fourche–T) garantit l'absence d'effort radial ou
+          axial sur la tige du mouvement, et indiquer si une vérification
+          expérimentale a été possible.
+\end{itemize}
+}
+
+% ─── 3. ACQUISITION OPTIQUE ──────────────────────────────────────────────────
+
+\section{\texorpdfstring{\textcolor{red}{Validation du système d'acquisition optique}}{Validation du système d'acquisition optique}}
+\label{sec:valid-optique}
+
+\textcolor{red}{%
+Cette section valide la fonction de contrainte FC8 (éclairage indépendant du
+milieu). Elle doit démontrer que les images produites par le système sont
+exploitables quelle que soit la luminosité ambiante de l'atelier.
+Elle doit couvrir :
+\begin{itemize}
+    \item \textbf{FC8-E17} : présenter des exemples d'images capturées dans
+          différentes conditions d'éclairage ambiant (lumière naturelle forte,
+          lumière artificielle, obscurité totale) et montrer que la qualité des
+          images — et par extension la valeur du MSE calculée — reste stable ;
+    \item Décrire les paramètres retenus pour l'exposition et la balance des
+          blancs, et expliquer pourquoi ils assurent cette robustesse ;
+    \item Évaluer si des variations d'éclairage résiduel ont engendré des
+          artéfacts sur le MSE lors des tests réels.
+\end{itemize}
+}
+
+% ─── 4. DÉTECTION ────────────────────────────────────────────────────────────
+
+\section{Validation de l'algorithme de détection}
+\label{sec:valid-detection}
+
+Pour tester l'algorithme, il aurait fallu pouvoir contrôler à quel moment le mouvement s'arrête, ce qui n'est pas possible en pratique : il faut attendre que le barillet se décharge naturellement, soit entre 40 et 100 heures selon le calibre. Attendre à chaque test n'était pas envisageable.
+
+La solution trouvée est d'exploiter la périodicité de l'aiguille des secondes, qui est le seul élément visible en mouvement sur les calibres testés. En jouant sur l'intervalle entre deux captures, on peut simuler les deux états que l'algorithme doit distinguer.
+
+\subsection{Simulation d'un mouvement arrêté}
+
+En prenant des photos toutes les 60 secondes, l'aiguille des secondes a effectué exactement un tour complet entre deux captures et se retrouve au même endroit. Les deux images sont donc pratiquement identiques et le MSE obtenu est proche de zéro, ce qui correspond exactement à ce qu'on observe quand un mouvement est à l'arrêt.
+
+\subsection{Simulation d'un mouvement en marche (cas critique)}
+
+Pour le cas inverse, des photos ont été prises toutes les 59 secondes. L'aiguille des secondes est alors décalée d'une seconde par rapport à la capture précédente, soit 6° de rotation. C'est le plus petit déplacement possible à mesurer avec les paramètres de capture du système, et donc le cas où le MSE sera le plus bas tout en restant non nul.
+
+C'est le cas le plus difficile à détecter. Si l'algorithme le détecte correctement, il fonctionnera sans problème pour tous les déplacements plus grands. Il aurait été possible de tester à 1 seconde d'intervalle, qui constitue également un cas critique, mais les délais fixes du système (stabilisation de la caméra, sauvegarde de l'image) ne permettent pas un intervalle aussi court sans modifier le code.
+
+\subsection{Résultats}
+
+Le tableau~\ref{tab:resultats_detection} présente les résultats des deux tests.
+
+\begin{table}[H]
+    \centering
+    \caption{Résultats de la validation de la détection}
+    \label{tab:resultats_detection}
+    \begin{tabular}{|l|c|c|c|}
+        \hline
+        \textbf{Scénario} & \textbf{Intervalle} & \textbf{MSE mesuré} & \textbf{Résultat} \\
+        \hline
+        Arrêt simulé (aiguille alignée)         & 60 s & $\approx 0$         & Arrêt détecté \checkmark \\
+        \hline
+        Mouvement simulé (décalage de 1 s)      & 59 s & $> \text{seuil}$    & Mouvement détecté \checkmark \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Les deux tests ont donné le résultat attendu. Le seuil est donc calibré de façon à distinguer un déplacement d'une seconde d'une image fixe, ce qui couvre tous les cas rencontrés en utilisation normale.
+
+% ─── 5. MESURE DE RÉSERVE DE MARCHE ─────────────────────────────────────────
+
+\section{\texorpdfstring{\textcolor{red}{Validation de la mesure de réserve de marche}}{Validation de la mesure de réserve de marche}}
+\label{sec:valid-mesure}
+
+\subsection{\texorpdfstring{\textcolor{red}{Précision temporelle de la mesure}}{Précision temporelle de la mesure}}
+
+\textcolor{red}{%
+Cette sous-section valide les exigences FS1-E1, FS1-E2 et FC2-E4.
+Elle doit démontrer que :
+\begin{itemize}
+    \item \textbf{FS1-E1} : la mesure démarre automatiquement dès la fin de la
+          séquence de dévidage, sans action de l'opérateur ;
+    \item \textbf{FS1-E2} : l'erreur maximale sur la durée de réserve de marche
+          est inférieure ou égale à 15 min, en lien direct avec l'intervalle
+          de capture choisi ; présenter le calcul ou la vérification
+          expérimentale confirmant ce point ;
+    \item \textbf{FC2-E4} : montrer que l'intervalle entre deux prises d'image
+          est stable à $\pm 30\ \mathrm{s}$ sur l'ensemble d'un test (par exemple
+          en analysant les horodatages des fichiers images sauvegardés) ;
+    \item \textbf{FC2-E5} : vérifier la dérive de l'horloge interne du Raspberry
+          Pi sur une durée représentative ($\geq 24\ \mathrm{h}$) et s'assurer
+          qu'elle reste inférieure à 1 s/jour ;
+    \item \textbf{FC2-E6} : confirmer qu'aucune image n'a été perdue lors des
+          tests (vérification du nombre de fichiers enregistrés par rapport
+          au nombre attendu).
+\end{itemize}
+}
+
+\subsection{\texorpdfstring{\textcolor{red}{Reproductibilité de la mesure}}{Reproductibilité de la mesure}}
+
+\textcolor{red}{%
+Cette sous-section valide l'exigence FS1-E3.
+Elle doit présenter les résultats de mesures répétées sur un même mouvement
+(au minimum 3 mesures consécutives dans des conditions identiques) et calculer
+l'écart entre les valeurs obtenues. Le résultat est conforme si l'ensemble des
+mesures se situent dans un intervalle de $\pm 15\ \mathrm{min}$ autour de la
+valeur médiane. Présenter un tableau avec les durées mesurées, la moyenne, et
+l'écart maximal constaté.
+}
+
+% ─── 6. INTERFACE UTILISATEUR ────────────────────────────────────────────────
+
+\section{\texorpdfstring{\textcolor{red}{Validation de l'interface utilisateur}}{Validation de l'interface utilisateur}}
+\label{sec:valid-ihm}
+
+\textcolor{red}{%
+Cette section valide la fonction de service FS5 (fournir une interface
+utilisateur). Elle doit couvrir les trois exigences suivantes :
+\begin{itemize}
+    \item \textbf{FS5-E14} : montrer, par capture d'écran ou description
+          illustrée, que les 7 types de mouvements du tableau fabricant sont
+          bien accessibles et sélectionnables depuis l'interface ;
+    \item \textbf{FS5-E15} : montrer que l'opérateur peut choisir entre le mode
+          réserve de marche et le mode vieillissement depuis l'interface, et
+          que ce choix conditionne correctement le comportement du système ;
+    \item \textbf{FS5-E16} : vérifier que la réserve de marche mesurée est
+          affichée à l'écran sous la forme heures et minutes à l'issue du test.
+\end{itemize}
+}
+
+% ─── 7. VIEILLISSEMENT ───────────────────────────────────────────────────────
+
+\section{\texorpdfstring{\textcolor{red}{Validation du mode vieillissement}}{Validation du mode vieillissement}}
+\label{sec:valid-vieillissement}
+
+\textcolor{red}{%
+Cette section valide la fonction de service FS6 (simuler le vieillissement).
+Elle doit démontrer que les paramètres d'impulsion appliqués par le moteur
+respectent les contraintes définies au cahier des charges :
+\begin{itemize}
+    \item \textbf{FS6-E17} : vérifier que chaque impulsion de rotation est
+          inférieure à 2 tours, que ce soit par lecture de la consigne envoyée
+          au driver ou par mesure directe ;
+    \item \textbf{FS6-E18} : mesurer ou relever la vitesse effective du moteur
+          en mode vieillissement et confirmer qu'elle est de 350 tr/min ;
+    \item \textbf{FS6-E19} : vérifier que l'accélération configurée dans le
+          profil de mouvement est $\leq 5000\ \mathrm{tr/min^2}$.
+\end{itemize}
+Indiquer si des tests de durée ont été réalisés en mode vieillissement et, le
+cas échéant, présenter les résultats (nombre d'impulsions effectuées, état du
+mouvement après le test).
+}
+
+% ─── 8. AUTONOMIE ET MULTI-POSTES ────────────────────────────────────────────
+
+\section{\texorpdfstring{\textcolor{red}{Validation de l'autonomie et des tests simultanés}}{Validation de l'autonomie et des tests simultanés}}
+\label{sec:valid-autonomie}
+
+\textcolor{red}{%
+Cette section valide les fonctions de contrainte FC5 (fonctionnement autonome)
+et FC6 (mesure simultanée de plusieurs mouvements). Elle doit couvrir :
+\begin{itemize}
+    \item \textbf{FC5-E10} : présenter un test de fonctionnement continu d'une
+          durée $\geq 30\ \mathrm{h}$ (ou justifier par calcul que l'architecture
+          logicielle le permet) sans aucune intervention de l'opérateur ;
+    \item \textbf{FC5-E11} : calculer ou mesurer l'espace disque occupé par
+          1 200 images (10 mouvements $\times$ 120 captures) et montrer que le
+          stockage disponible sur le Raspberry Pi est suffisant ;
+    \item \textbf{FC5-E12} : confirmer que le système fonctionne correctement
+          sans connexion réseau active (mode hors-ligne) ;
+    \item \textbf{FC6-E13} : décrire comment 10 postes peuvent fonctionner
+          simultanément (architecture logicielle multi-thread ou multi-processus)
+          et vérifier expérimentalement qu'ils fonctionnent bien en parallèle ;
+    \item \textbf{FC6-E14} : vérifier que l'arrêt d'un mouvement sur un poste
+          n'interrompt pas les mesures en cours sur les autres postes.
+\end{itemize}
+}
+
+% ─── 9. SYNTHÈSE ─────────────────────────────────────────────────────────────
+
+\section{\texorpdfstring{\textcolor{red}{Synthèse de la validation}}{Synthèse de la validation}}
+\label{sec:valid-synthese}
+
+\textcolor{red}{%
+Cette section conclut le chapitre par un tableau de synthèse récapitulant
+toutes les exigences du cahier des charges, le résultat de la vérification
+(conforme / non conforme / non testé) et une brève justification. Le tableau
+doit référencer les sections du présent chapitre où chaque vérification est
+détaillée. Exemple de colonnes : ID exigence — Description — Critère — Résultat
+— Référence. Terminer par un paragraphe de conclusion indiquant le nombre
+d'exigences validées sur le total et les éventuels points restants à vérifier.
+}

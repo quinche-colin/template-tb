@@ -488,8 +488,8 @@
 
 \fancypagestyle{headings}{
   \fancyhf{}
-  \fancyhead[LO]{\textsl{\rightmark}}
-  \fancyhead[RE]{\textsl{\leftmark}}
+  \fancyhead[LO]{\textsl{\nouppercase{\rightmark}}}
+  \fancyhead[RE]{\textsl{\nouppercase{\leftmark}}}
   \ifdefined\@confidential
     \fancyfoot[LE]{\MakeUppercase{\@confidential}}
     \fancyfoot[RO]{\MakeUppercase{\@confidential}}
