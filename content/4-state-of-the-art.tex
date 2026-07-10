@@ -71,17 +71,17 @@ L'appareil adopte un format empilable permettant de tester jusqu'à 10 mouvement
 \subsubsection{Avantages}
 
 \begin{itemize}
-    \item \textbf{Capacité de test simultané} : jusqu'à 10 mouvements par module, avec retrait individuel possible en cours de test.
+    \item Capacité de test simultané : jusqu'à 10 mouvements par module, avec retrait individuel possible en cours de test.
 
-    \item \textbf{Détection acoustique} : la méthode de détection par analyse sonore permet de traiter des mouvements de types différents sans adaptation mécanique.
+    \item Détection acoustique : la méthode de détection par analyse sonore permet de traiter des mouvements de types différents sans adaptation mécanique.
 
-    \item \textbf{Précision de mesure} : la résolution est d'une minute sur une plage allant jusqu'à 999 heures \cite{Witschi_Chronoscope_RDM}.
+    \item Précision de mesure : la résolution est d'une minute sur une plage allant jusqu'à 999 heures \cite{Witschi_Chronoscope_RDM}.
 \end{itemize}
 
 \subsubsection{Inconvénients}
 
 \begin{itemize}
-    \item \textbf{Durée de test égale à la réserve de marche complète} : l'appareil mesure la totalité de la réserve de marche. Pour un mouvement de 80 heures de réserve, le test dure 80 heures.
+    \item Durée de test égale à la réserve de marche complète : l'appareil mesure la totalité de la réserve de marche. Pour un mouvement de 80 heures de réserve, le test dure 80 heures.
 \end{itemize}
 
 \subsection{Chrono RMV d'Icoflex}
@@ -104,19 +104,19 @@ L'appareil intègre une base de données interne pour la gestion des calibres et
 \subsubsection{Avantages}
 
 \begin{itemize}
-    \item \textbf{Capacité de test simultané} : jusqu'à 20 mouvements en parallèle \cite{Icoflex_Chrono_RMV}.
+    \item Capacité de test simultané : jusqu'à 20 mouvements en parallèle \cite{Icoflex_Chrono_RMV}.
 
-    \item \textbf{Détection optique sans contact} : la méthode vidéo n'implique aucune interaction mécanique avec le mouvement pendant la mesure.
+    \item Détection optique sans contact : la méthode vidéo n'implique aucune interaction mécanique avec le mouvement pendant la mesure.
 
-    \item \textbf{Export des données} : les résultats sont exportables en CSV ou vers une base de données externe \cite{Icoflex_Chrono_RMV}.
+    \item Export des données : les résultats sont exportables en CSV ou vers une base de données externe \cite{Icoflex_Chrono_RMV}.
 
-    \item \textbf{Adaptabilité au positionnement} : le système peut être configuré pour des barquettes existantes.
+    \item Adaptabilité au positionnement : le système peut être configuré pour des barquettes existantes.
 \end{itemize}
 
 \subsubsection{Inconvénients}
 
 \begin{itemize}
-    \item \textbf{Durée de test égale à la réserve de marche complète} : comme pour le Chronoscope RDM, la mesure couvre l'intégralité de la réserve de marche du mouvement.
+    \item Durée de test égale à la réserve de marche complète : comme pour le Chronoscope RDM, la mesure couvre l'intégralité de la réserve de marche du mouvement.
 \end{itemize}
 
 \subsection{Machine de remontage de montres d'UNIMEC SA}
@@ -139,19 +139,19 @@ La machine permet le remontage automatique de 1 à 10 montres par l'entraînemen
 \subsubsection{Avantages}
 
 \begin{itemize}
-    \item \textbf{Contrôle du remontage} : le nombre de tours, la vitesse et le couple limite sont paramétrables, permettant une standardisation des conditions initiales de test.
+    \item Contrôle du remontage : le nombre de tours, la vitesse et le couple limite sont paramétrables, permettant une standardisation des conditions initiales de test.
 
-    \item \textbf{Stockage de profils} : 31 plateaux programmables avec reconnaissance automatique.
+    \item Stockage de profils : 31 plateaux programmables avec reconnaissance automatique.
 
-    \item \textbf{Protection par embrayage} : le couple appliqué à la couronne est limité mécaniquement.
+    \item Protection par embrayage : le couple appliqué à la couronne est limité mécaniquement.
 \end{itemize}
 
 \subsubsection{Inconvénients}
 
 \begin{itemize}
-    \item \textbf{Fonction limitée au remontage} : l'appareil ne comporte pas de fonction de mesure de réserve de marche ni de détection d'arrêt.
+    \item Fonction limitée au remontage : l'appareil ne comporte pas de fonction de mesure de réserve de marche ni de détection d'arrêt.
 
-    \item \textbf{Conçu pour montres complètes} : le système de fixation et d'embrayage est dimensionné pour des boîtiers de montre et non pour des mouvements nus. L'embrayage exerce une pression axiale sur la couronne, ce qui peut être incompatible avec certaines configurations de mouvements.
+    \item Conçu pour montres complètes : le système de fixation et d'embrayage est dimensionné pour des boîtiers de montre et non pour des mouvements nus. L'embrayage exerce une pression axiale sur la couronne, ce qui peut être incompatible avec certaines configurations de mouvements.
 \end{itemize}
 
 \section{Technologies et méthodes existantes}
@@ -163,10 +163,10 @@ L'analyse des solutions industrielles de la section précédente, combinée à u
 Deux méthodes se distinguent pour détecter l'arrêt d'un mouvement horloger :
 
 \begin{itemize}
-    \item \textbf{Détection acoustique} :
+    \item Détection acoustique :
     Le fonctionnement du mouvement génère un signal sonore périodique dont la disparition indique l'arrêt. Elle ne nécessite pas de contact avec le mouvement, mais sa fiabilité dépend du niveau de bruit ambiant \cite{Witschi_Chronoscope_RDM}.
 
-    \item \textbf{Détection optique} :
+    \item Détection optique :
     L'acquisition d'images à intervalles réguliers permet de détecter le déplacement des aiguilles ou d'éléments mobiles. L'absence de variation entre deux images successives indique l'arrêt. Elle requiert un positionnement fixe de la caméra et un éclairage stable, mais est insensible au bruit ambiant \cite{Icoflex_Chrono_RMV}.
 \end{itemize} 
 
@@ -175,10 +175,10 @@ Deux méthodes se distinguent pour détecter l'arrêt d'un mouvement horloger :
 Deux approches sont envisageables pour entraîner mécaniquement un mouvement horloger :
 
 \begin{itemize}
-    \item \textbf{Entraînement motorisé par la tige de remontoir} :
+    \item Entraînement motorisé par la tige de remontoir :
     Un moteur entraîne directement la tige de remontoir. Cette approche permet de contrôler précisément le nombre de tours appliqués et d'obtenir des conditions initiales reproductibles \cite{UNIMEC_Remontage}.
 
-    \item \textbf{Simulation de la masse oscillante} :
+    \item Simulation de la masse oscillante :
     Pour les mouvements automatiques, un dispositif met le mouvement en déplacement afin d'entraîner la masse oscillante. Cette méthode ne permet pas un contrôle précis du nombre de tours effectivement transmis au barillet.
 \end{itemize}
 

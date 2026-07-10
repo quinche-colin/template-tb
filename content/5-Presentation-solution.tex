@@ -15,10 +15,10 @@ Le prototype complet est visible à la figure~\ref{fig:vue_ensemble}.
 Le module est articulé autour de quatre sous-systèmes fonctionnels complémentaires :
 
 \begin{enumerate}
-    \item \textbf{Système de fixation~:} maintien du mouvement en position stable pendant toute la durée du test.
-    \item \textbf{Système de motorisation~:} entraînement contrôlé de la tige de remontoir, avec limitation du couple appliqué sur le mouvement.
-    \item \textbf{Système d'accouplement~:} liaison mécanique entre l'arbre moteur et la tige du mouvement, sans transmission d'efforts radiaux.
-    \item \textbf{Système d'acquisition optique~:} prise de vue périodique du mouvement permettant de détecter automatiquement son arrêt.
+    \item Système de fixation~: maintien du mouvement en position stable pendant toute la durée du test.
+    \item Système de motorisation~: entraînement contrôlé de la tige de remontoir, avec limitation du couple appliqué sur le mouvement.
+    \item Système d'accouplement~: liaison mécanique entre l'arbre moteur et la tige du mouvement, sans transmission d'efforts radiaux.
+    \item Système d'acquisition optique~: prise de vue périodique du mouvement permettant de détecter automatiquement son arrêt.
 \end{enumerate}
 
 L'ensemble est piloté depuis un ordinateur via un script Python, sans microcontrôleur intermédiaire.
@@ -26,14 +26,17 @@ L'ensemble est piloté depuis un ordinateur via un script Python, sans microcont
 \section{Système de fixation}
 
 Le mouvement est maintenu en place par un porte-mouvement industriel (figure~\ref{fig:fixation_proto}).
-Il accueille l'ensemble des calibres définis dans le cahier des charges et permet un montage en moins de deux minutes, sans outillage, sans exercer d'effort sur les composants délicats du mouvement.
+Il accueille l'ensemble des calibres définis dans le cahier des charges et permet un montage en moins de deux minutes, sans outillage et surtout sans endommager les composants du mouvement.
 
 \begin{figure}[H]
     \centering
-    \fbox{\parbox{0.65\textwidth}{\centering\vspace{2.5cm}\textit{[Photo : porte-mouvement avec calibre en position]}\vspace{2.5cm}}}
+    \includegraphics[width=0.65\textwidth]{assets/figures/Solution/Systeme de fixation du mouvement.jpg}
     \caption{Porte-mouvement avec un calibre en position de test}
     \label{fig:fixation_proto}
 \end{figure}
+
+Cette solution est déjà utilisée régulièrement et a même été recommandé par Breitling. 
+Par conséquent, cette solution de fixation semble idéal pour le projet.
 
 \section{Système de motorisation}
 
@@ -42,7 +45,7 @@ Ce type de moteur a été retenu pour sa capacité à contrôler précisément l
 
 \begin{figure}[H]
     \centering
-    \fbox{\parbox{0.65\textwidth}{\centering\vspace{2.5cm}\textit{[Photo : moteur NEMA 11 monté sur la structure]}\vspace{2.5cm}}}
+    \includegraphics[width=0.65\textwidth]{assets/figures/Solution/Montage du moteur pas à pas.jpg}
     \caption{Moteur pas à pas NEMA 11 monté sur la structure}
     \label{fig:moteur_proto}
 \end{figure}

@@ -15,19 +15,19 @@ Par ailleurs, son utilisation avérée dans les ateliers de Breitling atteste de
 Le moteur constitue l'actionneur central du banc de test. 
 Il doit répondre aux exigences de deux modes de fonctionnement distincts :
 \begin{itemize}
-    \item \textbf{Mode vieillissement accéléré~:} le moteur effectue des impulsions de rotation répétées, chacune inférieure à 2 tours, afin de simuler le remontage manuel d'une montre. Ces impulsions sont réalisées à une vitesse de 350 tours/min avec une accélération pouvant atteindre 5000 tours/min², ce qui impose au moteur des démarrages et arrêts dynamiques fréquents.
+    \item Mode vieillissement accéléré~: le moteur effectue des impulsions de rotation répétées, chacune inférieure à 2 tours, afin de simuler le remontage manuel d'une montre. Ces impulsions sont réalisées à une vitesse de 350 tours/min avec une accélération pouvant atteindre 5000 tours/min², ce qui impose au moteur des démarrages et arrêts dynamiques fréquents.
 
-    \item \textbf{Mode réserve de marche~:} ce mode se déroule en deux phases. Dans un premier temps, le moteur entraîne la tige du mouvement à 50 tours/min pour remonter le barillet complètement puis le dévider du nombre de tours souhaité. Dans un second temps, le moteur se maintient en position bloquée pendant environ 24 heures, empêchant toute rotation du système pendant que la caméra enregistre le déroulement du barillet.
+    \item Mode réserve de marche~: ce mode se déroule en deux phases. Dans un premier temps, le moteur entraîne la tige du mouvement à 50 tours/min pour remonter le barillet complètement puis le dévider du nombre de tours souhaité. Dans un second temps, le moteur se maintient en position bloquée pendant environ 24 heures, empêchant toute rotation du système pendant que la caméra enregistre le déroulement du barillet.
 \end{itemize}
 \subsubsection{Justification du choix : moteur pas à pas}
 Un moteur pas à pas a été retenu. Ce choix se justifie par trois critères majeurs :
 \begin{itemize}
     \setlength{\itemsep}{6pt}
-    \item \textbf{Contrôle précis de la position angulaire~:} Le nombre de tours doit être connu avec précision. En considérant une résolution minimale requise de 0,02 tour (soit 7,2°), un moteur pas à pas standard à 200 pas/tour offre un pas de 1,8°, soit une résolution quatre fois meilleure que celle exigée.
+    \item Contrôle précis de la position angulaire~: Le nombre de tours doit être connu avec précision. En considérant une résolution minimale requise de 0,02 tour (soit 7,2°), un moteur pas à pas standard à 200 pas/tour offre un pas de 1,8°, soit une résolution quatre fois meilleure que celle exigée.
     
-    \item \textbf{Maintien statique :} En mode réserve de marche, la phase de blocage sur 24 heures nécessite de retenir le mouvements afin d'éviter qu'il se dévide tout seul. Les moteurs pas à pas ont un couple de détente pouvant retenir naturellement la position même une fois hors tension, ce qu'aucun autre type de moteur ne peut faire.
+    \item Maintien statique : En mode réserve de marche, la phase de blocage sur 24 heures nécessite de retenir le mouvements afin d'éviter qu'il se dévide tout seul. Les moteurs pas à pas ont un couple de détente pouvant retenir naturellement la position même une fois hors tension, ce qu'aucun autre type de moteur ne peut faire.
     
-    \item \textbf{Commande simple et reproductible~:} Le nombre de pas envoyés détermine directement l'angle parcouru, sans calibration préalable.
+    \item Commande simple et reproductible~: Le nombre de pas envoyés détermine directement l'angle parcouru, sans calibration préalable.
 \end{itemize}
 \subsubsection{Sélection du format et du modèle}
 Parmi les formats normalisés de moteurs pas à pas à 200 pas/tour, il existe plusieurs tailles différentes (NEMA 8, NEMA 11, NEMA 17). 
@@ -64,7 +64,13 @@ L'accélération angulaire maximale de 5000~tr/min² est convertie en unités SI
 \end{equation}
 \noindent où $J_{\text{système}} = 15~\text{g·cm}^2 = 15 \times 10^{-7}~\text{kg·m}^2$ et $\alpha \approx 8{,}73~\text{rad/s}^2$. Cette valeur est négligeable au vu de son ordre de grandeur. 
 On cherche donc un moteur pas à pas de format NEMA 11 ayant un couple de détente supérieur au couple requis.
-Finalement, le moteur retenu est le \textbf{NEMA11-01} de Joy-IT (référence 28SHD4201-20) \cite{moons_nema11, joytechnik_nema11_01}. Ses caractéristiques principales sont présentées au tableau~\ref{tab:specs_moteur}:
+Finalement, le moteur retenu est le NEMA11-01 de Joy-IT (référence 28SHD4201-20) \cite{moons_nema11, joytechnik_nema11_01}. Ses caractéristiques principales sont présentées au tableau~\ref{tab:specs_moteur}:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{assets/figures/Dimensionement/Moteur Nema11-01.jpg}
+    \caption{Moteur pas à pas NEMA11-01 de Joy-IT \cite{joytechnik_nema11_01}}
+    \label{fig:moteur_nema11}
+\end{figure}
 \begin{table}[H]
   \centering
   \caption{Caractéristiques du moteur pas à pas NEMA11-01}
@@ -124,7 +130,7 @@ Couple net additionnel (au-delà de $C_{\text{détente}}$) que le moteur doit tr
     \textbf{Mouvement} & $\boldsymbol{C_{\text{barillet}}}$ \textbf{[mN·m]} & $\boldsymbol{r}$ \textbf{(tige/bar.)} & $\boldsymbol{C_{\text{requis}}}$ \textbf{[mN·m]} \\
     \hline
     Mvt19    & 6,7  & 3,33 & 2,01 \\
-    \textbf{Mvt01}    & \textbf{10,8} & \textbf{3,33} & \textbf{3,24} \\
+    Mvt01    & 10,8 & 3,33 & 3,24 \\
     Mvt200   & 7,9  & 3,33 & 2,37 \\
     Mvt200.1 & 7,9  & 3,33 & 2,37 \\
     Mvt110   & 6,81 & 2,84 & 2,40 \\
@@ -133,7 +139,7 @@ Couple net additionnel (au-delà de $C_{\text{détente}}$) que le moteur doit tr
   \end{tabular}
 \end{table}
 
-Le cas critique est le \textbf{Mvt01} ($C_{\text{barillet}} = 10{,}8$ mN·m, $r = 3{,}33$), qui donne le $C_{\text{requis}}$ le plus élevé :
+Le cas critique est le Mvt01 ($C_{\text{barillet}} = 10{,}8$ mN·m, $r = 3{,}33$), qui donne le $C_{\text{requis}}$ le plus élevé :
 \begin{equation}
     C_{\text{requis}} = \frac{C_{\text{barillet,max}}}{r}
     = \frac{10{,}8}{3{,}33}
@@ -157,8 +163,8 @@ Couple maximal développé par le moteur lorsqu'il est alimenté au courant nomi
 
 À partir de ces valeurs, deux régimes de courant sont définis pour le driver, séparés par une zone morte entre 0 et $C_{\text{détente}}$ où aucun mouvement n'est possible~:
 \begin{itemize}
-    \item \textbf{Régime accouplement} ($C_{\text{détente}} < C < C_{\text{détente}} + C_{\text{requis}}$)~: le couple moteur dépasse le seuil de détente, l'arbre tourne, mais le couple net transmis à la tige reste inférieur à $C_{\text{requis}}$. Le moteur s'accouple mécaniquement sans entraîner le mouvement.
-    \item \textbf{Régime remontage / dévidage} ($C_{\text{détente}} + C_{\text{requis}} < C < C_{\text{max,tige}}$)~: le couple net transmis dépasse $C_{\text{requis}}$ et le moteur entraîne activement la tige, permettant le remontage ou le dévidage contrôlé du barillet.
+    \item Régime accouplement ($C_{\text{détente}} < C < C_{\text{détente}} + C_{\text{requis}}$)~: le couple moteur dépasse le seuil de détente, l'arbre tourne, mais le couple net transmis à la tige reste inférieur à $C_{\text{requis}}$. Le moteur s'accouple mécaniquement sans entraîner le mouvement.
+    \item Régime remontage / dévidage ($C_{\text{détente}} + C_{\text{requis}} < C < C_{\text{max,tige}}$)~: le couple net transmis dépasse $C_{\text{requis}}$ et le moteur entraîne activement la tige, permettant le remontage ou le dévidage contrôlé du barillet.
 \end{itemize}
 
 La figure~\ref{fig:plages_couples} illustre la position de chaque valeur et les plages correspondant aux deux régimes.
@@ -235,7 +241,13 @@ En tenant compte du couple de maintien du moteur, la précision de limitation du
 \noindent où $C_{\text{maintien}} = 55$ mN·m (couple de maintien du moteur) et $N_{\text{utiles}} = 18$ niveaux. Cette précision de $\pm 3$ mN·m est suffisante pour l'application visée.
 
 \subsubsection{Driver sélectionné : TMCM-1021}
-Le \textbf{TMCM-1021} a été retenu. Ses caractéristiques principales sont présentées au tableau~\ref{tab:specs_driver}:
+Le TMCM-1021 a été retenu \cite{trinamic_tmcm_1021}. Ses caractéristiques principales sont présentées au tableau~\ref{tab:specs_driver}:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{assets/figures/Dimensionement/tmcm-1021.jpg}
+    \caption{Driver de moteur pas à pas TMCM-1021 \cite{trinamic_tmcm_1021}}
+    \label{fig:tmcm_1021}
+\end{figure}
 \begin{table}[H]
   \centering
   \caption{Caractéristiques du driver TMCM-1021}
@@ -255,17 +267,56 @@ Le \textbf{TMCM-1021} a été retenu. Ses caractéristiques principales sont pr�
 \end{table}
 \subsubsection{Avantages du TMCM-1021}
 \begin{itemize}
-    \item \textbf{Pilotage multi-axes~:} Le bus RS485 permet de connecter jusqu'à 255 modules sur un seul câble. Chaque driver se voit attribuer une adresse unique, permettant au script Python de les commander indépendamment via un simple adaptateur USB/RS485. Cette architecture est adaptée à une évolution vers un système multi-axes.
+    \item Pilotage multi-axes~: Le bus RS485 permet de connecter jusqu'à 255 modules sur un seul câble. Chaque driver se voit attribuer une adresse unique, permettant au script Python de les commander indépendamment via un simple adaptateur USB/RS485. Cette architecture est adaptée à une évolution vers un système multi-axes.
     
-    \item \textbf{Interface série~:} Le TMCM-1021 peut être contrôlé directement depuis un script Python sans microcontrôleur intermédiaire. Le fabricant Trinamic (ADI) propose une gamme intégrant le contrôleur, le driver et la communication, programmables via le langage TMCL et la bibliothèque Python PyTrinamic~\cite{trinamic_pytrinamic}.
+    \item Interface série~: Le TMCM-1021 peut être contrôlé directement depuis un script Python sans microcontrôleur intermédiaire. Le fabricant Trinamic (ADI) propose une gamme intégrant le contrôleur, le driver et la communication, programmables via le langage TMCL et la bibliothèque Python PyTrinamic~\cite{trinamic_pytrinamic}.
 \end{itemize}
+\subsubsection{Convertisseur USB-RS485}
+La liaison entre l'ordinateur et le bus RS485 du (ou des) driver(s) TMCM-1021 est assurée par le convertisseur SBC-TTL-RS485 de Joy-IT \cite{joyit_sbc_ttl_rs485}. Ses caractéristiques principales sont présentées au tableau~\ref{tab:specs_rs485}:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{assets/figures/Dimensionement/Convertisseur USB RS485.jpg}
+    \caption{Convertisseur USB vers RS485 SBC-TTL-RS485 de Joy-IT \cite{joyit_sbc_ttl_rs485}}
+    \label{fig:convertisseur_rs485}
+\end{figure}
+\begin{table}[H]
+  \centering
+  \caption{Caractéristiques du convertisseur USB-RS485 SBC-TTL-RS485}
+  \label{tab:specs_rs485}
+  \begin{tabular}{ll}
+    \toprule
+    \textbf{Paramètre} & \textbf{Valeur} \\
+    \midrule
+    Interface hôte & USB 2.0 type A \\
+    Interface bus & RS485 (câble 2 fils) \\
+    Alimentation & Bus USB (alimenté par l'hôte) \\
+    Compatibilité & Raspberry Pi, Arduino, PC \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 \subsection{Alimentation du moteur}
-L'alimentation du moteur est assurée par le bloc secteur \textbf{RS-25-24} (Mean Well).
+L'alimentation du moteur est assurée par le bloc secteur RS-25-24 (Mean Well) \cite{meanwell_rs2524}.
 \subsubsection{Caractéristiques de l'alimentation}
-\begin{itemize}
-    \item Tension de sortie : $V_{\text{alim}} = 24$ V DC
-    \item Courant maximal : $I_{\text{max}} = 1,1$ A
-\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{assets/figures/Dimensionement/Alimentation moteur.jpg}
+    \caption{Bloc d'alimentation à découpage RS-25-24 de Mean Well \cite{meanwell_rs2524}}
+    \label{fig:alim_moteur}
+\end{figure}
+\begin{table}[H]
+  \centering
+  \caption{Caractéristiques de l'alimentation RS-25-24}
+  \label{tab:specs_alim_moteur}
+  \begin{tabular}{ll}
+    \toprule
+    \textbf{Paramètre} & \textbf{Valeur} \\
+    \midrule
+    Tension de sortie & $V_{\text{alim}} = 24$ V DC \\
+    Courant maximal & $I_{\text{max}} = 1,1$ A \\
+    Puissance maximale & 26 W \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 \subsubsection{Vérification de la compatibilité}
 La puissance disponible est :
 \begin{equation}
@@ -297,7 +348,7 @@ La résolution requise est donc :
     \label{eq:resolution_spatiale}
 \end{equation}
 \noindent où $d_{\text{min}}$ est la largeur minimale à détecter en $[mm]$ et $N_{\text{pixels}}$ est le nombre minimal de pixels requis sur cette distance.
-Cela correspond à environ \textbf{33 pixels/mm}. 
+Cela correspond à environ 33 pixels/mm. 
 Le mouvement de montre le plus grand à observer fait $30$ mm de diamètre. 
 On souhaite que la zone observée par la caméra soit légèrement plus large, soit $40 \times 40$ mm. 
 Le nombre minimal de pixels du capteur en horizontal est donc :
@@ -307,9 +358,15 @@ Le nombre minimal de pixels du capteur en horizontal est donc :
 \end{equation}
 \noindent où Zone de travail = 40 mm (dimension du champ inspecté) et $R_{\text{requise}} = 0,030$ mm/pixel (résolution spatiale requise).
 \subsubsection{Caméra sélectionnée}
-Le modèle retenu est le \textbf{VEN-505-36U3C-M01} \cite{va_imaging_ven505}, équipé d'un capteur Sony IMX335 de format 1/2,8". 
-Cette résolution de 2592 x 1944 pixels (5 MP) dépasse largement l'exigence minimale de 1333 pixels, offrant une excellente marge de confort. 
+Le modèle retenu est le VEN-505-36U3C-M01 \cite{va_imaging_ven505}, équipé d'un capteur Sony IMX335 de format 1/2,8". 
+Cette résolution de 2592 x 1944 pixels (5 MP) dépasse largement l'exigence minimale de 1333 pixels, offrant une excellente marge de confort.
 Ses caractéristiques principales sont présentées au tableau~\ref{tab:specs_camera}:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{assets/figures/Dimensionement/Camera.jpg}
+    \caption{Caméra USB 3.0 5 MP VEN-505-36U3C-M01 \cite{va_imaging_ven505}}
+    \label{fig:camera}
+\end{figure}
 \begin{table}[H]
   \centering
   \caption{Caractéristiques de la caméra VEN-505-36U3C-M01}
@@ -337,7 +394,7 @@ Le grandissement optique nécessaire est déterminé par la dimension limitante 
     \label{eq:grandissement}
 \end{equation}
 \noindent où $W_{\text{capteur}} = 5,37$ mm (largeur du capteur) et Champ d'inspection = 40 mm.
-La distance de travail est fixée à \textbf{WD = 300 mm} pour permettre un montage pratique du système de motorisation et d'éclairage. 
+La distance de travail est fixée à WD = 300 mm pour permettre un montage pratique du système de motorisation et d'éclairage. 
 À partir du grandissement calculé et de cette distance de travail, la focale requise de l'objectif est déterminée par la relation de conjugaison pour un objectif à focale fixe :
 \begin{equation}
     f = \frac{WD}{1 + \frac{1}{m}} = \frac{300}{1 + \frac{1}{0,134}} = \frac{300}{8,46} \approx 35,5 \text{ mm}
@@ -346,24 +403,83 @@ La distance de travail est fixée à \textbf{WD = 300 mm} pour permettre un mont
 \noindent où WD = 300 mm (distance de travail) et $m = 0,134$ (grandissement).
 Une focale de 35 mm est donc requise pour satisfaire ces contraintes.
 \subsubsection{Objectif sélectionné}
-L'objectif retenu est le \textbf{VA-LCM-5MP-35MM-F1.4-015} \cite{va_imaging_lcm5mp}. 
+L'objectif retenu est le VA-LCM-5MP-25MM-F2.0-018 \cite{va_imaging_lcm5mp}.
 Ses caractéristiques principales sont présentées au tableau~\ref{tab:specs_objectif}:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{assets/figures/Dimensionement/Objectif.jpg}
+    \caption{Objectif C-mount VA-LCM-5MP-25MM-F2.0-018 \cite{va_imaging_lcm5mp}}
+    \label{fig:objectif}
+\end{figure}
 \begin{table}[H]
   \centering
-  \caption{Caractéristiques de l'objectif VA-LCM-5MP-35MM-F1.4-015}
+  \caption{Caractéristiques de l'objectif VA-LCM-5MP-25MM-F2.0-018}
   \label{tab:specs_objectif}
   \begin{tabular}{ll}
     \toprule
     \textbf{Paramètre} & \textbf{Valeur} \\
     \midrule
-    Focale fixe & 35 mm \\
-    Ouverture & F/1.4 \\
+    Focale fixe & 25 mm \\
+    Ouverture & F/2.0 \\
     Monture & C-mount \\
-    Optimisation & Capteurs format 2/3" et 1/2,8" \\
+    Optimisation & Capteurs format 1" et 1/2,8" \\
     Distance de travail & 300 mm \\
     \bottomrule
   \end{tabular}
 \end{table}
+\subsubsection{Mise au point et profondeur de champ}
+Les différents mouvements horlogers présentent des hauteurs totales variables (tableau~\ref{tab:dimensions_mouvements}), ce qui déplace axialement la face observée par la caméra d'un mouvement à l'autre.
+Afin d'éviter de refaire la mise au point à chaque changement de mouvement, la profondeur de champ de l'objectif doit couvrir cet écart.
+L'écart de hauteur totale entre le mouvement le plus épais (Mvt19, 8,73 mm) et le plus fin (Mvt111, 3,05 mm) vaut :
+\begin{equation}
+    \Delta h = h_{\text{max}} - h_{\text{min}} = 8,73 - 3,05 = 5,68 \text{ mm}
+    \label{eq:delta_h_mouvements}
+\end{equation}
+La taille de pixel du capteur est déterminée à partir de sa largeur physique et de sa résolution horizontale :
+\begin{equation}
+    p = \frac{W_{\text{capteur}}}{N_{\text{pixels}}} = \frac{5,37}{2592} \approx 0,00207 \text{ mm} = 2,07~\mu\text{m}
+    \label{eq:taille_pixel}
+\end{equation}
+En retenant un cercle de confusion égal à deux fois la taille d'un pixel, seuil couramment utilisé en vision industrielle pour définir la limite de flou acceptable, on obtient :
+\begin{equation}
+    c = 2p \approx 4,14~\mu\text{m} = 0,00414 \text{ mm}
+    \label{eq:cercle_confusion}
+\end{equation}
+\noindent où $p = 2,07~\mu$m est la taille d'un pixel.
+À partir de la focale $f = 25$ mm, de la distance de travail $do \approx 300$ mm et du nombre d'ouverture $N$ réglé par le diaphragme, la distance hyperfocale s'écrit :
+\begin{equation}
+    H(N) = f + \frac{f^2}{Nc}
+    \label{eq:hyperfocale}
+\end{equation}
+\noindent d'où les limites de netteté proche et éloignée :
+\begin{equation}
+    D_n = \frac{H \cdot do}{H + (do - f)}
+    \qquad
+    D_f = \frac{H \cdot do}{H - (do - f)}
+    \label{eq:limites_nettete}
+\end{equation}
+Avec l'ouverture native de l'objectif ($N = 2$, soit F/2.0), la profondeur de champ obtenue est :
+\begin{equation}
+    \text{DOF}(2) = D_f - D_n \approx 301,1 - 298,9 = 2,2 \text{ mm}
+    \label{eq:dof_f2}
+\end{equation}
+\noindent ce qui est insuffisant pour couvrir l'écart $\Delta h = 5,68$ mm calculé précédemment : un réglage du diaphragme est donc nécessaire.
+L'iris de l'objectif est gradué de F/2.0 à une position complètement fermée, l'avant-dernière graduation numérotée étant F/11.
+La profondeur de champ maximale atteignable, obtenue à cette ouverture $N = 11$, vaut :
+\begin{equation}
+    \text{DOF}(11) = D_f - D_n \approx 306,1 - 294,1 = 12,0 \text{ mm}
+    \label{eq:dof_f11}
+\end{equation}
+\noindent Cette profondeur de champ maximale de 12,0 mm dépasse largement l'écart $\Delta h = 5,68$ mm à couvrir : le système est donc compatible, avec une marge confortable, et il n'est pas nécessaire de refaire la mise au point d'un mouvement à l'autre.
+En pratique, il n'est pas utile de fermer le diaphragme jusqu'à cette valeur extrême, ce qui limiterait inutilement la quantité de lumière atteignant le capteur.
+En résolvant $\text{DOF}(N) = \Delta h$, on trouve $N \approx 5,2$, arrondi à la graduation normalisée $N = 5,6$ disponible sur l'objectif, pour laquelle :
+\begin{equation}
+    \text{DOF}(5,6) = D_f - D_n \approx 303,1 - 297,0 = 6,1 \text{ mm}
+    \label{eq:dof_f56}
+\end{equation}
+\noindent ce qui couvre déjà la totalité de l'écart de hauteur entre mouvements.
+Un réglage du diaphragme de F/2.0 à F/5.6 est donc retenu comme valeur de travail, suffisant pour conserver l'ensemble des mouvements du cahier des charges nets dans le champ de la caméra, quelle que soit leur hauteur totale.
+La perte de luminosité associée à cette fermeture du diaphragme est compensée par la puissance disponible de la ring light (90 W), présentée à la section suivante.
 \subsection{Système d'éclairage}
 \subsubsection{Justification du choix d'une ring light}
 L'observation du mouvement de montre en fonctionnement requiert un éclairage homogène et sans ombres. 
@@ -371,8 +487,14 @@ La ring light, montée coaxialement à l'objectif, fournit un éclairage diffus 
 À une distance de travail de 300 mm, un diamètre interne de 70 mm est requis pour ne pas obstruer le champ de vue de $40 \times 40$ mm. 
 Un angle d'émission de 90° (horizontal) produit un éclairage rasant favorable à la mise en évidence des reliefs du mouvement.
 \subsubsection{Ring light sélectionnée}
-La ring light sélectionnée est le modèle \textbf{VA-RL3-70-90W} \cite{va_imaging_rl3}. 
+La ring light sélectionnée est le modèle VA-RL3-70-90W \cite{va_imaging_rl3}.
 Ses caractéristiques principales sont présentées au tableau~\ref{tab:specs_ringlight}:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{assets/figures/Dimensionement/eclairage.jpg}
+    \caption{Ring light industrielle VA-RL3-70-90W \cite{va_imaging_rl3}}
+    \label{fig:ringlight}
+\end{figure}
 \begin{table}[H]
   \centering
   \caption{Caractéristiques de la ring light VA-RL3-70-90W}
@@ -390,8 +512,14 @@ Ses caractéristiques principales sont présentées au tableau~\ref{tab:specs_ri
   \end{tabular}
 \end{table}
 \subsubsection{Contrôleur d'éclairage}
-Le contrôleur retenu est le \textbf{VA-PS2-A4-60W-24V} \cite{va_imaging_ps2}. 
+Le contrôleur retenu est le VA-PS2-A4-60W-24V \cite{va_imaging_ps2}.
 Ses caractéristiques principales sont présentées au tableau~\ref{tab:specs_controller}:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{assets/figures/Dimensionement/Alimentation eclairage.jpg}
+    \caption{Contrôleur d'éclairage industriel VA-PS2-A4-60W-24V \cite{va_imaging_ps2}}
+    \label{fig:controleur_eclairage}
+\end{figure}
 \begin{table}[H]
   \centering
   \caption{Caractéristiques du contrôleur VA-PS2-A4-60W-24V}
@@ -411,10 +539,24 @@ Ses caractéristiques principales sont présentées au tableau~\ref{tab:specs_co
 \end{table}
 \subsubsection{Filtration polarisante}
 Les composants du mouvement de montre étant en métal poli, leur surface est fortement réfléchissante (réflexion spéculaire). 
-Afin d'éliminer les reflets parasites et améliorer le contraste, une configuration en \textbf{polarisation croisée} est mise en place. 
+Afin d'éliminer les reflets parasites et améliorer le contraste, une configuration en polarisation croisée est mise en place. 
 Ce montage bloque la lumière directement réfléchie (composante spéculaire) et ne laisse passer que la composante diffuse, améliorant significativement le contraste de l'image. 
 Cette configuration réduit le flux lumineux d'environ 20\%, ce qui est compensé par la puissance de la ring light (90 W).
 Les composants optiques de filtration sélectionnés sont présentés au tableau~\ref{tab:specs_filters}:
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/figures/Dimensionement/feuille filtre polarisant.jpg}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{assets/figures/Dimensionement/filtre d'objectif polarisant.jpg}
+    \end{minipage}
+    \caption{Feuille polarisante VA-LFT-LPOL-300x200 (gauche) \cite{va_imaging_lft_sheet} et filtre polarisant d'objectif VA-LFT-LPOL-M35.5 (droite) \cite{va_imaging_lft_lens}}
+    \label{fig:filtres_polarisants}
+\end{figure}
 \begin{table}[H]
   \centering
   \caption{Composants de filtration polarisante}
@@ -538,7 +680,7 @@ En appliquant la formule de la poutre encastrée chargée en bout :
   \approx 3{,}8 \times 10^{-3}\ \mu\text{m}
 \]
 
-La déflexion est donc de l'ordre du \textbf{nanomètre}, ce qui est négligeable au regard de toute tolérance mécanique en horlogerie.
+La déflexion est donc de l'ordre du nanomètre, ce qui est négligeable au regard de toute tolérance mécanique en horlogerie.
 
 \subsubsection{Contrainte de flexion}
 
@@ -548,4 +690,4 @@ La contrainte normale maximale, à l'encastrement, est :
   \sigma_{max} = \frac{M_{max}}{W} = \frac{0{,}627}{0{,}1696} \approx 3{,}7 \times 10^{-3}\ \text{MPa}
 \]
 
-La limite élastique d'un acier inoxydable courant étant de l'ordre de $300\ \text{MPa}$, la marge de sécurité est supérieure à $\times 80\,000$. La tige ne présente \textbf{aucun risque de déformation plastique}.
+La limite élastique d'un acier inoxydable courant étant de l'ordre de $300\ \text{MPa}$, la marge de sécurité est supérieure à $\times 80\,000$. La tige ne présente aucun risque de déformation plastique.

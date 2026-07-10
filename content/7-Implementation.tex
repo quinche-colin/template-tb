@@ -202,15 +202,15 @@ Galaxy (\texttt{gxipy}). Son initialisation est effectuée au démarrage
 de l'application et configure les paramètres suivants :
 
 \begin{itemize}
-    \item \textbf{Résolution :} $2592 \times 1944$~pixels (résolution
+    \item Résolution : $2592 \times 1944$~pixels (résolution
           maximale du capteur), afin de disposer du niveau de détail
           le plus élevé possible pour la comparaison d'images ;
-    \item \textbf{Temps d'exposition :} 15\,000~µs, réglé
+    \item Temps d'exposition : 15\,000~µs, réglé
           expérimentalement pour obtenir une image correctement exposée
           dans les conditions d'éclairage contrôlé du banc de mesure ;
-    \item \textbf{Gain :} 10~dB, choisi en complément du temps
+    \item Gain : 10~dB, choisi en complément du temps
           d'exposition pour équilibrer luminosité et bruit numérique ;
-    \item \textbf{Balance des blancs :} mode \textit{Once}, déclenchée
+    \item Balance des blancs : mode \textit{Once}, déclenchée
           une seule fois à l'initialisation. Ce mode permet au capteur
           d'effectuer une compensation automatique des couleurs sur la
           première image, puis de figer ces coefficients pour toutes
@@ -379,12 +379,12 @@ sont considérées comme identiques. Sa calibration répond à deux exigences
 contradictoires :
 
 \begin{itemize}
-    \item \textbf{Seuil trop élevé :} risque de faux positifs. Un déplacement
+    \item Seuil trop élevé : risque de faux positifs. Un déplacement
           d'aiguille faible, par exemple lorsque la trotteuse est proche de
           sa position de la capture précédente, pourrait produire un MSE
           inférieur au seuil et déclencher une détection d'arrêt erronée.
 
-    \item \textbf{Seuil trop faible :} risque de faux négatifs. Le bruit
+    \item Seuil trop faible : risque de faux négatifs. Le bruit
           numérique du capteur de la caméra et les micro-vibrations
           environnementales génèrent un MSE résiduel non nul, même lorsque
           la scène est parfaitement immobile.
