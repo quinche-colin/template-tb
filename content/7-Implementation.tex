@@ -84,23 +84,41 @@ titre que les mouvements intégrés.
 \subsection{Vue d'ensemble de la séquence}
 
 Avant de démarrer la phase de mesure, le système exécute une séquence
-préparatoire en trois étapes successives : l'accouplement, le remontage et
-le dévidage. Ces étapes sont pilotées par un moteur pas à pas TMCM-1021
-(Trinamic) connecté au système via une liaison RS485.
+automatisée en deux étapes successives : le remontage et le dévidage. Ces
+étapes sont pilotées par un moteur pas à pas TMCM-1021 (Trinamic) connecté
+au système via une liaison RS485. Elles sont précédées d'un accouplement
+mécanique entre le moteur et la tige du mouvement, réalisé manuellement lors
+du montage (section~\ref{sec:accouplement}).
 
-\subsection{Étape 1 : accouplement}
+\subsection{Accouplement}
+\label{sec:accouplement}
 
-L'accouplement est une phase préliminaire dont le but est d'engager
-mécaniquement le moteur avec le mécanisme de remontoir de la montre avant
-d'appliquer un couple significatif. Le moteur effectue une rotation horaire
-de 0{,}5 tour à vitesse réduite (10~tr/min) et à faible couple
-($\approx 6$~mN$\cdot$m), insuffisant pour entraîner le barillet mais
-suffisant pour engager le mécanisme d'accouplement.
+L'accouplement a pour but d'engager mécaniquement le moteur avec le
+mécanisme de remontoir de la montre avant d'appliquer un couple significatif,
+en garantissant que le nombre de tours effectué par le moteur soit le même
+que celui effectué par la tige du mouvement.
 
-Cette précaution évite un choc mécanique lors du démarrage du remontage, qui
-pourrait endommager l'accouplement, mais surtout cela garanti que le nombre de tours effectué par le moteur soit le même que celui effectué par la tige du mouvement.
+Une automatisation de cette étape a été tentée~: le moteur devait effectuer
+une rotation horaire de 0{,}5 tour à vitesse réduite (10~tr/min) et à faible
+couple ($\approx 6$~mN$\cdot$m), un couple censé être insuffisant pour
+entraîner le barillet mais suffisant pour engager le mécanisme d'accouplement.
+Ce couple avait été déterminé à partir de la plage de fonctionnement définie
+au chapitre précédent (figure~\ref{fig:plages_couples}), calculée à partir du
+couple \emph{maximal} du barillet plutôt que de sa valeur minimale. En
+pratique, le couple minimal réellement nécessaire pour entraîner le mouvement
+s'est révélé bien inférieur à cette estimation~: il n'existait donc pas de
+palier de couple où le moteur tourne sans entraîner également le mouvement.
+Cette automatisation a par conséquent dû être abandonnée~; le code
+correspondant a été commenté plutôt que supprimé, et reste directement
+réutilisable si cette approche devait être reprise, par exemple en
+s'appuyant sur la bride glissante présente sur tous les mouvements du tableau
+fabricant pour absorber le décalage résiduel.
 
-\subsection{Étape 2 : remontage du barillet}
+L'accouplement entre la fourche en U (moteur) et la fourche en T (tige)
+(section~\ref{sec:accouplement_fourche}) se fait donc désormais à la main
+lors du montage, avant le lancement de la séquence automatisée.
+
+\subsection{Étape 1 : remontage du barillet}
 
 Le remontage consiste à remonter le ressort moteur (barillet) jusqu'à son niveau maximal.
 Le moteur effectue une rotation horaire dont l'amplitude est définie à partir des caractéristiques mécaniques du
@@ -132,7 +150,26 @@ où $C_{\text{détente}} = 5$~mN$\cdot$m est le couple résistif magnétique à
 vaincre et $C_{\text{max}} = 15$~mN$\cdot$m la limite de sécurité.
 La vitesse de rotation est fixée à 50~tr/min pour tous les mouvements.
 
-\subsection{Étape 3 : dévidage partiel du barillet}
+Ce couple cible $C_{\text{moteur}}$ est ensuite traduit en un palier CS du
+driver~: le logiciel sélectionne le palier le plus proche au-dessus de la
+cible (fonction \texttt{movement\_torque\_to\_tmcl()}, fichier
+\texttt{config.py}). Trois régimes sont ainsi couverts~:
+\begin{itemize}
+    \item Régime 1 (5 -- 9~mN$\cdot$m)~: le moteur tourne mais ne peut pas
+          entraîner le mouvement (accouplement) ;
+    \item Régime 2 (9 -- 15~mN$\cdot$m)~: couple suffisant pour entraîner le
+          mouvement ;
+    \item Mode vieillissement~: accès à l'ensemble des 32 paliers, y compris
+          sous le seuil de détente.
+\end{itemize}
+Lorsqu'un couple réellement nul est requis (roue libre), le registre CS
+n'est pas descendu en dessous de son plancher~: le logiciel bascule sur un
+mécanisme distinct, la consigne \texttt{StandbyCurrent~=~0} combinée à un
+délai de roue libre (\texttt{FreewheelingDelay}), qui coupe l'étage de
+puissance plutôt que de réduire davantage le courant (fonction
+\texttt{deactivate\_torque()}, fichier \texttt{motor\_functions.py}).
+
+\subsection{Étape 2 : dévidage partiel du barillet}
 
 À l'issue du remontage, une pause de 5~secondes est observée pour laisser
 le mécanisme se stabiliser. Le moteur effectue ensuite une rotation
@@ -185,7 +222,7 @@ dans l'interface.
 \subsection{Démarrage de la mesure}
 
 À l'issue du dévidage, le moteur est mis hors tension. L'accouplement
-fourche–T reste en place et la tige du mouvement demeure solidaire de l'arbre
+reste en place et la tige du mouvement demeure solidaire de l'arbre
 moteur. C'est le couple de détente du moteur (5~mN$\cdot$m) qui suffit à
 maintenir la tige bloquée en rotation, empêchant le barillet de se dévider
 spontanément pendant la durée du test. La phase de mesure démarre
@@ -342,6 +379,7 @@ et la réserve de marche est enregistrée. Sinon, l'image courante devient la
 nouvelle référence pour la prochaine comparaison.
 
 \subsection{Intervalle de capture : compromis entre précision et consommation}
+\label{sec:intervalle_capture}
 
 Le choix de l'intervalle entre deux captures résulte d'un compromis entre
 deux exigences antagonistes. D'une part, un intervalle court améliore la
