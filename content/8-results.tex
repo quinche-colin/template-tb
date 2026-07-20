@@ -1,4 +1,4 @@
-\chapter{Validation de la solution}
+\chapter{Analyse des résultats et validation des exigences}
 
 % ─── 1. POSAGE ───────────────────────────────────────────────────────────────
 
@@ -103,6 +103,16 @@ l'entraînement du moteur se sont révélées cohérentes avec les calculs
 théoriques. La limitation de couple maximale fonctionne par ailleurs
 correctement.
 
+Concernant l'absence d'effort radial ou axial sur la tige (FC1-E3), aucun
+essai dédié n'a été réalisé pour la mesurer directement. Le dimensionnement
+théorique du système d'accouplement (section~\ref{sec:dim-accouplement})
+garantit toutefois cette exigence par construction~: le principe
+d'accouplement à jeu angulaire entre la fourche en T et la fourche en U
+transmet le couple de rotation tout en découplant mécaniquement les axes
+radiaux, si bien qu'aucune charge radiale ni effort de flexion n'est
+transmis à la tige. Cette exigence est donc considérée comme conforme, bien
+que non vérifiée expérimentalement.
+
 Ces différents résultats semblent satisfaire l'ensemble des exigences du
 cahier des charges pour le système de motorisation.
 
@@ -201,6 +211,8 @@ Cette sous-section valide les exigences suivantes du cahier des charges~:
           remontage » ;
     \item \textbf{FS1-E2} : « Précision $\leq 15\ \mathrm{min}$ (intervalle
           photo) » ;
+    \item \textbf{FS4-E11} : « Prise d'image toutes les $15\ \mathrm{min} \pm
+          30\ \mathrm{s}$ » ;
     \item \textbf{FC2-E4} : « Intervalle entre deux prises d'image stable à
           $\pm 30\ \mathrm{s}$ » ;
     \item \textbf{FC2-E5} : « Horloge interne dérive $\leq 1\ \mathrm{s/jour}$ » ;
@@ -220,26 +232,35 @@ conséquence.
 
 La stabilité de l'intervalle entre deux prises d'image (FC2-E4) est vérifiable
 sur les images des rapports de test, sur lesquelles l'heure de la prise de vue
-est incrustée~; les écarts observés confirment un intervalle fiable. Le nombre
-d'images obtenues à l'issue d'un test permet en outre de confirmer qu'aucune
-image n'a été perdue (FC2-E6).
+est incrustée~; les écarts observés confirment un intervalle fiable. Cette
+même vérification couvre l'exigence FS4-E11, qui porte sur ce même intervalle
+de $15\ \mathrm{min} \pm 30\ \mathrm{s}$. Le nombre d'images obtenues à l'issue
+d'un test permet en outre de confirmer qu'aucune image n'a été perdue (FC2-E6).
 
 Enfin, le déplacement de l'aiguille des secondes du mouvement entre deux
 captures fournit une référence de temps indépendante, ce qui permet de
 valider indirectement l'absence de dérive significative de l'horloge interne
 de l'ordinateur (FC2-E5).
 
-\subsection{\texorpdfstring{\textcolor{red}{Reproductibilité de la mesure}}{Reproductibilité de la mesure}}
+\subsection{Reproductibilité de la mesure}
 
-\textcolor{red}{%
-Cette sous-section valide l'exigence FS1-E3.
-Elle doit présenter les résultats de mesures répétées sur un même mouvement
-(au minimum 3 mesures consécutives dans des conditions identiques) et calculer
-l'écart entre les valeurs obtenues. Le résultat est conforme si l'ensemble des
-mesures se situent dans un intervalle de $\pm 15\ \mathrm{min}$ autour de la
-valeur médiane. Présenter un tableau avec les durées mesurées, la moyenne, et
-l'écart maximal constaté.
-}
+Cette sous-section devait valider l'exigence suivante du cahier des charges~:
+\begin{itemize}
+    \item \textbf{FS1-E3} : « Résultat reproductible à $\pm 15\ \mathrm{min}$
+          sur 3 mesures consécutives dans les mêmes conditions ».
+\end{itemize}
+
+Comme expliqué à la section~\ref{sec:valid-detection}, la portion de la
+réserve de marche effectivement mesurée en temps réel correspond aux
+dernières 24 heures environ~: c'est le temps qu'il faut attendre, à chaque
+essai, que le mouvement s'arrête de lui-même après le dévidage contrôlé du
+barillet. Valider cette exigence demande donc, au minimum, trois mesures
+consécutives sur un même mouvement dans des conditions identiques, soit
+environ trois jours d'essais continus rien que pour cette seule vérification.
+
+Ce temps n'a pas pu être dégagé dans le cadre de ce travail. Cette exigence
+n'a par conséquent fait l'objet d'aucune vérification, même partielle, et
+reste à démontrer lors d'essais ultérieurs.
 
 % ─── 6. INTERFACE UTILISATEUR ────────────────────────────────────────────────
 
@@ -330,40 +351,427 @@ paramètre d'accélération est bien pris en compte par le système.
 
 % ─── 8. AUTONOMIE ET MULTI-POSTES ────────────────────────────────────────────
 
-\section{\texorpdfstring{\textcolor{red}{Validation de l'autonomie et des tests simultanés}}{Validation de l'autonomie et des tests simultanés}}
+\section{Validation de l'autonomie et des tests simultanés}
 \label{sec:valid-autonomie}
 
-\textcolor{red}{%
 Cette section valide les fonctions de contrainte FC5 (fonctionnement autonome)
-et FC6 (mesure simultanée de plusieurs mouvements). Elle doit couvrir :
+et FC6 (mesure simultanée de plusieurs mouvements), à savoir~:
 \begin{itemize}
-    \item \textbf{FC5-E10} : présenter un test de fonctionnement continu d'une
-          durée $\geq 30\ \mathrm{h}$ (ou justifier par calcul que l'architecture
-          logicielle le permet) sans aucune intervention de l'opérateur ;
-    \item \textbf{FC5-E11} : calculer ou mesurer l'espace disque occupé par
-          1 200 images (10 mouvements $\times$ 120 captures) et montrer que le
-          stockage disponible sur le Raspberry Pi est suffisant ;
-    \item \textbf{FC5-E12} : confirmer que le système fonctionne correctement
-          sans connexion réseau active (mode hors-ligne) ;
-    \item \textbf{FC6-E13} : décrire comment 10 postes peuvent fonctionner
-          simultanément (architecture logicielle multi-thread ou multi-processus)
-          et vérifier expérimentalement qu'ils fonctionnent bien en parallèle ;
-    \item \textbf{FC6-E14} : vérifier que l'arrêt d'un mouvement sur un poste
-          n'interrompt pas les mesures en cours sur les autres postes.
+    \item \textbf{FC5-E10} : « Fonctionnement continu $\geq 30\ \mathrm{h}$ sans
+          intervention » ;
+    \item \textbf{FC5-E11} : « Stockage local d'au moins 1\,200 images (10
+          mouvements $\times$ 120 images) » ;
+    \item \textbf{FC5-E12} : « Fonctionnement assuré hors réseau » ;
+    \item \textbf{FC6-E13} : « 10 mouvements testés simultanément » ;
+    \item \textbf{FC6-E14} : « Chaque emplacement fonctionne indépendamment
+          (l'arrêt de l'un n'interrompt pas les autres) ».
 \end{itemize}
-}
 
-% ─── 9. SYNTHÈSE ─────────────────────────────────────────────────────────────
+\subsection{Fonctionnement continu (FC5-E10)}
 
-\section{\texorpdfstring{\textcolor{red}{Synthèse de la validation}}{Synthèse de la validation}}
+Un test de fonctionnement continu de 30 heures ou plus n'a pas été réalisé à ce
+jour. La validation repose donc pour l'instant sur l'architecture logicielle
+mise en place pour garantir un tel fonctionnement.
+
+Le code désactive la mise en veille du PC ainsi que la désalimentation des
+ports USB qui interviendrait normalement lors de la fermeture de l'écran (mode
+portable). Cela garantit que la connexion avec la maquette, réalisée par ces
+ports, reste active tant que l'ordinateur lui-même est alimenté. En théorie,
+rien ne vient donc empêcher un test de fonctionner pendant 30 heures ou plus~:
+il suffit que le PC et la maquette restent alimentés pendant toute la durée du
+test. Cette exigence est par conséquent considérée comme non testée
+empiriquement, bien que rien n'empêche a priori sa réalisation.
+
+\subsection{Stockage local des images (FC5-E11)}
+
+Les images sont enregistrées au format JPEG à la résolution maximale du
+capteur, soit $2592 \times 1944$ pixels (5,04 Mpx). À cette résolution, une
+image JPEG représente typiquement entre 1 et 2 Mo selon le niveau de
+compression. En retenant une valeur moyenne de 1,5 Mo par image, l'espace
+nécessaire pour stocker 1\,200 images (10 mouvements $\times$ 120 captures)
+s'élève à~:
+\[
+    1\,200 \times 1{,}5\ \mathrm{Mo} = 1\,800\ \mathrm{Mo} \approx 1{,}8\ \mathrm{Go}.
+\]
+Les images étant enregistrées localement sur le disque du PC, et non sur une
+carte mémoire dédiée, cet espace est négligeable au regard de la capacité de
+stockage d'un PC actuel, couramment de plusieurs centaines de Go voire de
+plusieurs To. L'exigence est donc satisfaite avec une marge très confortable.
+
+\subsection{Fonctionnement hors réseau (FC5-E12)}
+
+Une connexion réseau n'est nécessaire à aucun moment de l'utilisation du
+logiciel~: l'enregistrement des résultats de test peut se faire n'importe où
+sur le PC, sans dépendre d'un service distant. Une connexion réseau ne devient
+nécessaire que si l'utilisateur souhaite, de son propre chef, enregistrer ses
+résultats sur un espace de stockage en ligne (cloud), ce qui reste un cas
+d'usage optionnel et ne fait pas partie du fonctionnement de base du système.
+L'exigence est donc satisfaite.
+
+\subsection{Mesure simultanée sur plusieurs postes (FC6-E13, FC6-E14)}
+
+L'interface logicielle permet de créer plusieurs cases, une par module de
+mesure, et ces cases fonctionnent indépendamment les unes des autres du point
+de vue de l'affichage et de la configuration. Concernant l'arrêt d'un test
+(FC6-E14), les interfaces sont actuellement indépendantes~: interrompre l'une
+d'elles n'a aucune incidence sur les autres.
+
+En revanche, le logiciel ne permet pas réellement, à ce stade, de piloter
+plusieurs modules en parallèle (FC6-E13), et cela n'a pas du tout été testé.
+Pour y parvenir, il faudrait d'abord implémenter une connectivité des postes
+de test via un bus USB, puis adapter le code afin de piloter les différents
+ports correspondants. En résumé, l'interface actuelle permet de se représenter
+à quoi ressemblerait le logiciel une fois cette fonctionnalité implémentée,
+mais celle-ci n'a pas été réalisée, la maquette actuelle ne permettant de
+toute façon pas de la tester (un seul poste physique étant disponible).
+Cette exigence n'est donc pas satisfaite en l'état.
+
+% ─── 9. SÉCURITÉ DE L'OPÉRATEUR ──────────────────────────────────────────────
+
+\section{Validation de la sécurité de l'opérateur}
+\label{sec:valid-securite}
+
+Cette section valide la fonction de contrainte FC3~:
+\begin{itemize}
+    \item \textbf{FC3-E7} : « Les couples appliqués et les formes des pièces
+          ne peuvent pas blesser l'opérateur ».
+\end{itemize}
+
+Le point de contact le plus critique de la machine est la fourche
+d'accouplement située sur l'arbre moteur~: c'est le seul élément en rotation
+directement accessible et susceptible de coincer un doigt. Le cas le plus
+défavorable correspond donc à un doigt bloqué dans cette fourche, à son rayon
+d'entraînement $R = 12{,}5\ \text{mm}$ (section~\ref{sec:dim-accouplement}).
+Le couple moteur $C$ se traduit alors, à ce rayon, par une force
+tangentielle~:
+\[
+    F = \frac{C}{R}.
+\]
+
+\paragraph{Cas 1 -- couple maximal que le moteur peut fournir.}
+Le couple de maintien $C_{\text{maintien}} = 55\ \text{mN·m}$
+(tableau~\ref{tab:specs_moteur}) n'est pas le couple maximal que le moteur
+peut délivrer~: il ne correspond qu'au palier nominal $CS = 18$ du driver
+(section~\ref{sec:dim-accouplement}, équation~\eqref{eq:couple_moteur_cs}).
+Le registre $CS$ pouvant être poussé jusqu'à sa valeur maximale $CS = 31$, le
+couple maximal réellement atteignable par l'ensemble moteur-driver est~:
+\[
+    C_{\text{max}} = \frac{31+1}{19} \times 55 \approx 92{,}6\ \text{mN·m}
+\]
+\noindent (tableau~\ref{tab:echelons_couple}), ce qui donne~:
+\[
+    F_1 = \frac{92{,}6\times10^{-3}}{12{,}5\times10^{-3}} = 7{,}4\ \text{N}.
+\]
+
+\paragraph{Cas 2 -- limite programmée de 15~mN·m.}
+Si le couple maximal du cas 1 ne devait pas être garanti de manière fiable, le
+logiciel limite dans tous les cas le couple moteur à
+$C_{\text{max}} = 15\ \text{mN·m}$ (voir FC1-E1, section~\ref{sec:valid-moteur}) :
+\[
+    F_2 = \frac{15\times10^{-3}}{12{,}5\times10^{-3}} = 1{,}2\ \text{N}.
+\]
+
+\paragraph{Comparaison avec les limites admissibles.}
+La norme ISO/TS~15066~\cite{iso_ts_15066}, qui fixe les limites biomécaniques
+applicables à la collaboration homme-robot, indique pour la région du corps
+« main et doigts » une force maximale admissible de 140~N en contact
+quasi-statique (cas d'un pincement ou d'un coincement, le plus représentatif
+du cas étudié ici). Les deux valeurs calculées ci-dessus, $F_1 = 7{,}4\ \text{N}$
+et $F_2 = 1{,}2\ \text{N}$, restent très largement inférieures à cette limite,
+avec des marges respectives d'environ $\times 19$ et $\times 117$.
+
+Même dans le scénario le plus défavorable où le moteur délivrerait son couple
+maximal absolu (cas 1), la force exercée sur un doigt coincé dans la fourche
+resterait donc sans commune mesure avec le seuil de douleur/blessure défini
+par la norme. L'exigence FC3-E7 est par conséquent considérée comme validée
+par le calcul.
+
+% ─── 10. ENCOMBREMENT ────────────────────────────────────────────────────────
+
+\section{Validation de l'encombrement}
+\label{sec:valid-encombrement}
+
+Cette section valide la fonction de contrainte FC7~:
+\begin{itemize}
+    \item \textbf{FC7-E15} : « Dimensions $\leq 800\ \mathrm{mm} \times 800\ \mathrm{mm}$
+          et $\leq 1000\ \mathrm{mm}$ en hauteur » ;
+    \item \textbf{FC7-E16} : « L'utilisateur ne doit pas avoir besoin d'accéder
+          à des éléments disposés à plus de $700\ \mathrm{mm}$ au-dessus de la
+          table ».
+\end{itemize}
+
+\subsection{Encombrement au sol}
+
+Le prototype réalisé dans le cadre de ce travail a été conçu pour réaliser des
+essais et valider le concept, et non pour respecter directement les
+contraintes d'encombrement du produit final. Toutefois, son architecture permet néanmoins d'en extraire
+les dimensions clés nécessaires pour dimensionner l'architecture d'une machine
+à 10 postes.
+
+Le porte-mouvement Bergeon \No 4040 (section~\ref{sec:dim-fixation})
+mesure 38~mm de large et constitue, parmi l'ensemble des composants d'un poste
+de mesure (moteur, accouplement, support caméra, etc.), l'élément le plus
+large. En alignant 10 postes côte à côte, la largeur occupée par les seuls
+porte-mouvements est donc de~:
+\[
+    10 \times 38 = 380\ \text{mm}.
+\]
+En ajoutant l'armature (structure porteuse, fixations, marges de montage),
+cette largeur passe à environ 500~mm.
+
+Pour la profondeur, un poste de mesure complet occupe 139~mm. En ajoutant les
+alimentations (moteur et éclairage), qui peuvent être disposées à l'arrière des postes, cette profondeur reste inférieure à la limite de 800~mm.
+Une machine à 10 postes rentrant dans une zone de 800~mm par 800~mm, apparaît donc
+réalisable sans problème particulier, laissant même une marge confortable par
+rapport à la limite fixée par l'exigence
+FC7-E15.
+
+\subsection{Hauteur de la machine}
+
+Contrairement à l'encombrement au sol, la hauteur d'un poste de mesure ne
+dépend pas du nombre de postes juxtaposés~: les 10 postes prévus sont disposés
+côte à côte sur un même plan de travail, et non empilés les uns sur les
+autres. La hauteur mesurée sur le prototype actuel est donc directement
+représentative de celle du produit final.
+
+Or, la maquette réalisée dans le cadre de ce travail mesure moins de
+$350\ \mathrm{mm}$ de hauteur. Cette valeur est très largement inférieure à la
+limite de $1000\ \mathrm{mm}$ fixée par l'exigence FC7-E15, et également
+inférieure à la limite de $700\ \mathrm{mm}$ fixée par l'exigence FC7-E16~:
+aucun élément de la machine ne se trouve à une hauteur qui nécessiterait à
+l'utilisateur d'aller le chercher en hauteur. Les exigences FC7-E15 (volet
+hauteur) et FC7-E16 sont par conséquent considérées comme validées.
+
+% ─── 11. SYNTHÈSE ────────────────────────────────────────────────────────────
+
+\section{Synthèse de la validation}
 \label{sec:valid-synthese}
 
-\textcolor{red}{%
-Cette section conclut le chapitre par un tableau de synthèse récapitulant
-toutes les exigences du cahier des charges, le résultat de la vérification
-(conforme / non conforme / non testé) et une brève justification. Le tableau
-doit référencer les sections du présent chapitre où chaque vérification est
-détaillée. Exemple de colonnes : ID exigence — Description — Critère — Résultat
-— Référence. Terminer par un paragraphe de conclusion indiquant le nombre
-d'exigences validées sur le total et les éventuels points restants à vérifier.
-}
+Les tableaux~\ref{tab:synthese-fs} et~\ref{tab:synthese-fc} reprennent la
+structure du cahier des charges (section~\ref{sec:cahier-charges}) pour
+chacune des fonctions de service et de contrainte, en y ajoutant le résultat
+de la vérification de chaque exigence et une brève justification. Le fond de
+la cellule « Exigences » indique ce résultat, selon les cinq cas de figure
+décrits au tableau~\ref{tab:legende-couleurs}.
+
+\begin{table}[H]
+    \centering
+    \caption{Signification du code couleur utilisé dans les tableaux de synthèse}
+    \label{tab:legende-couleurs}
+    \begin{tabular}{|>{\centering\arraybackslash}p{1.8cm}|p{3cm}|p{9.2cm}|}
+    \hline
+    \textbf{Couleur} & \textbf{Résultat} & \textbf{Critère} \\
+    \hline
+    \cellcolor{resConforme} & Conforme & L'exigence a été vérifiée avec succès. \\
+    \hline
+    \cellcolor{resPartiel} & Conforme (non garanti à 100~\%) & La vérification effectuée (souvent qualitative) ne couvre pas totalement l'exigence, mais rien ne laisse penser qu'elle ne serait pas respectée. \\
+    \hline
+    \cellcolor{resNonVerifie} & Non testé & Aucune vérification, même partielle, n'a été réalisée. \\
+    \hline
+    \cellcolor{resAFaire} & À finir & L'exigence n'est pas satisfaite en l'état, non pas en raison d'un problème de conception, mais faute d'avoir encore implémenté ou testé la fonctionnalité correspondante. \\
+    \hline
+    \cellcolor{resNonConforme} & Non conforme & L'exigence n'est pas satisfaite et le problème est jugé irrémédiable en l'état. \\
+    \hline
+    \end{tabular}
+\end{table}
+
+\begin{landscape}
+\subsection{Fonctions de service}
+
+\captionof{table}{Synthèse de la validation -- Fonctions de service}
+\label{tab:synthese-fs}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{1cm}|p{4cm}|p{8cm}|p{8cm}|}
+\hline
+\textbf{ID} & \textbf{Fonction de service} & \textbf{Exigences} & \textbf{Justification} \\
+\hline
+\endfirsthead
+
+\multicolumn{4}{c}{\tablename\ \thetable{} (suite)} \\
+\hline
+\textbf{ID} & \textbf{Fonction de service} & \textbf{Exigences} & \textbf{Justification} \\
+\hline
+\endhead
+
+\hline
+\endfoot
+
+\multirow{3}{*}{FS1} & \multirow{3}{4cm}{Mesurer la réserve de marche}
+    & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E1} La mesure est déclenchée automatiquement après remontage
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Déclenchement automatique observé lors des essais, sans action de l'opérateur (§~\ref{sec:valid-mesure}). \\
+\cline{3-4}
+ & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E2} Précision $\leq 15\ \mathrm{min}$ (intervalle photo)
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Erreur maximale directement liée à l'intervalle de capture, démontrée par calcul et paramétrable (§~\ref{sec:valid-mesure}). \\
+\cline{3-4}
+ & & \cellcolor{resNonVerifie}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E3} Résultat reproductible à $\pm 15\ \mathrm{min}$ sur 3 mesures consécutives dans les mêmes conditions
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Essais de répétabilité non réalisés~: chaque mesure nécessite $\approx 24$ h, soit $\approx 3$ jours pour les 3 essais consécutifs requis, non disponibles dans le cadre de ce travail (§~\ref{sec:valid-mesure}). \\
+\hline
+
+\multirow{4}{*}{FS2} & \multirow{4}{4cm}{Remonter le mouvement automatiquement}
+    & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E4} Nombre de pas paramétrable
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}L'application exécute correctement les profils demandés depuis l'interface (§~\ref{sec:valid-moteur}). \\
+\cline{3-4}
+ & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E5} Vitesse $\leq 50\ \mathrm{tr/min}$
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Vitesse vérifiée par analyse vidéo (comptage de tours rapporté au temps) (§~\ref{sec:valid-moteur}). \\
+\cline{3-4}
+ & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E6} Sens de rotation sélectionnable (horaire / anti-horaire)
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Fonctionnalité utilisée sans problème lors des essais de commande du moteur (§~\ref{sec:valid-moteur}). \\
+\cline{3-4}
+ & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E7} Remontage s'arrête automatiquement en fin de cycle
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Comportement observé conforme à la consigne lors des essais (§~\ref{sec:valid-moteur}). \\
+\hline
+
+\multirow{3}{*}{FS3} & \multirow{3}{4cm}{Permettre le montage du mouvement}
+    & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E8} Compatible avec les 7 mouvements du tableau fabricant
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Testé expérimentalement sur Mvt01 (avec et sans masse oscillante) ; compatibilité dimensionnelle avec les 7 calibres issue du dimensionnement du posage (§~\ref{sec:valid-posage}). \\
+\cline{3-4}
+ & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E9} Montage effectué en $< 2\ \mathrm{min}$
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Montage réalisé en nettement moins de 2 minutes lors des essais (§~\ref{sec:valid-posage}). \\
+\cline{3-4}
+ & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E10} Aucune marque laissée sur le mouvement après démontage
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Aucune marque constatée après démontage lors des essais (§~\ref{sec:valid-posage}). \\
+\hline
+
+\multirow{3}{*}{FS4} & \multirow{3}{4cm}{Détecter si le mouvement fonctionne}
+    & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E11} Prise d'image toutes les $15\ \mathrm{min} \pm 30\ \mathrm{s}$
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Stabilité de l'intervalle vérifiée sur les horodatages incrustés dans les images (§~\ref{sec:valid-mesure}). \\
+\cline{3-4}
+ & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E12} Arrêt du mouvement détecté dans les $15\ \mathrm{min}$ suivant l'arrêt effectif
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Détection garantie à chaque prise d'image (intervalle de 15 min) ; algorithme validé sur le cas critique (§~\ref{sec:valid-detection}). \\
+\cline{3-4}
+ & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E13} Aucune fausse détection d'arrêt sur mouvement en marche
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Cas critique testé avec succès (décalage minimal de 6°, intervalle de 59 s) (§~\ref{sec:valid-detection}). \\
+\hline
+
+\multirow{3}{*}{FS5} & \multirow{3}{4cm}{Fournir une interface utilisateur}
+    & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E14} Les 7 types de mouvements (tableau fabricant) sont sélectionnables sur l'interface
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Sélection des 7 calibres du tableau fabricant vérifiée depuis l'interface (§~\ref{sec:valid-ihm}). \\
+\cline{3-4}
+ & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E15} Le mode de test est sélectionnable (Réserve de marche ou Vieillissement)
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Sélection du mode vérifiée ; le choix conditionne correctement le comportement du système (§~\ref{sec:valid-ihm}). \\
+\cline{3-4}
+ & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E16} La réserve de marche est affichée en heures et minutes
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Résultat affiché sous le format attendu à l'issue d'un test (§~\ref{sec:valid-ihm}). \\
+\hline
+
+\multirow{3}{*}{FS6} & \multirow{3}{4cm}{Simuler le vieillissement}
+    & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E17} Impulsions $< 2\ \mathrm{tr}$
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Amplitude vérifiée par la même méthode d'analyse vidéo que pour le mode réserve de marche (§~\ref{sec:valid-vieillissement}). \\
+\cline{3-4}
+ & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E18} Vitesse $350\ \mathrm{tr/min}$
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Vitesse vérifiée par analyse vidéo (§~\ref{sec:valid-vieillissement}). \\
+\cline{3-4}
+ & & \cellcolor{resPartiel}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E19} Accélération $\leq 5000\ \mathrm{tr/min^2}$
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Aucun moyen de mesure direct ; effet du paramètre observé qualitativement et cohérent avec la théorie (§~\ref{sec:valid-vieillissement}). \\
+\hline
+
+\end{longtable}
+
+\newpage
+\subsection{Fonctions de contrainte}
+
+\captionof{table}{Synthèse de la validation -- Fonctions de contrainte}
+\label{tab:synthese-fc}
+\begin{longtable}{|>{\raggedright\arraybackslash}p{1cm}|p{4.5cm}|p{7.5cm}|p{8cm}|}
+\hline
+\textbf{ID} & \textbf{Fonction de contrainte} & \textbf{Exigences} & \textbf{Justification} \\
+\hline
+\endfirsthead
+
+\multicolumn{4}{c}{\tablename\ \thetable{} (suite)} \\
+\hline
+\textbf{ID} & \textbf{Fonction de contrainte} & \textbf{Exigences} & \textbf{Justification} \\
+\hline
+\endhead
+
+\hline
+\endfoot
+
+\multirow{3}{*}{FC1} & \multirow{3}{4.5cm}{Protéger le mouvement}
+    & \cellcolor{resPartiel}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E1} Couple limité par contrôle du courant moteur (valeur min. issue du tableau fabricant et valeur maximum de 15\,mN\,m)
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Validation qualitative uniquement (retenue manuelle de l'arbre moteur) ; cohérente avec les calculs théoriques mais aucune mesure quantitative du couple (§~\ref{sec:valid-moteur}). \\
+\cline{3-4}
+ & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E2} Vitesse $\leq 50\ \mathrm{tr/min}$ en mode réserve de marche, $\leq 350\ \mathrm{tr/min}$ en mode vieillissement
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Vérifiée par analyse vidéo pour les deux modes (§~\ref{sec:valid-moteur}). \\
+\cline{3-4}
+ & & \cellcolor{resPartiel}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E3} Aucun effort radial ou axial exercé sur la tige
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Non mesuré expérimentalement, mais garanti par le dimensionnement théorique du découplage angulaire de l'accouplement (§~\ref{sec:valid-moteur}). \\
+\hline
+
+\multirow{3}{*}{FC2} & \multirow{3}{4.5cm}{Assurer la précision de mesure}
+    & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E4} Intervalle entre deux prises d'image stable à $\pm 30\ \mathrm{s}$
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Stabilité vérifiée sur les horodatages incrustés dans les images des rapports de test (§~\ref{sec:valid-mesure}). \\
+\cline{3-4}
+ & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E5} Horloge interne dérive $\leq 1\ \mathrm{s/jour}$
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Validée indirectement via le déplacement de l'aiguille des secondes entre deux captures (§~\ref{sec:valid-mesure}). \\
+\cline{3-4}
+ & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E6} Images enregistrées sans perte sur toute la durée du test
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Nombre d'images obtenu à l'issue d'un test conforme à l'attendu (§~\ref{sec:valid-mesure}). \\
+\hline
+
+FC3 & Garantir la sécurité de l'opérateur
+    & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E7} Les couples appliqués et les formes des pièces ne peuvent pas blesser l'opérateur
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Calcul de la force au doigt coincé dans la fourche ($F \leq 7{,}4$ N) très inférieure à la limite ISO/TS 15066 de 140 N pour la main (marge $\times 19$) (§~\ref{sec:valid-securite}). \\
+\hline
+
+\multirow{2}{*}{FC4} & \multirow{2}{4.5cm}{Assurer la compatibilité des mouvements}
+    & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E8} Dimensions compatibles avec les 7 mouvements du tableau donné par le fabricant
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Testé expérimentalement sur Mvt01 ; compatibilité dimensionnelle des 7 calibres issue du dimensionnement (§~\ref{sec:valid-posage}). \\
+\cline{3-4}
+ & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E9} Support réglable sans outillage
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Montage réalisé sans outillage lors des essais (§~\ref{sec:valid-posage}). \\
+\hline
+
+\multirow{3}{*}{FC5} & \multirow{3}{4.5cm}{Fonctionner de manière autonome}
+    & \cellcolor{resPartiel}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E10} Fonctionnement continu $\geq 30\ \mathrm{h}$ sans intervention
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Essai de longue durée non encore réalisé ; mise en veille du PC et coupure des ports USB désactivées par logiciel, rien n'empêche a priori un fonctionnement $\geq 30\ \mathrm{h}$ (§~\ref{sec:valid-autonomie}). \\
+\cline{3-4}
+ & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E11} Stockage local d'au moins 1\,200 images (10 mouvements $\times$ 120 images)
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Calcul basé sur la résolution des images (5,04 Mpx) : $\approx 1{,}8$ Go pour 1\,200 images, négligeable sur un disque de PC (§~\ref{sec:valid-autonomie}). \\
+\cline{3-4}
+ & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E12} Fonctionnement assuré hors réseau
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Aucune connexion réseau requise pour l'utilisation du logiciel ; uniquement nécessaire en option pour un enregistrement cloud (§~\ref{sec:valid-autonomie}). \\
+\hline
+
+\multirow{2}{*}{FC6} & \multirow{2}{4.5cm}{Mesurer plusieurs mouvements simultanément}
+    & \cellcolor{resAFaire}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E13} 10 mouvements testés simultanément
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Non implémenté : le logiciel ne permet pas encore de piloter plusieurs modules en parallèle (bus USB et adaptation du code requis) (§~\ref{sec:valid-autonomie}). \\
+\cline{3-4}
+ & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E14} Chaque emplacement fonctionne indépendamment (l'arrêt de l'un n'interrompt pas les autres)
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Interfaces indépendantes : l'arrêt d'un test n'affecte pas les autres (§~\ref{sec:valid-autonomie}). \\
+\hline
+
+\multirow{2}{*}{FC7} & \multirow{2}{4.5cm}{Respecter un encombrement maximal}
+    & \cellcolor{resPartiel}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E15} Dimensions $\leq 800\ \mathrm{mm} \times 800\ \mathrm{mm}$ et $\leq 1000\ \mathrm{mm}$ en hauteur
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Hauteur mesurée sur le prototype ($< 350$ mm) largement conforme ; surface au sol estimée par extrapolation à partir du composant le plus large ($\approx 800\times800$ mm), non construite ni mesurée sur un produit final (§~\ref{sec:valid-encombrement}). \\
+\cline{3-4}
+ & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E16} L'utilisateur ne doit pas avoir besoin d'accéder à des éléments disposés à plus de $700\ \mathrm{mm}$ au-dessus de la table
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Hauteur du prototype mesurée $< 350\ \mathrm{mm}$, très inférieure à la limite de 700 mm (§~\ref{sec:valid-encombrement}). \\
+\hline
+
+FC8 & Assurer un éclairage indépendant du milieu
+    & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E17} Les images sont utilisables à toutes les luminosités
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Photos exploitables obtenues dans les trois conditions d'éclairage testées (§~\ref{sec:valid-optique}). \\
+\hline
+
+\end{longtable}
+\end{landscape}
+
+Sur les 36~exigences du cahier des charges, 29 sont pleinement conformes (soit
+environ 81~\%), dont la sécurité de l'opérateur (FC3-E7), validée par le calcul
+de la force au doigt coincé dans la fourche d'accouplement, et la hauteur
+d'accès aux éléments de la machine (FC7-E16), validée par la mesure du
+prototype. Cinq exigences sont considérées comme conformes sans garantie à
+100~\%~: le couple moteur (FC1-E1), l'absence d'effort radial ou axial sur la
+tige (FC1-E3, garantie par le dimensionnement théorique de l'accouplement mais
+non mesurée), l'accélération en mode vieillissement (FS6-E19), le
+fonctionnement continu de longue durée (FC5-E10) et l'encombrement au sol de
+la machine (FC7-E15), pour lesquelles une vérification qualitative, une
+justification par conception ou une extrapolation à partir du prototype a été
+apportée, sans qu'aucun élément ne laisse penser à une non-conformité. Une
+seule exigence n'a fait l'objet d'aucune vérification, même partielle~: la
+reproductibilité de la mesure de réserve de marche (FS1-E3). Enfin, une seule
+exigence n'est aujourd'hui pas satisfaite~:
+FC6-E13 (mesure simultanée sur 10 postes), non pas pour une raison de
+conception, mais faute d'avoir encore implémenté le pilotage parallèle de
+plusieurs modules. Aucune exigence n'est jugée non conforme de manière
+irrémédiable.

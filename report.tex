@@ -14,6 +14,13 @@
 \usepackage{lipsum} % Générer du texte de remplissage pour les exemples
 \usepackage{parcolumns} % Si besoin de gérer des colonnes parallèles
 \usepackage{multirow}
+\usepackage{colortbl} % Pour la coloration des cellules (tableau de synthèse des exigences)
+% Palette du tableau de synthèse des exigences (chapitre "Analyse des résultats")
+\definecolor{resConforme}{HTML}{C8F7C5}    % Vert : exigence conforme
+\definecolor{resPartiel}{HTML}{E4F5A0}     % Vert-jaune : non prouvé à 100 %, mais vérification partielle allant dans le bon sens
+\definecolor{resNonVerifie}{HTML}{FFD9A0}  % Orange : non testé du tout
+\definecolor{resAFaire}{HTML}{BBDEFB}      % Bleu : non conforme, mais uniquement par manque de temps d'implémentation
+\definecolor{resNonConforme}{HTML}{F7C5C5} % Rouge : non conforme et irrémédiable
 \usepackage{tikzducks} % Utile pour générer des images temporaires
 \usepackage{chemfig} % Si besoin d'insérer des formules chimiques
 \usepackage[version=4]{mhchem} % Si besoin d'insérer des formules chimiques

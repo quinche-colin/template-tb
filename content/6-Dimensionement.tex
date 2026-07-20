@@ -1,6 +1,7 @@
 \chapter{Dimensionnement \& Choix du matériel}
 \section{Système de fixation}
-Le porte-mouvement retenu est le modèle métallique industriel \No 4040 de la marque Bergeon. 
+\label{sec:dim-fixation}
+Le porte-mouvement retenu est le modèle métallique industriel \No 4040 de la marque Bergeon.
 Sa large compatibilité lui permet d'accueillir l'ensemble des calibres définis dans le cahier des charges. 
 Par ailleurs, son utilisation avérée dans les ateliers de Breitling atteste de son adéquation aux exigences d'un environnement de production horloger professionnel.
 \begin{figure}[H]
@@ -745,6 +746,7 @@ Ces caractéristiques permettent une détection fiable et reproductible du mouve
 
 
 \section{Système d'accouplement fourche en T -- fourche en U}
+\label{sec:dim-accouplement}
 
 L'accouplement entre la tige du mouvement horloger et l'arbre moteur est réalisé au moyen d'une fourche en T et d'une fourche en U (voir \autoref{fig:accouplement_proto}, section~\ref{sec:accouplement_fourche}).
 La fourche en U, solidaire de l'arbre moteur, vient s'engager dans la fourche en T, dont les deux bras sont espacés de 25 mm, montée sur la tige du mouvement.
@@ -825,44 +827,46 @@ périodicité de 180°, et non de 360° :
 \end{equation}
 
 La \autoref{fig:positions_angle} illustre cette géométrie tous les 45° sur un
-tour complet, en reprenant la construction à deux cercles de rayon $R$ (un
-autour de $O_1$, un autour de $O_2$) et en faisant apparaître le
-désalignement $e$ entre les deux centres. Les deux points où le bras moteur
-croiserait le cercle moteur sont toujours représentés (symétrie oblige)~;
-celui qui est effectivement actif -- entouré sur la figure -- est en haut
-pour $\alpha<180°$ et en bas pour $\alpha\geq180°$. On observe que les
-panneaux de la seconde ligne ($225°$ à $315°$) reproduisent exactement les
-mêmes valeurs de $\Delta$ que ceux de la première ligne ($45°$ à $135°$) :
-c'est la périodicité de 180° de l'\eqref{eq:beta_periodicity}
-(\autoref{fig:beta_evolution}, \autoref{fig:delta_evolution}).
+tour complet, en deux colonnes de quatre cercles (colonne 1~: $\alpha=0°$ à
+$135°$~; colonne 2~: $\alpha=180°$ à $315°$), en reprenant la construction à
+deux cercles de rayon $R$ (un autour de $O_1$, un autour de $O_2$) et en
+faisant apparaître le désalignement $e$ entre les deux centres. Les deux
+points où le bras moteur croiserait le cercle moteur sont toujours
+représentés (symétrie oblige)~; celui qui est effectivement actif -- entouré
+sur la figure -- est en haut pour $\alpha<180°$ et en bas pour
+$\alpha\geq180°$. On observe que la seconde colonne ($180°$ à $315°$)
+reproduit exactement les mêmes valeurs de $\Delta$ que la première ($0°$ à
+$135°$) : c'est la périodicité de 180° de l'\eqref{eq:beta_periodicity}. Le
+système étant entièrement décrit par un seul demi-tour, les
+\autoref{fig:beta_evolution} et \autoref{fig:delta_evolution} qui suivent se
+limitent à $\alpha\in[0°,180°]$.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{assets/figures/Implementation/fig_positions_angle.png}
+  \includegraphics[width=0.62\textwidth]{assets/figures/Implementation/fig_positions_angle.png}
   \caption{Position de la tige (bleu, angle $\beta$) en fonction de la
   position du moteur (orange, angle $\alpha$), tous les 45° sur un tour
-  complet. Les axes $O_1$ (moteur) et $O_2$ (tige) et leur désalignement $e$
-  sont indiqués sur le premier panneau ; le bras moteur actif est entouré.
-  $R=12{,}5$~mm, $e=\Delta h=3{,}18$~mm.}
+  complet, en deux colonnes de quatre. Les axes $O_1$ (moteur) et $O_2$
+  (tige) et leur désalignement $e$ sont indiqués sur le premier panneau ; le
+  bras moteur actif est entouré. $R=12{,}5$~mm, $e=\Delta h=3{,}18$~mm.}
   \label{fig:positions_angle}
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.75\textwidth]{assets/figures/Implementation/fig_beta_evolution.png}
-  \caption{Évolution de l'angle tige $\beta$ sur un tour complet, pour
+  \caption{Évolution de l'angle tige $\beta$ sur un demi-tour, pour
   différentes valeurs du désalignement $e$ (0 à 5~mm). Le désalignement réel
   ($\Delta h = 3{,}18$~mm) se situe entre les courbes $e=3$~mm et $e=4$~mm.
-  La courbe présente un point anguleux à 180°, marquant le changement de
-  bras actif.}
+  Le comportement se répète à l'identique sur chaque demi-tour suivant.}
   \label{fig:beta_evolution}
 \end{figure}
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{assets/figures/Implementation/fig_delta_evolution.png}
-  \caption{Écart angulaire $\Delta=\beta-\alpha$ sur un tour complet, pour
-  différentes valeurs du désalignement $e$ (0 à 5~mm). Le motif se répète à
+  \caption{Écart angulaire $\Delta=\beta-\alpha$ sur un demi-tour, pour
+  différentes valeurs du désalignement $e$ (0 à 5~mm). Ce motif se répète à
   l'identique tous les 180° (et non tous les 360°), conséquence directe de
   la symétrie de la fourche en T.}
   \label{fig:delta_evolution}
@@ -925,19 +929,37 @@ cahier des charges est l'imprécision de mesure qu'il engendre, analysée à la
 
 \subsubsection{Profil de vitesse simulé}
 
-La \autoref{fig:profil_saccade} illustre, pour le désalignement réel
-$e=\Delta h=3{,}18$~mm, la superposition de la saccade périodique
-(\eqref{eq:omega_ratio}, prolongée par périodicité de 180° comme
-l'\eqref{eq:beta_periodicity}) sur le profil de vitesse trapézoïdal
-théorique de l'accouplement. Conformément à l'\eqref{eq:eps_bounds_calc}, la
-vitesse instantanée croît jusqu'à $+34\ \%$ puis chute brusquement à
-$-20\ \%$ à chaque changement de bras actif (tous les 180° de rotation
-moteur, soit deux fois par tour), avant de recommencer le même cycle.
+Plutôt qu'un profil trapézoïdal générique, la \autoref{fig:profil_saccade}
+superpose la saccade périodique (\eqref{eq:omega_ratio}, prolongée par
+périodicité de 180° comme l'\eqref{eq:beta_periodicity}) aux deux profils de
+vitesse réellement utilisés par le logiciel, avec l'accélération maximale de
+5000~tr/min\textsuperscript{2} déjà retenue pour le dimensionnement
+dynamique de l'accouplement (\eqref{eq:alpha})~:
+
+\begin{itemize}
+  \item \textbf{Remontage} (mode réserve de marche, cas du Mvt01)~: 50~tr/min,
+  sur $N_{\text{tige}} = 34{,}3$~tr (\eqref{eq:n_tige_mvt01}) -- soit une
+  trentaine de tours. Les phases d'accélération et de décélération, très
+  courtes ($0{,}25$~tr chacune), laissent place à un long palier à vitesse
+  constante où la saccade se répète une soixantaine de fois.
+  \item \textbf{Vieillissement accéléré}~: 350~tr/min visés, sur seulement
+  2~tr. Cette distance est très inférieure à celle nécessaire pour atteindre
+  350~tr/min à cette accélération ($12{,}25$~tr) -- le profil réel est donc
+  \emph{triangulaire}, avec un pic à seulement $100$~tr/min.
+\end{itemize}
+
+Conformément à l'\eqref{eq:eps_bounds_calc}, la vitesse instantanée croît
+jusqu'à $+34\ \%$ au-dessus de la consigne puis chute brusquement à $-20\ \%$
+en dessous à chaque changement de bras actif (tous les 180° de rotation
+moteur, soit deux fois par tour), quel que soit le profil de consigne.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.85\textwidth]{assets/figures/Implementation/profil de vitesse trapezoidale avec saccade.png}
-  \caption{Profil de vitesse trapézoïdal 1/3–1/3–1/3 avec saccade périodique due au désalignement réel de l'accouplement, $e=\Delta h=3{,}18$~mm. Le motif se répète tous les 180° de rotation moteur.}
+  \includegraphics[width=\textwidth]{assets/figures/Implementation/profil de vitesse trapezoidale avec saccade.png}
+  \caption{Profils de vitesse réels avec saccade périodique due au
+  désalignement réel de l'accouplement, $e=\Delta h=3{,}18$~mm~: remontage
+  du Mvt01 (gauche) et vieillissement accéléré (droite, profil
+  triangulaire). Le motif se répète tous les 180° de rotation moteur.}
   \label{fig:profil_saccade}
 \end{figure}
 
