@@ -330,51 +330,34 @@ Le tableau~\ref{tab:echelons_couple} applique l'équation~\eqref{eq:couple_moteu
 à l'ensemble des 32 paliers, avec les valeurs de courant réelles publiées
 par le fabricant \cite{trinamic_tmcm_1021}.
 
-\begin{longtable}{|c|c|c|c|}
+\begin{table}[H]
+  \centering
   \caption{Courant et couple moteur pour chaque palier du driver \cite{trinamic_tmcm_1021}}
-  \label{tab:echelons_couple}\\
-  \hline
-  \textbf{Palier (CS)} & \textbf{Valeur TMCL} & \textbf{Courant $I_{\text{RMS}}$ [A]} & \textbf{$C_{\text{moteur}}$ [mN·m]} \\
-  \hline
-  \endfirsthead
-  \hline
-  \textbf{Palier (CS)} & \textbf{Valeur TMCL} & \textbf{Courant $I_{\text{RMS}}$ [A]} & \textbf{$C_{\text{moteur}}$ [mN·m]} \\
-  \hline
-  \endhead
-  0  & 0--7     & 0,024 & 2,86  \\
-  1  & 8--15    & 0,049 & 5,83  \\
-  2  & 16--23   & 0,073 & 8,69  \\
-  3  & 24--31   & 0,097 & 11,55 \\
-  4  & 32--39   & 0,122 & 14,52 \\
-  5  & 40--47   & 0,146 & 17,38 \\
-  6  & 48--55   & 0,170 & 20,24 \\
-  7  & 56--63   & 0,194 & 23,10 \\
-  8  & 64--71   & 0,219 & 26,07 \\
-  9  & 72--79   & 0,243 & 28,93 \\
-  10 & 80--87   & 0,267 & 31,79 \\
-  11 & 88--95   & 0,292 & 34,76 \\
-  12 & 96--103  & 0,316 & 37,62 \\
-  13 & 104--111 & 0,340 & 40,48 \\
-  14 & 112--119 & 0,365 & 43,45 \\
-  15 & 120--127 & 0,389 & 46,31 \\
-  16 & 128--135 & 0,413 & 49,17 \\
-  17 & 136--143 & 0,438 & 52,14 \\
-  18 & 144--151 & 0,462 & 55,00 \\
-  19 & 152--159 & 0,486 & 57,86 \\
-  20 & 160--167 & 0,510 & 60,71 \\
-  21 & 168--175 & 0,535 & 63,69 \\
-  22 & 176--183 & 0,559 & 66,55 \\
-  23 & 184--191 & 0,583 & 69,40 \\
-  24 & 192--199 & 0,608 & 72,38 \\
-  25 & 200--207 & 0,632 & 75,24 \\
-  26 & 208--215 & 0,656 & 78,10 \\
-  27 & 216--223 & 0,681 & 81,07 \\
-  28 & 224--231 & 0,705 & 83,93 \\
-  29 & 232--239 & 0,729 & 86,79 \\
-  30 & 240--247 & 0,754 & 89,76 \\
-  31 & 248--255 & 0,778 & 92,62 \\
-  \hline
-\end{longtable}
+  \label{tab:echelons_couple}
+  \begin{tabular}{|c|c|c|c||c|c|c|c|}
+    \hline
+    \textbf{CS} & \textbf{TMCL} & \textbf{$I_{\text{RMS}}$ [A]} & \textbf{$C_{\text{moteur}}$ [mN·m]}
+      & \textbf{CS} & \textbf{TMCL} & \textbf{$I_{\text{RMS}}$ [A]} & \textbf{$C_{\text{moteur}}$ [mN·m]} \\
+    \hline
+    0  & 0--7     & 0,024 & 2,86  & 16 & 128--135 & 0,413 & 49,17 \\
+    1  & 8--15    & 0,049 & 5,83  & 17 & 136--143 & 0,438 & 52,14 \\
+    2  & 16--23   & 0,073 & 8,69  & 18 & 144--151 & 0,462 & 55,00 \\
+    3  & 24--31   & 0,097 & 11,55 & 19 & 152--159 & 0,486 & 57,86 \\
+    4  & 32--39   & 0,122 & 14,52 & 20 & 160--167 & 0,510 & 60,71 \\
+    5  & 40--47   & 0,146 & 17,38 & 21 & 168--175 & 0,535 & 63,69 \\
+    6  & 48--55   & 0,170 & 20,24 & 22 & 176--183 & 0,559 & 66,55 \\
+    7  & 56--63   & 0,194 & 23,10 & 23 & 184--191 & 0,583 & 69,40 \\
+    8  & 64--71   & 0,219 & 26,07 & 24 & 192--199 & 0,608 & 72,38 \\
+    9  & 72--79   & 0,243 & 28,93 & 25 & 200--207 & 0,632 & 75,24 \\
+    10 & 80--87   & 0,267 & 31,79 & 26 & 208--215 & 0,656 & 78,10 \\
+    11 & 88--95   & 0,292 & 34,76 & 27 & 216--223 & 0,681 & 81,07 \\
+    12 & 96--103  & 0,316 & 37,62 & 28 & 224--231 & 0,705 & 83,93 \\
+    13 & 104--111 & 0,340 & 40,48 & 29 & 232--239 & 0,729 & 86,79 \\
+    14 & 112--119 & 0,365 & 43,45 & 30 & 240--247 & 0,754 & 89,76 \\
+    15 & 120--127 & 0,389 & 46,31 & 31 & 248--255 & 0,778 & 92,62 \\
+    \hline
+  \end{tabular}
+\end{table}
 
 Dans la plage de fonctionnement utile (0 à 20~mN·m), seuls les paliers
 $CS = 0$ à $5$ sont atteignables. La figure~\ref{fig:plages_couples_paliers}
@@ -749,17 +732,16 @@ Ces caractéristiques permettent une détection fiable et reproductible du mouve
 \label{sec:dim-accouplement}
 
 L'accouplement entre la tige du mouvement horloger et l'arbre moteur est réalisé au moyen d'une fourche en T et d'une fourche en U (voir \autoref{fig:accouplement_proto}, section~\ref{sec:accouplement_fourche}).
-La fourche en U, solidaire de l'arbre moteur, vient s'engager dans la fourche en T, dont les deux bras sont espacés de 25 mm, montée sur la tige du mouvement.
+La fourche en U, solidaire de l'arbre moteur, est composée de deux goupilles espacées de 25~mm, entre lesquelles vient se coincer l'unique goupille (longue de 30~mm) de la fourche en T, montée sur la tige du mouvement.
 Ce principe d'accouplement à jeu angulaire transmet le couple de rotation tout en découplant les axes radiaux : les forces parasites susceptibles d'endommager le mouvement (charges radiales, bending) ne sont pas transmises, et une certaine tolérance au désalignement angulaire et radial est assurée naturellement par le jeu entre les deux fourches.
 
 \subsection{Analyse de la saccade due au désalignement}
 
 En revanche, un désalignement résiduel entre les deux axes introduit une variation périodique du rapport de transmission instantané, se traduisant par une légère saccade superposée au profil de vitesse théorique.
-Pour un profil trapézoïdal 1/3–1/3–1/3 (accélération, vitesse constante, décélération), cette saccade se manifeste principalement en début et en fin de mouvement, là où la dérivée de vitesse est non nulle.
-Afin de maintenir l'erreur de vitesse en dessous de 5 \%, le défaut d'alignement radial maximal admissible doit être rigoureusement contrôlé lors du montage.
 
 \subsubsection{Analyse des tolérances de montage entre mouvements}
 
+Afin d'analyser cette saccade, il est nécessaire de connaitre la différence de hauteur de tige des différents mouvements, car il s'agit de la seule dimensions pouvant varier d'un mouvement à l'autre avec cette solution de fixation. 
 Les différents mouvements n'ayant pas les mêmes dimensions, la hauteur de la tige peut varier lors du montage dépendamment du mouvement.
 \begin{align*}
   \text{Mouvement 1} &: 8{,}73 - 4{,}1 = 4{,}63\ \text{mm} \\
@@ -784,26 +766,11 @@ de référence pour $e$ dans toute la suite de l'analyse.
 
 \subsubsection{Modèle cinématique exact}
 
-Le désalignement de l'accouplement est de nature \emph{radiale}~: les axes
-moteur ($O_1$, fourche en U) et tige ($O_2$, fourche en T) restent
-parallèles, mais décalés d'une distance $e$. Le point d'engagement entre les
-deux fourches est entraîné à un rayon fixe $R = 12{,}5\ \text{mm}$ autour de
-l'axe moteur $O_1$ (demi-écart de la fourche en T). La fourche en T, dont
-l'axe $O_2$ est décalé de $e$ par rapport à $O_1$, « regarde » ce même point
-d'engagement~: son orientation $\beta$ est donc l'angle, vu depuis $O_2$, du
-point entraîné par le moteur à l'angle $\alpha$. Le point entraîné se trouve
-en $(R\cos\alpha+e,\ R\sin\alpha)$ dans le repère centré sur $O_2$ ; son
-angle $\beta$ vaut donc :
-
-\begin{equation}
-  \beta(\alpha) = \cos^{-1}\!\left(\frac{R\cos\alpha+e}{\sqrt{(R\cos\alpha+e)^2+(R\sin\alpha)^2}}\right)
-  \label{eq:beta_alpha_cos}
-\end{equation}
-
-Cette forme en $\cos^{-1}$ ne renvoie toutefois que des valeurs dans
-$[0°,180°]$ : au-delà de $\alpha=180°$, le signe correct de $\beta$ n'est
-pas restitué. La forme équivalente suivante, utilisée pour les calculs et
-les figures qui suivent, lève cette ambiguïté sur $[0°,360°[$ :
+Le désalignement de l'accouplement est \emph{radial}~: les axes moteur
+($O_1$, fourche en U) et tige ($O_2$, fourche en T) restent parallèles, mais
+décalés d'une distance $e$. Le point de contact entre l'une des deux goupilles de la fourche en U et la goupille de la fourche en T,
+tourne autour de $O_1$ avec un rayon fixe de $R = 12{,}5\ \text{mm}$. En revanche, vu depuis $O_2$, ce point de contact n'est pas à une distance constante.
+L'angle $\beta$ de la fourche en T peut alors être exprimé en fonction de $\alpha$ avec la formule suivante :
 
 \begin{equation}
   \beta(\alpha) = \operatorname{atan2}\!\big(R\sin\alpha,\ e+R\cos\alpha\big)
@@ -811,15 +778,10 @@ les figures qui suivent, lève cette ambiguïté sur $[0°,360°[$ :
   \label{eq:beta_alpha}
 \end{equation}
 
-\paragraph{Symétrie de la fourche en T.} La fourche en T (tige) possède
-\emph{deux} bras diamétralement opposés (espacés de 25~mm, donc $R$ de part
-et d'autre de $O_2$) : ce n'est pas un point unique qui reste engagé sur un
-tour complet, mais un bras qui entraîne la rotation sur un demi-tour moteur,
-puis c'est le second bras -- géométriquement identique au premier, juste
-tourné de 180° -- qui prend le relais et reproduit exactement le même
-comportement. L'\eqref{eq:beta_alpha} n'est donc valable que sur un
-demi-tour moteur ($\alpha\in[0°,180°)$) ; au-delà, elle se prolonge par
-périodicité de 180°, et non de 360° :
+\paragraph{Symétrie de la fourche en U.} La fourche en U possède deux
+goupilles diamétralement opposées, qui viennent alternativement entrainer la fourche en T~: 
+sur un tour moteur complet, une goupille entraine la fourche en T durant 180°, puis c'est au tour de la seconde goupille, et ainsi de suite.
+L'équation \eqref{eq:beta_alpha} se prolonge donc au-delà de l'ensemble $[0°,180°)$ par cette périodicité de 180° :
 
 \begin{equation}
   \beta(\alpha + 180°) = \beta(\alpha) + 180°
@@ -827,31 +789,21 @@ périodicité de 180°, et non de 360° :
 \end{equation}
 
 La \autoref{fig:positions_angle} illustre cette géométrie tous les 45° sur un
-tour complet, en deux colonnes de quatre cercles (colonne 1~: $\alpha=0°$ à
-$135°$~; colonne 2~: $\alpha=180°$ à $315°$), en reprenant la construction à
-deux cercles de rayon $R$ (un autour de $O_1$, un autour de $O_2$) et en
-faisant apparaître le désalignement $e$ entre les deux centres. Les deux
-points où le bras moteur croiserait le cercle moteur sont toujours
-représentés (symétrie oblige)~; celui qui est effectivement actif -- entouré
-sur la figure -- est en haut pour $\alpha<180°$ et en bas pour
-$\alpha\geq180°$. On observe que la seconde colonne ($180°$ à $315°$)
-reproduit exactement les mêmes valeurs de $\Delta$ que la première ($0°$ à
-$135°$) : c'est la périodicité de 180° de l'\eqref{eq:beta_periodicity}. Le
-système étant entièrement décrit par un seul demi-tour, les
-\autoref{fig:beta_evolution} et \autoref{fig:delta_evolution} qui suivent se
-limitent à $\alpha\in[0°,180°]$.
+tour complet.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.62\textwidth]{assets/figures/Implementation/fig_positions_angle.png}
   \caption{Position de la tige (bleu, angle $\beta$) en fonction de la
   position du moteur (orange, angle $\alpha$), tous les 45° sur un tour
-  complet, en deux colonnes de quatre. Les axes $O_1$ (moteur) et $O_2$
-  (tige) et leur désalignement $e$ sont indiqués sur le premier panneau ; le
-  bras moteur actif est entouré. $R=12{,}5$~mm, $e=\Delta h=3{,}18$~mm.}
+  complet, en deux colonnes de quatre panneaux. Les axes $O_1$ (moteur) et
+  $O_2$ (tige) et leur désalignement $e$ sont indiqués sur le premier
+  panneau ; la goupille active de la fourche en U est entourée. $R=12{,}5$~mm,
+  $e=\Delta h=3{,}18$~mm.}
   \label{fig:positions_angle}
 \end{figure}
 
+Une fois le modèle géométrique défini, il est possible de représenté l'évolution de l'angle $\beta$ en fonction de $\alpha$ le tout pour différentes valeurs de désalignement. 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.75\textwidth]{assets/figures/Implementation/fig_beta_evolution.png}
@@ -862,22 +814,29 @@ limitent à $\alpha\in[0°,180°]$.
   \label{fig:beta_evolution}
 \end{figure}
 
+De plus, il est également possible de représenté la différence entre ces deux angles.
+
+\begin{equation}
+  \Delta\theta(\alpha)=\beta(\alpha)-\alpha=\operatorname{atan2}\!\big(R\sin\alpha,\ e+R\cos\alpha\big)-\alpha
+  \qquad \alpha\in[0°,180°)
+  \label{eq:delta_theta}
+\end{equation}
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{assets/figures/Implementation/fig_delta_evolution.png}
-  \caption{Écart angulaire $\Delta=\beta-\alpha$ sur un demi-tour, pour
+  \caption{Écart angulaire $\Delta\theta=\beta-\alpha$ sur un demi-tour, pour
   différentes valeurs du désalignement $e$ (0 à 5~mm). Ce motif se répète à
   l'identique tous les 180° (et non tous les 360°), conséquence directe de
-  la symétrie de la fourche en T.}
+  la symétrie de la fourche en U.}
   \label{fig:delta_evolution}
 \end{figure}
 
 \subsubsection{Erreur de vitesse}
 
-En dérivant l'\eqref{eq:beta_alpha} par rapport à $\alpha$, on obtient le
+En dérivant l'équation \eqref{eq:beta_alpha} par rapport à $\alpha$, on obtient le
 rapport de transmission instantané exact, valable sur le même demi-tour
 $\alpha\in[0°,180°)$ puis prolongé par périodicité de 180° comme
-l'\eqref{eq:beta_periodicity} :
+l'équation \eqref{eq:beta_periodicity} :
 
 \begin{equation}
   \frac{\omega_2}{\omega_1} = \frac{d\beta}{d\alpha}
@@ -885,12 +844,12 @@ l'\eqref{eq:beta_periodicity} :
   \label{eq:omega_ratio}
 \end{equation}
 
-L'erreur de vitesse relative $\varepsilon(\alpha) \equiv \omega_2/\omega_1-1$
-s'écrit alors $\varepsilon(\alpha) = -e(e+R\cos\alpha)/(R^2+e^2+2Re\cos\alpha)$.
-En posant $c=\cos\alpha$, on vérifie que $d\varepsilon/dc$ est du signe
-constant de $-eR(R^2-e^2)$, indépendant de $c$~: $\varepsilon$ est donc
-monotone en $\cos\alpha$, et ses extrema sont atteints aux bornes
-$\alpha=0$ et $\alpha=\pi$ :
+L'erreur de vitesse relative $\varepsilon(\alpha)$ peut être calculée de la manière suivante car $i_{\text{ideal}}=1$.
+\begin{equation}
+  \varepsilon(\alpha) =\frac{i_{\text{réel}}-i_{\text{ideal}}}{i_{\text{ideal}}}= \omega_2/\omega_1-1=\frac{-e(e+R\cos\alpha)}{(R^2+e^2+2Re\cos\alpha)}
+\end{equation}
+
+Les valeurs de $R$ et $e$ étant des constantes seul les termes en $\cos\alpha$ font varier $\varepsilon(\alpha)$. Par conséquent, les extremas de cette fonction sont atteints aux extremas de la fonction $\cos\alpha$ soit $\alpha=0$ et $\alpha=\pi$. Ce qui donne après simplification :
 
 \begin{equation}
   \varepsilon_{\text{min}} = -\frac{e}{R+e} \quad (\alpha=0), \qquad
@@ -912,114 +871,84 @@ continue à cet instant (\autoref{fig:beta_evolution}), mais $d\beta/d\alpha$
 y est discontinue, puisque le bras qui prend le relais redémarre son propre
 cycle à $\varepsilon_{\text{min}}$. La vitesse de la tige subit donc un saut
 brusque de $+34{,}1\ \%$ à $-20{,}3\ \%$ toutes les 180° de rotation moteur
-(\autoref{fig:profil_saccade}), absorbé mécaniquement par le jeu angulaire de
-l'accouplement mentionné plus haut.
-
-\textbf{Ce résultat, obtenu à partir du modèle géométrique exact, est
-nettement plus défavorable que le seuil de 5~\% envisagé initialement pour le
-dimensionnement du jeu de l'accouplement.} Le rayon d'entraînement de
-$12{,}5\ \text{mm}$ ne permet donc pas de garantir une erreur de vitesse
-inférieure à 5~\% pour le désalignement réel observé entre mouvements
-($\Delta h = 3{,}18$~mm) -- il faudrait pour cela un désalignement
-$e \leq \varepsilon_{\text{seuil}}\cdot R/(1+\varepsilon_{\text{seuil}}) =
-0{,}595\ \text{mm}$, très inférieur à $\Delta h$. Ce critère de 5~\% n'est
-cependant qu'un indicateur intermédiaire~: ce qui importe réellement pour le
-cahier des charges est l'imprécision de mesure qu'il engendre, analysée à la
-\autoref{sec:precision_mesure}.
+(\autoref{fig:profil_remontage}, \autoref{fig:profil_vieillissement}). Se saut est absorbé mécaniquement par le jeu angulaire de
+l'accouplement.
 
 \subsubsection{Profil de vitesse simulé}
 
-Plutôt qu'un profil trapézoïdal générique, la \autoref{fig:profil_saccade}
-superpose la saccade périodique (\eqref{eq:omega_ratio}, prolongée par
-périodicité de 180° comme l'\eqref{eq:beta_periodicity}) aux deux profils de
-vitesse réellement utilisés par le logiciel, avec l'accélération maximale de
-5000~tr/min\textsuperscript{2} déjà retenue pour le dimensionnement
-dynamique de l'accouplement (\eqref{eq:alpha})~:
-
-\begin{itemize}
-  \item \textbf{Remontage} (mode réserve de marche, cas du Mvt01)~: 50~tr/min,
-  sur $N_{\text{tige}} = 34{,}3$~tr (\eqref{eq:n_tige_mvt01}) -- soit une
-  trentaine de tours. Les phases d'accélération et de décélération, très
-  courtes ($0{,}25$~tr chacune), laissent place à un long palier à vitesse
-  constante où la saccade se répète une soixantaine de fois.
-  \item \textbf{Vieillissement accéléré}~: 350~tr/min visés, sur seulement
-  2~tr. Cette distance est très inférieure à celle nécessaire pour atteindre
-  350~tr/min à cette accélération ($12{,}25$~tr) -- le profil réel est donc
-  \emph{triangulaire}, avec un pic à seulement $100$~tr/min.
-\end{itemize}
-
-Conformément à l'\eqref{eq:eps_bounds_calc}, la vitesse instantanée croît
-jusqu'à $+34\ \%$ au-dessus de la consigne puis chute brusquement à $-20\ \%$
-en dessous à chaque changement de bras actif (tous les 180° de rotation
-moteur, soit deux fois par tour), quel que soit le profil de consigne.
+Pour le mode réserve de marche (Mvt01)~: 50~tr/min sur
+$N_{\text{tige}} = 34{,}3$~tr, cf. l'équation~\eqref{eq:n_tige_mvt01}. Le
+profil réel obtenu est le suivant :
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{assets/figures/Implementation/profil de vitesse trapezoidale avec saccade.png}
-  \caption{Profils de vitesse réels avec saccade périodique due au
-  désalignement réel de l'accouplement, $e=\Delta h=3{,}18$~mm~: remontage
-  du Mvt01 (gauche) et vieillissement accéléré (droite, profil
-  triangulaire). Le motif se répète tous les 180° de rotation moteur.}
-  \label{fig:profil_saccade}
+  \includegraphics[width=0.8\textwidth]{assets/figures/Implementation/fig_profil_remontage.png}
+  \caption{Profil de vitesse réel en mode réserve de marche (Mvt01), avec
+  saccade périodique due au désalignement $e=\Delta h=3{,}18$~mm.}
+  \label{fig:profil_remontage}
 \end{figure}
+
+Pour le mode vieillissement accéléré~: 350~tr/min visés sur seulement 2~tr.
+Former un profil trapézoïdal complet sur une distance aussi courte demande
+une accélération d'au moins $350^2/2 = 61\,250\ \text{tr/min}^2$, très
+supérieure à la limite de 5000~tr/min\textsuperscript{2} imposée par le
+cahier des charges (E19). Le graphe ci-dessous utilise donc une accélération
+illustrative de $100\,000$~tr/min\textsuperscript{2}, uniquement pour montrer
+la forme trapézoïdale~; ce n'est pas la valeur réelle du système.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{assets/figures/Implementation/fig_profil_vieillissement.png}
+  \caption{Profil de vitesse illustratif en mode vieillissement accéléré
+  (accélération de $100\,000$~tr/min\textsuperscript{2}, non représentative
+  du système réel), avec saccade périodique due au désalignement
+  $e=\Delta h=3{,}18$~mm.}
+  \label{fig:profil_vieillissement}
+\end{figure}
+
+Dans les deux cas, la vitesse instantanée croît jusqu'à $+34\ \%$ au-dessus de
+la consigne puis chute à $-20\ \%$ en dessous, à chaque changement de
+goupille active (tous les 180° de rotation moteur).
 
 \subsection{Analyse de la précision de la mesure}
 \label{sec:precision_mesure}
 
-Au-delà de la saccade de vitesse, le désalignement de l'accouplement
-introduit également un déphasage angulaire entre le moteur et la tige du
-mouvement. Ce déphasage est directement pertinent pour la précision de la
-mesure de réserve de marche, puisque celle-ci est déduite du nombre de tours
-effectués par la tige.
+L'écart angulaire $\Delta\theta(\alpha)$, défini par l'équation~\eqref{eq:delta_theta},
+ajoute également une imprécision sur la mesure de la réserve de marche, car
+cette dernière est directement liée au nombre de tours effectués par la tige de remontoir.
 
-\subsubsection{Écart angulaire maximal entre moteur et mouvement}
+\subsubsection{Écart angulaire maximal}
 
-L'écart angulaire $\Delta(\alpha) = \beta(\alpha)-\alpha$ est extrémal
-lorsque $d\beta/d\alpha=1$, ce qui, d'après l'\eqref{eq:omega_ratio}, donne
-la condition $\cos\alpha = -e/R$. En substituant cette valeur dans
-l'\eqref{eq:beta_alpha}, le numérateur et le dénominateur de
-$\operatorname{atan2}$ se simplifient en $R\sqrt{1-e^2/R^2}$ et $0$
-respectivement, de sorte que $\beta=\pi/2$ \emph{exactement} en ce point~:
-l'écart maximal se produit donc toujours lorsque la tige passe par 90°.
-On en déduit l'écart angulaire maximal sous une forme remarquablement
-simple :
+$\Delta\theta(\alpha)$ atteint son maximum quand sa dérivée s'annule,
+c'est-à-dire quand $d\beta/d\alpha=1$. D'après l'équation~\eqref{eq:omega_ratio},
+cela revient à $\cos\alpha=-e/R$. En remplaçant cette valeur dans
+l'équation~\eqref{eq:beta_alpha}, le dénominateur de l'atan2 devient nul, ce
+qui donne exactement $\beta=\pi/2$~: l'écart maximal se produit donc toujours
+au moment où la tige passe par 90°, d'où :
 
 \begin{equation}
-  \Delta_{\text{max}} = \frac{\pi}{2} - \arccos\!\left(-\frac{e}{R}\right) = \arcsin\!\left(\frac{e}{R}\right)
+  \Delta\theta_{\text{max}} = \frac{\pi}{2} - \arccos\!\left(-\frac{e}{R}\right) = \arcsin\!\left(\frac{e}{R}\right)
   \label{eq:delta_max}
 \end{equation}
 
-Avec $e = \Delta h = 3{,}18\ \text{mm}$ et $R = 12{,}5\ \text{mm}$ :
+Avec $e=\Delta h=3{,}18\ \text{mm}$ et $R=12{,}5\ \text{mm}$ :
 
 \begin{equation}
-  \Delta_{\text{max}} = \arcsin\!\left(\frac{3{,}18}{12{,}5}\right) \approx 14{,}74°
+  \Delta\theta_{\text{max}} = \arcsin\!\left(\frac{3{,}18}{12{,}5}\right) \approx 14{,}74°
   \label{eq:delta_max_calc}
 \end{equation}
 
-Cette valeur, bien supérieure à l'estimation obtenue précédemment par
-analogie avec un joint de Cardan, confirme qu'un modèle approché n'était pas
-adapté ici~: le déphasage angulaire réel entre moteur et tige est de l'ordre
-de $15°$, et non de $1°$.
-
-Contrairement à $\varepsilon_{\text{max}}$ (\eqref{eq:eps_bounds_calc}),
-atteint à la borne $\alpha=180°$ où le bras actif change,
-$\Delta_{\text{max}}$ est atteint à l'intérieur du demi-tour
-($\alpha\approx104{,}7°$, cf. $\cos\alpha=-e/R$) -- ce n'est donc pas un
-artefact du changement de bras, mais un maximum lisse de l'écart de
-position. Par périodicité (\eqref{eq:beta_periodicity}), cette même valeur
-$\Delta_{\text{max}} = -14{,}74°$ est atteinte une seconde fois, à
-$\alpha\approx284{,}7°$, avec le \emph{même signe} : la tige est toujours en
-retard sur le moteur (jamais en avance) à ces deux instants, contrairement à
-une oscillation symétrique $\pm\Delta_{\text{max}}$ que suggérerait une
-périodicité de 360°. Seule l'amplitude \emph{maximale} de l'écart --
-utilisée ci-dessous pour majorer l'imprécision de mesure -- est donc
-inchangée par la prise en compte de la symétrie~; c'est sa fréquence
-d'occurrence (deux fois par tour) et le signe constant qui diffèrent.
+Contrairement à $\varepsilon_{\text{max}}$, atteint à la borne $\alpha=180°$
+où la goupille active change, ce maximum est atteint à l'intérieur du
+demi-tour ($\alpha\approx104{,}7°$)~: c'est donc un maximum lisse de l'écart
+de position, pas un artefact du changement de goupille. Il se répète à
+l'identique (même signe) à $\alpha\approx284{,}7°$~: la tige est ainsi
+toujours en retard sur le moteur, jamais en avance.
 
 \subsubsection{Conversion en imprécision temporelle}
 
 L'accouplement se situant sur la tige et non directement sur le
-barillet, la conversion de $\Delta_{\text{max}}$ en temps doit passer par le
+barillet, la conversion de $\Delta\theta_{\text{max}}$ en temps doit passer par le
 rapport de transmission $r$ (tige/barillet). Le nombre de tours de tige
 nécessaires à un armage complet est :
 
@@ -1042,20 +971,20 @@ $3600\times RM/N_{\text{tige}}$ secondes, d'où l'équivalence angle--temps :
 et l'imprécision de mesure induite par le désalignement s'écrit :
 
 \begin{equation}
-  \Delta t_{\text{max}} = \Delta_{\text{max}}[°] \times \frac{10\cdot RM}{N_{\text{tige}}}
+  \Delta t_{\text{max}} = \Delta\theta_{\text{max}}[°] \times \frac{10\cdot RM}{N_{\text{tige}}}
   \label{eq:dt_max}
 \end{equation}
 
 Le cas le plus défavorable est le Mvt01 ($RM = 80$~h, $N_{\text{total}} =
-10{,}3$~tr, $r = 3{,}33$). Par l'\eqref{eq:n_tige} :
+10{,}3$~tr, $r = 3{,}33$). Par l'équation~\eqref{eq:n_tige} :
 
 \begin{equation}
   N_{\text{tige}} = 3{,}33\times 10{,}3 \approx 34{,}30\ \text{tr}
   \label{eq:n_tige_mvt01}
 \end{equation}
 
-puis, par l'\eqref{eq:dt_max} avec $\Delta_{\text{max}} = 14{,}74°$
-(\eqref{eq:delta_max_calc}) :
+puis, par l'équation~\eqref{eq:dt_max} avec $\Delta\theta_{\text{max}} = 14{,}74°$
+(équation~\eqref{eq:delta_max_calc}) :
 
 \begin{equation}
   \Delta t_{\text{max}} = 14{,}74\times\frac{10\times 80}{34{,}30} = 14{,}74\times 23{,}32 \approx 344\ \text{s} \approx 5{,}73\ \text{min}
@@ -1065,8 +994,8 @@ puis, par l'\eqref{eq:dt_max} avec $\Delta_{\text{max}} = 14{,}74°$
 \subsubsection{Désalignement limite pour respecter l'exigence E2}
 
 L'exigence \textbf{E2} du cahier des charges impose une précision de mesure
-$\leq 15\ \text{min}$. En inversant l'\eqref{eq:dt_max} (avec
-l'\eqref{eq:delta_max}), on obtient le désalignement radial $e$ qui amènerait
+$\leq 15\ \text{min}$. En inversant l'équation~\eqref{eq:dt_max} (avec
+l'équation~\eqref{eq:delta_max}), on obtient le désalignement radial $e$ qui amènerait
 $\Delta t_{\text{max}}$ exactement à cette limite, pour le cas le plus
 défavorable (Mvt01) :
 
@@ -1098,10 +1027,10 @@ désalignement admissible.
 \subsubsection{Application à tous les mouvements}
 
 Le \autoref{tab:precision_desalignement} reprend, selon la même démarche
-(\eqref{eq:n_tige}, \eqref{eq:dt_max} et \eqref{eq:e_15min}), les résultats
-pour l'ensemble des mouvements, avec $\Delta_{\text{max}} = 14{,}74°$
-(\eqref{eq:delta_max_calc}, indépendant du mouvement puisqu'il ne dépend que
-de $e$ et $R$).
+(équations~\eqref{eq:n_tige}, \eqref{eq:dt_max} et \eqref{eq:e_15min}), les
+résultats pour l'ensemble des mouvements, avec $\Delta\theta_{\text{max}} = 14{,}74°$
+(équation~\eqref{eq:delta_max_calc}, indépendant du mouvement puisqu'il ne
+dépend que de $e$ et $R$).
 
 \begin{table}[H]
   \centering
@@ -1123,8 +1052,7 @@ de $e$ et $R$).
 L'imprécision de mesure induite par le désalignement réel de l'accouplement
 reste comprise entre $3{,}2$ et $5{,}7$ minutes selon le mouvement, ce qui
 respecte l'exigence de précision \textbf{E2 (\SI{15}{\minute})} du cahier des
-charges, mais avec une marge nettement plus restreinte (62 à 78~\%) que ce
-qu'une analyse au premier ordre aurait suggéré. Le mouvement Mvt01 est le
+charges, mais avec une marge restreinte (62 à 78~\%). Le mouvement Mvt01 est le
 cas le plus contraignant, avec seulement \SI{4.62}{\mm} de marge sur le
 désalignement admissible avant de dépasser l'exigence E2. Le désalignement
 mécanique de l'accouplement reste donc acceptable pour le système, mais ne

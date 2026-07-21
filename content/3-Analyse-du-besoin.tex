@@ -2,24 +2,29 @@
 
 \section{Description du processus de mesure souhaité}
 
+Une fois le mouvement placé manuellement par un horloger dans un posage adaptable à différents mouvements, l'utilisateur choisit sur l'interface le mode de fonctionnement à appliquer~: réserve de marche ou vieillissement.
+
+\subsection{Mode réserve de marche}
+
 La séquence de mesure souhaitée est la suivante :
 
 \begin{itemize}
-    \item Le mouvement sans cliquet d'armage et avec la configuration de mesure souhaitée est placé manuellement par un horloger dans un posage adaptable à différents mouvements.
     \item La machine remonte le mouvement d'un nombre défini de tours afin de garantir un armage complet du barillet.
     \item La tige de remontoir est ensuite bloquée en rotation, laissant le mouvement fonctionner librement.
-    \item La machine dévide artificiellement le barillet d'un nombre défini de tours, correspondant à la partie linéaire de la réserve de marche totale.
+    \item La machine dévide artificiellement le barillet d'un nombre défini de tours, afin de laisser en théorie 24 heures à la réserve de marche.
     \item La tige est à nouveau bloquée laissant le mouvement fonctionner jusqu'à son arrêt.
     \item Le moment de l'arrêt est détecté automatiquement et le système en déduit la réserve de marche.
     \item La machine dévide les derniers tours de barillet afin de s'assurer que la pression restante dans le ressort n'endommage pas le mouvement lors du démontage.
 \end{itemize}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.65\textwidth]{assets/figures/Analyse du besoin/mouvement configuration COSC.jpg}
-    \caption{Mouvement dans la configuration de mesure COSC}
-    \label{fig:mouvement_config_cosc}
-\end{figure}
+\subsection{Mode vieillissement}
+
+Ce mode vise à accélérer le vieillissement du mouvement en simulant des remontages à la mains. La séquence souhaitée est la suivante :
+
+\begin{itemize}
+    \item Une fois le mode sélectionné, l'utilisateur choisi le nombre d'impulsions à effectuer, ainsi que la vitesse, le nombre de tours et l'accélération de ces dernières.
+    \item La machine applique en continu des impulsions de rotation sur la tige de remontoir.
+\end{itemize}
 
 \begin{landscape}
 \section{Cahier des charges}

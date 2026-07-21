@@ -23,6 +23,26 @@ Le module est articulé autour de quatre sous-systèmes fonctionnels complément
 
 L'ensemble est piloté depuis un ordinateur via un script Python, sans microcontrôleur intermédiaire.
 
+\section{Configuration du mouvement testé}
+\label{sec:config_mouvement}
+
+Avant son montage dans le posage, le mouvement doit être préparé dans la configuration COSC, à laquelle s'ajoute le retrait du cliquet d'armage. Cette configuration est illustrée à la figure~\ref{fig:mouvement_config_cosc}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\textwidth]{assets/figures/Solution/mouvement configuration COSC.jpg}
+    \caption{Mouvement dans la configuration de mesure COSC}
+    \label{fig:mouvement_config_cosc}
+\end{figure}
+
+Trois éléments caractérisent cette configuration~:
+
+\begin{itemize}
+    \item Le cliquet d'armage est retiré. Comme expliqué au \S~\ref{sec:mesure_acceleree}, ce retrait est indispensable à la méthode de mesure accélérée~: il permet de dévider artificiellement le barillet plutôt que d'attendre le déroulement complet et naturel du ressort.
+    \item Le cadran et l'aiguille des secondes propres à la configuration COSC sont conservés. Sans être strictement indispensable, cette aiguille offre un élément visuel simple et positionné de manière constante d'un mouvement à l'autre, ce qui simplifie et fiabilise grandement sa détection par le système d'acquisition optique (\S~\ref{sec:acquisition_optique}). Une détection directe du mouvement des rouages internes serait en théorie envisageable, mais nettement plus délicate en pratique du fait de leur petite taille et de leur emplacement variable selon les calibres.
+    \item La couronne COSC, montée sur la tige de remontoir, est conservée~: elle sert de support à la fourche en T de l'accouplement (\S~\ref{sec:accouplement_fourche}), indispensable à la liaison avec le moteur.
+\end{itemize}
+
 \section{Système de fixation}
 
 Le mouvement est maintenu en place par un porte-mouvement industriel (figure~\ref{fig:fixation_proto}).
@@ -69,6 +89,7 @@ La fourche en U, solidaire de l'arbre moteur, vient s'engager dans la fourche en
 Ce principe transmet le couple de rotation tout en découplant les axes radiaux : les charges radiales et les légères erreurs d'alignement entre les deux axes ne sont pas transmises à la tige, protégeant ainsi le mouvement.
 
 \section{Système d'acquisition optique}
+\label{sec:acquisition_optique}
 
 Une caméra industrielle est fixée au-dessus du mouvement à une distance de travail de 300 mm (figure~\ref{fig:camera_proto}).
 Toutes les 15 minutes, une photo est prise.
