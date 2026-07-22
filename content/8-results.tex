@@ -440,15 +440,14 @@ Cette section valide la fonction de contrainte FC3~:
 Le point de contact le plus critique de la machine est la fourche
 d'accouplement située sur l'arbre moteur~: c'est le seul élément en rotation
 directement accessible et susceptible de coincer un doigt. Le cas le plus
-défavorable correspond donc à un doigt bloqué dans cette fourche, à son rayon
-d'entraînement $R = 12{,}5\ \text{mm}$ (section~\ref{sec:dim-accouplement}).
-Le couple moteur $C$ se traduit alors, à ce rayon, par une force
-tangentielle~:
+défavorable correspond donc à un doigt bloqué dans cette fourche. Son rayon
+d'entraînement valant $R = 12{,}5\ \text{mm}$ (section~\ref{sec:dim-accouplement}) et le couple moteur étant également connu,
+ la force tangentielle vaut donc~:
 \[
     F = \frac{C}{R}.
 \]
 
-\paragraph{Cas 1 -- couple maximal que le moteur peut fournir.}
+\paragraph{Cas 1 -- couple maximal que le moteur peut fournir.\\}
 Le couple de maintien $C_{\text{maintien}} = 55\ \text{mN·m}$
 (tableau~\ref{tab:specs_moteur}) n'est pas le couple maximal que le moteur
 peut délivrer~: il ne correspond qu'au palier nominal $CS = 18$ du driver
@@ -463,7 +462,7 @@ couple maximal réellement atteignable par l'ensemble moteur-driver est~:
     F_1 = \frac{92{,}6\times10^{-3}}{12{,}5\times10^{-3}} = 7{,}4\ \text{N}.
 \]
 
-\paragraph{Cas 2 -- limite programmée de 15~mN·m.}
+\paragraph{Cas 2 -- limite programmée de 15~mN·m.\\}
 Si le couple maximal du cas 1 ne devait pas être garanti de manière fiable, le
 logiciel limite dans tous les cas le couple moteur à
 $C_{\text{max}} = 15\ \text{mN·m}$ (voir FC1-E1, section~\ref{sec:valid-moteur}) :
@@ -471,20 +470,54 @@ $C_{\text{max}} = 15\ \text{mN·m}$ (voir FC1-E1, section~\ref{sec:valid-moteur}
     F_2 = \frac{15\times10^{-3}}{12{,}5\times10^{-3}} = 1{,}2\ \text{N}.
 \]
 
-\paragraph{Comparaison avec les limites admissibles.}
+\paragraph{Comparaison avec les limites admissibles.\\}
 La norme ISO/TS~15066~\cite{iso_ts_15066}, qui fixe les limites biomécaniques
-applicables à la collaboration homme-robot, indique pour la région du corps
-« main et doigts » une force maximale admissible de 140~N en contact
-quasi-statique (cas d'un pincement ou d'un coincement, le plus représentatif
-du cas étudié ici). Les deux valeurs calculées ci-dessus, $F_1 = 7{,}4\ \text{N}$
-et $F_2 = 1{,}2\ \text{N}$, restent très largement inférieures à cette limite,
-avec des marges respectives d'environ $\times 19$ et $\times 117$.
+applicables à la collaboration homme-robot, serait la référence naturelle
+pour cette comparaison. Son accès étant payant, son contenu intégral n'a pas
+pu être consulté dans le cadre de ce travail. La comparaison s'appuie donc à
+la place sur une étude ouverte et indépendante~\cite{behrens2022biomechanical},
+qui rapporte, à partir de mesures effectuées sur 112 sujets, la force de
+pincement tolérée (pour contact franc avec une surface non coupante, correspondant
+aux goupilles arrondies de l'accouplement) avant l'apparition d'une
+douleur, pour différentes zones de la main~:
+
+\begin{table}[H]
+  \centering
+  \caption{Force de pincement tolérée pour un contact franc avant apparition d'une douleur, par zone de la main \cite{behrens2022biomechanical}}
+  \label{tab:seuils_douleur_main}
+  \begin{tabular}{|l|c|c|}
+    \hline
+    \textbf{Zone de la main} & \textbf{Moyenne~$\pm$~écart-type [N]} & \textbf{Borne inférieure [N]} \\
+    \hline
+    Pulpe du doigt      & $123 \pm 84$ & 39 \\
+    Articulation du doigt (DIP) & $126 \pm 75$ & 51 \\
+    Éminence thénar     & $100 \pm 62$ & 38 \\
+    Paume               & $118 \pm 77$ & 41 \\
+    Dos de la main      & $114 \pm 50$ & 64 \\
+    \hline
+  \end{tabular}
+\end{table}
+
+La borne inférieure (moyenne moins un écart-type) représente une estimation
+conservative du seuil de douleur, en tenant compte de la variabilité
+inter-individuelle observée dans l'étude. La valeur critique -- la plus
+faible de toutes les zones -- est celle de l'éminence thénar~:
+
+\begin{equation}
+  F_{\text{critique}} = 100 - 62 = 38\ \text{N}
+\end{equation}
+
+Les deux valeurs calculées ci-dessus, $F_1 = 7{,}4\ \text{N}$ et
+$F_2 = 1{,}2\ \text{N}$, restent très largement inférieures à cette valeur
+critique.
 
 Même dans le scénario le plus défavorable où le moteur délivrerait son couple
-maximal absolu (cas 1), la force exercée sur un doigt coincé dans la fourche
-resterait donc sans commune mesure avec le seuil de douleur/blessure défini
-par la norme. L'exigence FC3-E7 est par conséquent considérée comme validée
-par le calcul.
+maximal absolu (cas 1) et où le point de contact serait la zone la moins
+résistante de la main, la force exercée sur un doigt coincé dans la fourche
+resterait donc sans commune mesure avec le seuil de douleur mesuré
+expérimentalement. L'exigence FC3-E7 est par conséquent considérée comme
+vraisemblablement respectée, sans toutefois avoir pu être confirmée par la
+norme de référence elle-même, faute d'accès à son contenu payant.
 
 % ─── 10. ENCOMBREMENT ────────────────────────────────────────────────────────
 
@@ -709,8 +742,8 @@ décrits au tableau~\ref{tab:legende-couleurs}.
 \hline
 
 FC3 & Garantir la sécurité de l'opérateur
-    & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E7} Les couples appliqués et les formes des pièces ne peuvent pas blesser l'opérateur
-    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Calcul de la force au doigt coincé dans la fourche ($F \leq 7{,}4$ N) très inférieure à la limite ISO/TS 15066 de 140 N pour la main (marge $\times 19$) (§~\ref{sec:valid-securite}). \\
+    & \cellcolor{resPartiel}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E7} Les couples appliqués et les formes des pièces ne peuvent pas blesser l'opérateur
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Calcul de la force au doigt coincé dans la fourche ($F \leq 7{,}4$ N) très inférieure à la valeur critique conservative (moyenne $-$ écart-type) mesurée expérimentalement par une étude ouverte (38 N, marge $\times 5$), en l'absence d'accès à la norme ISO/TS 15066 payante (§~\ref{sec:valid-securite}). \\
 \hline
 
 \multirow{2}{*}{FC4} & \multirow{2}{4.5cm}{Assurer la compatibilité des mouvements}
@@ -756,19 +789,21 @@ FC8 & Assurer un éclairage indépendant du milieu
 \end{longtable}
 \end{landscape}
 
-Sur les 36~exigences du cahier des charges, 29 sont pleinement conformes (soit
-environ 81~\%), dont la sécurité de l'opérateur (FC3-E7), validée par le calcul
-de la force au doigt coincé dans la fourche d'accouplement, et la hauteur
-d'accès aux éléments de la machine (FC7-E16), validée par la mesure du
-prototype. Cinq exigences sont considérées comme conformes sans garantie à
-100~\%~: le couple moteur (FC1-E1), l'absence d'effort radial ou axial sur la
-tige (FC1-E3, garantie par le dimensionnement théorique de l'accouplement mais
-non mesurée), l'accélération en mode vieillissement (FS6-E19), le
-fonctionnement continu de longue durée (FC5-E10) et l'encombrement au sol de
-la machine (FC7-E15), pour lesquelles une vérification qualitative, une
-justification par conception ou une extrapolation à partir du prototype a été
-apportée, sans qu'aucun élément ne laisse penser à une non-conformité. Une
-seule exigence n'a fait l'objet d'aucune vérification, même partielle~: la
+Sur les 36~exigences du cahier des charges, 28 sont pleinement conformes (soit
+environ 78~\%), dont la hauteur d'accès aux éléments de la machine (FC7-E16),
+validée par la mesure du prototype. Six exigences sont considérées comme
+conformes sans garantie à 100~\%~: le couple moteur (FC1-E1), l'absence
+d'effort radial ou axial sur la tige (FC1-E3, garantie par le dimensionnement
+théorique de l'accouplement mais non mesurée), l'accélération en mode
+vieillissement (FS6-E19), le fonctionnement continu de longue durée
+(FC5-E10), l'encombrement au sol de la machine (FC7-E15), ainsi que la
+sécurité de l'opérateur (FC3-E7), dont le calcul de force au doigt coincé
+n'a pu être comparé qu'à une étude ouverte de substitution, faute d'accès à
+la norme ISO/TS 15066 payante. Pour ces six exigences, une vérification
+qualitative, une justification par conception ou une extrapolation à partir
+du prototype a été apportée, sans qu'aucun élément ne laisse penser à une
+non-conformité. Une seule exigence n'a fait l'objet d'aucune vérification,
+même partielle~: la
 reproductibilité de la mesure de réserve de marche (FS1-E3). Enfin, une seule
 exigence n'est aujourd'hui pas satisfaite~:
 FC6-E13 (mesure simultanée sur 10 postes), non pas pour une raison de

@@ -1,5 +1,126 @@
 \chapter{Implémentation logicielle}
 
+\section{Organisation du dossier ARMAGE}
+
+Le dossier \texttt{ARMAGE} contient l'ensemble du code source de
+l'application de pilotage du banc de test, ainsi que les ressources et
+outils nécessaires à son fonctionnement et à sa distribution. Chaque
+sous-dossier regroupe les fichiers liés à une couche fonctionnelle précise
+(matériel, traitement d'image, interface graphique, utilitaires), ce qui
+permet de localiser rapidement le code concerné par une modification~: tout
+ce qui touche la caméra se trouve dans \texttt{camera/}, tout ce qui touche
+le moteur dans \texttt{motor/}.
+
+\begin{figure}[H]
+    \DTsetlength{0.2em}{1em}{0.2em}{0.4pt}{1.6pt}
+    \dirtree{%
+        .1 ARMAGE/.
+        .2 main.py.
+        .2 requirements.txt.
+        .2 settings.json.
+        .2 ARMAGE.spec.
+        .2 build\_windows.bat.
+        .2 build\_linux.sh.
+        .2 GxIAPI.dll.
+        .2 Mode\_emploi\_ARMAGE.pdf.
+        .2 README.md.
+        .2 app.log.
+        .2 camera/.
+        .3 camera\_controller.py.
+        .2 motor/.
+        .3 motor\_controller.py.
+        .2 processing/.
+        .3 image\_processor.py.
+        .2 gui/.
+        .3 main\_window.py.
+        .3 main\_page.py.
+        .3 module\_widget.py.
+        .3 dialogs.py.
+        .3 save\_dialog.py.
+        .3 settings\_manager.py.
+        .3 enums.py.
+        .2 utils/.
+        .3 config.py.
+        .3 report\_generator.py.
+        .3 user\_manual.py.
+        .3 manual\_assets/.
+        .2 gxipy/.
+        .2 assets/.
+        .2 captures/\DTcomment{généré}.
+        .2 build/\DTcomment{généré}.
+        .2 dist/\DTcomment{généré}.
+        .2 \_\_pycache\_\_/\DTcomment{généré, plusieurs occurrences}.
+    }
+    \caption{Arborescence du dossier ARMAGE}
+    \label{fig:armage-arborescence}
+\end{figure}
+
+\subsection{Fichiers à la racine}
+
+Le point d'entrée est \texttt{main.py}~: il configure le logging, désactive
+la mise en veille de l'ordinateur pendant la durée d'un test, force le thème
+clair de l'interface Qt et lance la fenêtre principale. Les dépendances
+Python sont listées dans \texttt{requirements.txt}, installables via
+\texttt{pip install -r requirements.txt}. \texttt{settings.json} est un
+fichier de configuration persistante (port moteur, index caméra, mouvements
+personnalisés, nombre de modules), lu et écrit par
+\texttt{gui/settings\_manager.py}.
+
+\texttt{ARMAGE.spec}, avec les scripts \texttt{build\_windows.bat} et
+\texttt{build\_linux.sh}, servent à empaqueter l'application en exécutable
+via PyInstaller~; \texttt{GxIAPI.dll} (le SDK caméra Daheng) est embarquée
+dans cet exécutable pour Windows. Enfin, \texttt{Mode\_emploi\_ARMAGE.pdf}
+est généré par \texttt{utils/user\_manual.py}, \texttt{README.md} contient
+la documentation technique du projet, et \texttt{app.log} est le journal
+d'exécution.
+
+\subsection{Dossiers de code source}
+
+Chaque périphérique a son propre dossier, isolé de l'interface~:
+\texttt{camera/} pilote la caméra Daheng via le SDK \texttt{gxipy}
+(connexion, exposition, gain, capture), et \texttt{motor/} pilote le moteur
+TMCM-1021 via le protocole TMCL et la bibliothèque \texttt{pytrinamic}
+(connexion, remontage, dévidage, impulsions, limites de couple).
+\texttt{processing/} compare les images successives (métrique MSE) pour
+détecter l'arrêt réel du mouvement et en déduire la réserve de marche.
+
+\texttt{gui/} contient l'interface graphique PySide6/Qt qui orchestre ces
+trois couches~: la fenêtre principale, la page listant les modules actifs,
+le widget de module individuel, les boîtes de dialogue, et la gestion des
+paramètres persistants. \texttt{utils/} regroupe les fonctions transverses~:
+\texttt{config.py} centralise les constantes du projet, tandis que
+\texttt{report\_generator.py} et \texttt{user\_manual.py} génèrent
+respectivement le rapport PDF de fin de test et le mode d'emploi, via
+\texttt{fpdf2}.
+
+Enfin, \texttt{gxipy/} est le SDK caméra fourni par Daheng (code tiers, non
+modifié), et \texttt{assets/} regroupe les icônes de l'application.
+
+\subsection{Dossiers générés automatiquement}
+
+Les dossiers \texttt{captures/}, \texttt{build/}, \texttt{dist/} et
+\texttt{\_\_pycache\_\_/} ne contiennent que du contenu généré
+automatiquement et ne doivent pas être édités manuellement~:
+\texttt{captures/} sert d'historique des essais (images et rapports PDF),
+\texttt{build/} et \texttt{dist/} sont produits par PyInstaller lors de
+l'empaquetage (ce dernier contenant l'exécutable final), et
+\texttt{\_\_pycache\_\_/} contient le bytecode Python compilé.
+
+\subsection{Logique de rangement}
+
+Le dossier suit trois principes. D'abord, une séparation entre le matériel,
+la logique et l'interface~: chaque périphérique physique (caméra, moteur) a
+son propre module isolé, indépendant de l'interface graphique, ce qui
+facilite le test en mode simulation (sans matériel branché) et la
+maintenance. Ensuite, une centralisation de la configuration~: un seul
+fichier (\texttt{utils/config.py}) regroupe les constantes ajustables, ce
+qui évite de disperser des valeurs « magiques » dans le code. Enfin, une
+séparation entre le code source et les artefacts générés~: les dossiers
+\texttt{build/}, \texttt{dist/}, \texttt{captures/} et les
+\texttt{\_\_pycache\_\_/} ne contiennent que du contenu généré
+automatiquement (compilation, exécutable, résultats de tests) et pourraient
+être supprimés puis régénérés sans perte de code.
+
 % ─── 1. FIXATION ────────────────────────────────────────────────────────────
 
 \section{Gestion du posage et sélection du mouvement}

@@ -731,6 +731,14 @@ Ces caractéristiques permettent une détection fiable et reproductible du mouve
 \section{Système d'accouplement fourche en T -- fourche en U}
 \label{sec:dim-accouplement}
 
+\paragraph{Remarque~:} L'analyse qui suit a été rédigée après le montage du
+système, alors qu'elle aurait dû, idéalement, précéder le choix des
+composants. La raison de ce choix est que la commande du matériel devait être passée rapidement
+en début de projet pour respecter les délais du travail de Bachelor. Toutefois, ne
+disposant que d'une journée par semaine durant la phase initiale du travail de Bachelor, mener
+cette analyse théorique complète avant de commander aurait considérablement
+retardé l'approvisionnement. Le risque a donc été pris de reporter cette analyse à la fin du projet.
+
 L'accouplement entre la tige du mouvement horloger et l'arbre moteur est réalisé au moyen d'une fourche en T et d'une fourche en U (voir \autoref{fig:accouplement_proto}, section~\ref{sec:accouplement_fourche}).
 La fourche en U, solidaire de l'arbre moteur, est composée de deux goupilles espacées de 25~mm, entre lesquelles vient se coincer l'unique goupille (longue de 30~mm) de la fourche en T, montée sur la tige du mouvement.
 Ce principe d'accouplement à jeu angulaire transmet le couple de rotation tout en découplant les axes radiaux : les forces parasites susceptibles d'endommager le mouvement (charges radiales, bending) ne sont pas transmises, et une certaine tolérance au désalignement angulaire et radial est assurée naturellement par le jeu entre les deux fourches.
@@ -919,100 +927,115 @@ cette dernière est directement liée au nombre de tours effectués par la tige 
 
 \subsubsection{Écart angulaire maximal}
 
-$\Delta\theta(\alpha)$ atteint son maximum quand sa dérivée s'annule,
-c'est-à-dire quand $d\beta/d\alpha=1$. D'après l'équation~\eqref{eq:omega_ratio},
-cela revient à $\cos\alpha=-e/R$. En remplaçant cette valeur dans
-l'équation~\eqref{eq:beta_alpha}, le dénominateur de l'atan2 devient nul, ce
-qui donne exactement $\beta=\pi/2$~: l'écart maximal se produit donc toujours
-au moment où la tige passe par 90°, d'où :
+L'écart angulaire $\Delta\theta(\alpha)$ atteint un extremum quand sa dérivée
+s'annule, c'est-à-dire quand $d\beta/d\alpha=1$. D'après
+l'équation~\eqref{eq:omega_ratio}, cela se produit lorsque $\cos\alpha=-e/R$.
+En remplaçant cette valeur dans l'équation~\eqref{eq:beta_alpha}, avec
+$e=\Delta h=3{,}18\ \text{mm}$ et $R=12{,}5\ \text{mm}$, on obtient les
+valeurs de $\beta$ et $\alpha$ à cet instant :
+
+\begin{align}
+  \beta &= \operatorname{atan2}\!\Big(R\sin\alpha,\ \underbrace{e+R\cos\alpha}_{=\,e+R(-e/R)\,=\,0}\Big)
+  = \operatorname{atan2}\big(R\sin\alpha,\ 0\big) = 90° \\
+  \alpha &= \arccos\!\left(-\frac{e}{R}\right) = \arccos\!\left(-\frac{3{,}18}{12{,}5}\right) \approx 104{,}74°
+  \label{eq:alpha_extremum}
+\end{align}
+
+En substituant ces deux valeurs dans $\Delta\theta=\beta-\alpha$ :
 
 \begin{equation}
-  \Delta\theta_{\text{max}} = \frac{\pi}{2} - \arccos\!\left(-\frac{e}{R}\right) = \arcsin\!\left(\frac{e}{R}\right)
+  \Delta\theta_{\text{max}} = 90° - 104{,}74° = -14{,}74°
   \label{eq:delta_max}
 \end{equation}
 
-Avec $e=\Delta h=3{,}18\ \text{mm}$ et $R=12{,}5\ \text{mm}$ :
-
-\begin{equation}
-  \Delta\theta_{\text{max}} = \arcsin\!\left(\frac{3{,}18}{12{,}5}\right) \approx 14{,}74°
-  \label{eq:delta_max_calc}
-\end{equation}
-
-Contrairement à $\varepsilon_{\text{max}}$, atteint à la borne $\alpha=180°$
-où la goupille active change, ce maximum est atteint à l'intérieur du
-demi-tour ($\alpha\approx104{,}7°$)~: c'est donc un maximum lisse de l'écart
-de position, pas un artefact du changement de goupille. Il se répète à
-l'identique (même signe) à $\alpha\approx284{,}7°$~: la tige est ainsi
-toujours en retard sur le moteur, jamais en avance.
+Cet extremum est atteint 2 fois lors d'un tour lorsque $\alpha=104{,}7°$ et $\alpha=284{,}7°$.
 
 \subsubsection{Conversion en imprécision temporelle}
 
-L'accouplement se situant sur la tige et non directement sur le
-barillet, la conversion de $\Delta\theta_{\text{max}}$ en temps doit passer par le
-rapport de transmission $r$ (tige/barillet). Le nombre de tours de tige
-nécessaires à un armage complet est :
+L'accouplement se situant sur la tige et non directement sur le barillet, la
+conversion de $\Delta\theta_{\text{max}}$ en temps se fait en trois étapes,
+illustrées pour le cas le plus défavorable, le Mvt01 ($RM=80$~h,
+$N_{\text{total}}=10{,}3$~tr, $r=3{,}33$).
 
-\begin{equation}
-  N_{\text{tige}} = r\cdot N_{\text{total}}
-  \label{eq:n_tige}
-\end{equation}
-
-Ce nombre de tours de tige correspond, par définition, à la réserve de marche
-totale $RM$ du mouvement (un armage complet fournit $RM$ heures de marche).
-Un tour de tige (360°) équivaut donc à $RM/N_{\text{tige}}$ heures, soit
-$3600\times RM/N_{\text{tige}}$ secondes, d'où l'équivalence angle--temps :
-
-\begin{equation}
-  1° \leftrightarrow \frac{RM}{N_{\text{tige}}}\times\frac{3600}{360}\ \text{s}
-  = \frac{10\cdot RM}{N_{\text{tige}}}\ \text{s}
-  \label{eq:conversion_deg_s}
-\end{equation}
-
-et l'imprécision de mesure induite par le désalignement s'écrit :
-
-\begin{equation}
-  \Delta t_{\text{max}} = \Delta\theta_{\text{max}}[°] \times \frac{10\cdot RM}{N_{\text{tige}}}
-  \label{eq:dt_max}
-\end{equation}
-
-Le cas le plus défavorable est le Mvt01 ($RM = 80$~h, $N_{\text{total}} =
-10{,}3$~tr, $r = 3{,}33$). Par l'équation~\eqref{eq:n_tige} :
+\textbf{1. Nombre de tours de tige.\\} Un armage complet correspond à
+$N_{\text{tige}} = r\cdot N_{\text{total}}$ :
 
 \begin{equation}
   N_{\text{tige}} = 3{,}33\times 10{,}3 \approx 34{,}30\ \text{tr}
   \label{eq:n_tige_mvt01}
 \end{equation}
 
-puis, par l'équation~\eqref{eq:dt_max} avec $\Delta\theta_{\text{max}} = 14{,}74°$
-(équation~\eqref{eq:delta_max_calc}) :
+\textbf{2. Réserve de marche par tour.\\} Par définition, $N_{\text{tige}}$ est le nombre de tours
+correspondant à la réserve de marche totale $RM$. Les deux valeurs étant connu, il est possible de calculé le nombre d'heure corespondant à un tour de
+tige pour un type de mouvement donné :
 
 \begin{equation}
-  \Delta t_{\text{max}} = 14{,}74\times\frac{10\times 80}{34{,}30} = 14{,}74\times 23{,}32 \approx 344\ \text{s} \approx 5{,}73\ \text{min}
-  \label{eq:dt_max_mvt01}
+  \frac{RM}{N_{\text{tige}}} = \frac{80}{34{,}30} \approx 2{,}33\ \text{h/tr}
+  \label{eq:rm_par_tour}
 \end{equation}
+
+\textbf{3. Erreur maximale sur la réserve de marche.\\} L'écart
+$\Delta\theta_{\text{max}}=14{,}74°$ (équation~\eqref{eq:delta_max})
+représente une fraction de tour de $\Delta\theta_{\text{max}}/360°$, d'où
+l'imprécision de mesure :
+
+\begin{equation}
+  \Delta t_{\text{max}} = \frac{\Delta\theta_{\text{max}}}{360°}\times\frac{RM}{N_{\text{tige}}}
+  = \frac{14{,}74}{360}\times 2{,}33 \approx 0{,}0955\ \text{h} \approx 5{,}73\ \text{min}
+  \label{eq:dt_max}
+\end{equation}
+
+La \autoref{tab:precision_desalignement} présente les résultats, après avoir appliqué cette même démarche à
+l'ensemble des mouvements.
+
+\begin{table}[H]
+  \centering
+  \caption{Imprécision de mesure induite par le désalignement réel ($e=\Delta h=3{,}18$~mm)}
+  \label{tab:precision_desalignement}
+  \begin{tabular}{|c|c|c|c|}
+    \hline
+    \textbf{Mouvement} & $\boldsymbol{RM}$ \textbf{[h]} & $\boldsymbol{N_{\text{tige}}}$ \textbf{[tr]} & $\boldsymbol{\Delta t_{\text{max}}}$ \textbf{[min]} \\
+    \hline
+    Mvt19    & 100 & 47{,}12 & 5{,}21 \\
+    Mvt01    & 80  & 34{,}30 & 5{,}73 \\
+    Mvt200   & 90  & 43{,}96 & 5{,}03 \\
+    Mvt200.1 & 90  & 43{,}96 & 5{,}03 \\
+    Mvt110   & 90  & 68{,}16 & 3{,}24 \\
+    Mvt111   & 89  & 41{,}44 & 5{,}28 \\
+    \hline
+  \end{tabular}
+\end{table}
+
+L'imprécision de mesure induite par le désalignement réel de l'accouplement
+reste comprise entre $3{,}2$ et $5{,}7$ minutes selon le mouvement, ce qui
+respecte l'exigence de 15 minutes présente dans le cahier des
+charges.
 
 \subsubsection{Désalignement limite pour respecter l'exigence E2}
 
-L'exigence \textbf{E2} du cahier des charges impose une précision de mesure
-$\leq 15\ \text{min}$. En inversant l'équation~\eqref{eq:dt_max} (avec
-l'équation~\eqref{eq:delta_max}), on obtient le désalignement radial $e$ qui amènerait
-$\Delta t_{\text{max}}$ exactement à cette limite, pour le cas le plus
-défavorable (Mvt01) :
+L'exigence \textbf{E2} impose une précision de mesure $\leq 15$~min, soit
+$0{,}25$~h. Par l'équation~\eqref{eq:dt_max} inversée, cela correspond à un
+écart angulaire limite de :
 
 \begin{equation}
-  e_{15\text{min}} = R\sin\!\left(\frac{15\times 60}{10\cdot RM/N_{\text{tige}}}\right)
-  = 12{,}5\times\sin(38{,}59°) \approx 7{,}80\ \text{mm}
+  \Delta\theta_{15\text{min}} = \frac{0{,}25}{RM/N_{\text{tige}}}\times 360°
+  = \frac{0{,}25}{2{,}33}\times 360° \approx 38{,}59°
+\end{equation}
+
+Comme $\Delta\theta=90°-\alpha$ (cf.~\eqref{eq:delta_max}), cela correspond à
+un angle $\alpha = 90°+38{,}59° = 128{,}59°$. En inversant
+l'équation~\eqref{eq:alpha_extremum} ($\alpha=\arccos(-e/R)$, donc
+$e=-R\cos\alpha$), on obtient le désalignement radial limite pour le Mvt01 :
+
+\begin{equation}
+  e_{15\text{min}} = -R\cos(128{,}59°) = -12{,}5\times\cos(128{,}59°) \approx 7{,}80\ \text{mm}
   \label{eq:e_15min}
 \end{equation}
 
-La \autoref{fig:precision_e_limite} illustre, pour le mouvement Mvt01,
-l'imprécision de mesure obtenue sur un tour complet du moteur, pour le
-désalignement réel ($e=3{,}18$~mm) et pour ce désalignement limite
-($e=7{,}80$~mm). Conformément à la périodicité de 180°, chaque courbe
-redescend deux fois par tour~: la courbe orange touche tout juste $-15$~min
-à ces deux occasions, tandis que la courbe bleue (cas réel) ne descend qu'à
-environ $-5{,}7$~min, soit une marge de \SI{4.62}{\mm} (59~\%) sur le
-désalignement admissible.
+La \autoref{fig:precision_e_limite} compare, pour le Mvt01, l'imprécision de
+mesure sur un tour moteur complet au désalignement réel ($e=3{,}18$~mm) à
+ce désalignement limite ($e=7{,}80$~mm)~: la courbe limite touche tout juste
+$-15$~min, contre $-5{,}7$~min pour le cas réel.
 
 \begin{figure}[H]
   \centering
@@ -1024,40 +1047,8 @@ désalignement admissible.
   \label{fig:precision_e_limite}
 \end{figure}
 
-\subsubsection{Application à tous les mouvements}
-
-Le \autoref{tab:precision_desalignement} reprend, selon la même démarche
-(équations~\eqref{eq:n_tige}, \eqref{eq:dt_max} et \eqref{eq:e_15min}), les
-résultats pour l'ensemble des mouvements, avec $\Delta\theta_{\text{max}} = 14{,}74°$
-(équation~\eqref{eq:delta_max_calc}, indépendant du mouvement puisqu'il ne
-dépend que de $e$ et $R$).
-
-\begin{table}[H]
-  \centering
-  \caption{Imprécision de mesure induite par le désalignement réel ($e=\Delta h=3{,}18$~mm) et désalignement limite pour l'exigence E2 (15 min)}
-  \label{tab:precision_desalignement}
-  \begin{tabular}{|c|c|c|c|c|c|}
-    \hline
-    \textbf{Mouvement} & $\boldsymbol{RM}$ \textbf{[h]} & $\boldsymbol{N_{\text{tige}}}$ \textbf{[tr]} & $\boldsymbol{\Delta t_{\text{max}}}$ \textbf{[min]} & \textbf{Marge} & $\boldsymbol{e_{15\text{min}}}$ \textbf{[mm]} \\
-    \hline
-    Mvt19             & 100 & 47{,}12 & 5{,}21 & 65\,\% & 8{,}43 \\
-    Mvt01             & 80  & 34{,}30 & 5{,}73 & 62\,\% & 7{,}80 \\
-    Mvt200 / Mvt200.1 & 90  & 43{,}96 & 5{,}03 & 66\,\% & 8{,}68 \\
-    Mvt110            & 90  & 68{,}16 & 3{,}24 & 78\,\% & 11{,}60 \\
-    Mvt111            & 89  & 41{,}44 & 5{,}28 & 65\,\% & 8{,}35 \\
-    \hline
-  \end{tabular}
-\end{table}
-
-L'imprécision de mesure induite par le désalignement réel de l'accouplement
-reste comprise entre $3{,}2$ et $5{,}7$ minutes selon le mouvement, ce qui
-respecte l'exigence de précision \textbf{E2 (\SI{15}{\minute})} du cahier des
-charges, mais avec une marge restreinte (62 à 78~\%). Le mouvement Mvt01 est le
-cas le plus contraignant, avec seulement \SI{4.62}{\mm} de marge sur le
-désalignement admissible avant de dépasser l'exigence E2. Le désalignement
-mécanique de l'accouplement reste donc acceptable pour le système, mais ne
-doit pas être négligé lors du montage~: un contrôle plus rigoureux de $\Delta h$
-serait souhaitable pour préserver cette marge.
+Le mouvement Mvt01 étant le cas le plus contraignant, ce désalignement
+mécanique reste acceptable pour le système.
 
 \subsection{Analyse des contraintes et déformations}
 

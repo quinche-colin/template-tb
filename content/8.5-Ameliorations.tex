@@ -1,0 +1,116 @@
+\chapter{Améliorations et suite du projet}
+\label{ch:ameliorations}
+
+Le chapitre précédent a listé quelques points encore incertains ou non testés
+(voir la synthèse en fin de chapitre~8). Mais l'essentiel est ailleurs~:
+passer d'un prototype à un seul poste à une machine de production à 10
+postes demande surtout des évolutions structurelles qui n'avaient pas besoin
+d'être réglées pour valider le concept, et qui deviennent maintenant
+incontournables. C'est l'objet de ce chapitre.
+
+\section{Passage du prototype à une machine à 10 postes}
+
+\subsection{Structure porteuse et socle commun}
+
+Le prototype repose sur un socle individuel, avec ses propres poteaux pour
+la caméra et l'éclairage. Le reproduire tel quel dix fois, comme envisagé au
+chapitre précédent pour l'estimation d'encombrement, multiplierait d'autant
+le nombre de poteaux à fabriquer et aligner, et laisserait peu de place
+autour de chaque mouvement pour le fixer.
+
+Un socle principal unique, supportant les 10 modules, serait préférable~: en
+mutualisant une partie de la structure porteuse (des traverses communes
+plutôt qu'un jeu complet par poste), on réduit le nombre d'éléments verticaux
+et on libère de l'espace autour de chaque posage pour la fixation du
+mouvement.
+
+\subsection{Gestion des câbles et des alimentations}
+
+Sur le prototype, les câbles moteur, caméra et éclairage cheminent librement
+autour de la structure, sans organisation particulière. À l'échelle de 10
+postes, ça deviendrait vite un problème, pour la maintenance comme pour la
+sécurité~: câbles qui pendent, risques d'accrochage. Le socle principal
+devra donc prévoir des canaux pour faire passer proprement ces câbles
+jusqu'aux alimentations, ainsi que des emplacements pour fixer les blocs
+d'alimentation eux-mêmes, aujourd'hui simplement posés à côté du prototype.
+
+\subsection{Connectivité~: bus USB}
+
+Côté moteurs, pas de souci~: le bus RS485 (tableau~\ref{tab:specs_driver})
+permet déjà de connecter jusqu'à 255 modules sur un seul câble, via un
+unique adaptateur USB. Les caméras, en revanche, ont chacune leur propre
+liaison~: relier directement 10 caméras, et le reste des périphériques par
+poste, au même ordinateur reviendrait à brancher une vingtaine de ports USB,
+ce qui n'est pas gérable en l'état. Il faudra donc mettre en place un vrai
+système de bus USB, par exemple via des concentrateurs industriels, pour
+regrouper ces connexions.
+
+\subsection{Adaptations logicielles}
+
+Cette connectivité ne suffira pas à elle seule~: le logiciel actuel ne
+pilote pas plusieurs modules en parallèle. Une fois le bus USB en place, le
+code devra donc être adapté pour reconnaître et piloter chaque poste
+indépendamment, en s'appuyant sur la structure de cases déjà prévue dans
+l'interface pour représenter plusieurs modules.
+
+\section{Amélioration du système de fixation du mouvement}
+
+Une fois la machine terminée, il a été remarqué lors de tests avec un mouvement équipé de sa masse oscillante, que celle-ci
+rendait l'épaisseur du mouvement inconstante et par conséquent plus compliqué à fixer.
+Une solution a alors été imaginée pour pallier ce problème. L'idée est de fixer le mouvement
+directement dans sa boîte en plexiglas, plutôt que de le serrer seul,
+ce qui demanderait de revoir la cotation de certaines pièces afin de s'assurer que toute l'architecture du système reste compatible et que ça ne désalignerait pas la tige par rapport à l'accouplement.
+
+De plus, cette solution garantirait qu'aucun serrage ne soit exercé sur le mouvement
+lui-même.
+
+Toutefois, des cales sous la boîte restent malgré tout nécessaires. En effet, l'analyse de la
+saccade a montré qu'une variation de hauteur d'un mouvement à l'autre
+désaligne l'accouplement, ce qui induit une erreur à la fois sur la
+vitesse et sur la précision de la mesure. Le but de ces cales est que la tige de tous les mouvements soit parfaitement alignée avec l'arbre moteur. Il y aurait donc un modèle de cale à concevoir pour chaque type de mouvement.
+
+\section{Synthèse}
+
+Le tableau~\ref{tab:synthese_ameliorations} résume les principaux points
+restant à traiter pour passer du prototype actuel à une machine conforme à
+l'ensemble du cahier des charges.
+
+\begin{table}[H]
+  \centering
+  \caption{Synthèse des points restant à traiter}
+  \label{tab:synthese_ameliorations}
+  \begin{tabular}{|p{4cm}|p{10.5cm}|}
+    \hline
+    \textbf{Point à traiter} & \textbf{Description} \\
+    \hline
+    Structure à 10 postes & Concevoir un socle principal commun, réduisant le
+    nombre de poteaux et libérant de l'espace autour de chaque posage. \\
+    \hline
+    Câblage et alimentations & Ajouter des canaux de câbles et des
+    emplacements de fixation dédiés aux alimentations. \\
+    \hline
+    Connectivité USB & Mettre en place un bus USB pour gérer les caméras des
+    10 postes sans multiplier les ports. \\
+    \hline
+    Logiciel multi-postes & Adapter le code pour piloter chaque poste
+    indépendamment via le bus USB. \\
+    \hline
+    Fixation du mouvement & Fixer le mouvement dans sa boîte en plexiglas
+    plutôt que de le serrer seul, en adaptant la cotation des pièces
+    concernées et en prévoyant des cales pour préserver l'alignement de
+    l'accouplement. \\
+    \hline
+  \end{tabular}
+\end{table}
+
+Deux points supplémentaires n'ont volontairement pas été inclus dans ce
+tableau~: contrairement aux points précédents, ils ne sont pas indispensables
+pour que la machine réponde au cahier des charges, mais restent conseillés
+pour gagner en confiance dans les résultats. Réaliser un plus grand nombre
+d'essais en conditions réelles permettrait de réellement garantir la
+fiabilité de la mesure, plutôt que de s'appuyer sur les quelques tests
+effectués jusqu'ici. De même, une mesure directe du couple, via un banc de
+test dédié, offrirait une vérification plus rigoureuse que les calculs
+théoriques et les essais qualitatifs réalisés à ce jour. Ni l'un ni l'autre
+n'est indispensable, mais avoir de vrais essais pour appuyer ces valeurs
+resterait un gage de qualité.
