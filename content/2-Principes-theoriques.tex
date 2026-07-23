@@ -19,10 +19,87 @@ Elle peut aller de quelques dizaines à plusieurs centaines d'heures selon le mo
 
 \paragraph{Remarque :} la section suivante a été rédigée en prenant pour référence les documents suivants : le livre \og Théorie d'horlogerie \fg{} \cite{theorie_horlogerie}, le site \og Horopedia \fg{} \cite{Horopedia_rochet}, le site \og Worldtempus \fg{} \cite{Worldtempus} et le site \og Élégance et Précision \fg{} \cite{Elegance_precision}.
 
-Un mouvement mécanique convertit l'énergie potentielle élastique d'un ressort en un mouvement rotatif régulier, lequel entraîne les aiguilles. 
-Ce processus implique quatre organes principaux : le barillet, le train de rouages, l'échappement et le balancier-spiral.
+Un mouvement mécanique ne comporte pas de pile, c'est donc le barillet qui est la source d'énergie du mouvement. 
+Il se compose d'un tambour cylindrique, d'un couvercle, d'un arbre central et d'un ressort plat enroulé à l'intérieur (figure~\ref{fig:v2_barillet}).
 
-L'énergie suit un chemin ordonné depuis le barillet jusqu'au balancier-spiral, en passant par le train de rouages et l'échappement, comme l'illustre la figure~\ref{fig:v2_transmission}.
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\textwidth]{assets/figures/Principes théoriques/Barillet.jpg}
+  \caption{Illustration d'un barillet \cite{Generale_ressorts}}
+  \label{fig:v2_barillet}
+\end{figure}
+
+Lorsque la tige de remontoir tourne, elle transmet sa rotation au rochet, une roue dentée fixée sur l'arbre du barillet. 
+Les dents asymétriques du rochet, combinées au cliquet d'armage, permettent à l'arbre de tourner dans un seul et unique sens. 
+La rotation du rochet comprime progressivement le ressort contre cet arbre jusqu'à un armage complet.
+Le mécanisme de remontage complet est visible sur la figure~\ref{fig:v2_remontoir}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.85\textwidth]{assets/figures/Principes théoriques/Mécanisme du remontoir image.png}
+  \caption{Mécanisme de remontage : rochet et cliquet d'armage \cite{Horopedia_rochet}}
+  \label{fig:v2_remontoir}
+\end{figure}
+
+Les états désarmé et armé du ressort sont illustrés à la figure~\ref{fig:v2_ressort}.
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{assets/figures/Principes théoriques/ressort désarmé.png}
+    \caption{Ressort désarmé}
+    \label{fig:v2_ressort_desarme}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{assets/figures/Principes théoriques/ressort armé.png}
+    \caption{Ressort armé}
+    \label{fig:v2_ressort_arme}
+  \end{subfigure}
+  \caption{Ressort du barillet désarmé et armé \cite{theorie_horlogerie}}
+  \label{fig:v2_ressort}
+\end{figure}
+
+Lorsque le ressort est entièrement armé, la bride glissante entre en action. 
+Il s'agit du mécanisme de fixation reliant l'extrémité extérieure du ressort à la paroi du tambour. 
+Elle permet au ressort de glisser contre la paroi intérieure du tambour plutôt que de forcer davantage. 
+Ce glissement limite le couple maximal transmissible et protège le mouvement contre tout surarmage. 
+
+Une fois remonté, le ressort du barillet cherche à se détendre. 
+Mais comme il est retenu d'un côté par le cliquet d'armage l'énergie est libéré de l'autre côté du barillet en générant une force dans le train de rouages. 
+
+L'échappement à ancre suisse permet au barillet de se dévider, mais uniquement sous la forme de petites impulsions. 
+La figure~\ref{fig:v2_echappement_ancre} illustre un échappement à ancre suisse.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.6\textwidth]{assets/figures/Principes théoriques/echappement a ancre suisse 2.png}
+  \caption{Échappement à ancre suisse \cite{Worldtempus}}
+  \label{fig:v2_echappement_ancre}
+\end{figure}
+
+Ces impulsions font tourner le balancier autour de son axe, avant que celui-ci ne soit rappelé par son ressort spiral. 
+Ce mouvement se répète, faisant osciller le balancier dans un sens puis dans l'autre à une fréquence quasi constante. 
+Enfin, l'ancre reliée au balancier profite de cette oscillation pour entrainer le train de rouage sous la forme de petit cran permettant ainsi de battre la seconde, et ce, jusqu'à ce que le ressort du barillet soit entièrement détendu, ce qui empêche le balancier d'osciller et la montre de fonctionner. 
+La figure~\ref{fig:v2_balancier} illustre un balancier-spiral.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{assets/figures/Principes théoriques/Balancier-spiral.jpg}
+  \caption{Balancier-spiral \cite{Worldtempus}}
+  \label{fig:v2_balancier}
+\end{figure}
+
+En résumé, l'énergie suit un chemin ordonné depuis le barillet jusqu'au balancier-spiral, en passant par le train de rouages et l'échappement, comme l'illustre la figure~\ref{fig:v2_transmission}.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\textwidth]{assets/figures/Principes théoriques/transmission de l'energie d'un mouvement.png}
+  \caption{Transmission de l'énergie dans un mouvement de montre \cite{theorie_horlogerie}}
+  \label{fig:v2_transmission}
+\end{figure}
 
 \begin{minipage}[t]{0.48\linewidth}
   \begin{enumerate}
@@ -46,77 +123,12 @@ L'énergie suit un chemin ordonné depuis le barillet jusqu'au balancier-spiral,
   \end{enumerate}
 \end{minipage}
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.5\textwidth]{assets/figures/Principes théoriques/transmission de l'energie d'un mouvement.png}
-  \caption{Transmission de l'énergie dans un mouvement de montre \cite{theorie_horlogerie}}
-  \label{fig:v2_transmission}
-\end{figure}
-
-Le barillet est la source d'énergie du mouvement. 
-Il se compose d'un tambour cylindrique, d'un couvercle, d'un arbre central et d'un ressort plat enroulé à l'intérieur (figure~\ref{fig:v2_barillet}).
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.75\textwidth]{assets/figures/Principes théoriques/Barillet.jpg}
-  \caption{Illustration d'un barillet \cite{Generale_ressorts}}
-  \label{fig:v2_barillet}
-\end{figure}
-
-Lorsque la couronne est actionnée, elle transmet sa rotation via la tige de remontoir au rochet, une roue dentée fixée sur l'arbre du barillet. Les dents asymétriques du rochet, combinées au cliquet d'armage, ne permettent à l'arbre de tourner que dans un seul sens, ce qui comprime progressivement le ressort contre cet arbre. Les états désarmé et armé du ressort sont illustrés à la figure~\ref{fig:v2_ressort}.
-
-\begin{figure}[H]
-  \centering
-  \begin{subfigure}[b]{0.48\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{assets/figures/Principes théoriques/ressort désarmé.png}
-    \caption{Ressort désarmé}
-    \label{fig:v2_ressort_desarme}
-  \end{subfigure}
-  \hfill
-  \begin{subfigure}[b]{0.48\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{assets/figures/Principes théoriques/ressort armé.png}
-    \caption{Ressort armé}
-    \label{fig:v2_ressort_arme}
-  \end{subfigure}
-  \caption{Ressort du barillet désarmé et armé \cite{theorie_horlogerie}}
-  \label{fig:v2_ressort}
-\end{figure}
-
-Lorsque le ressort est entièrement armé, la bride glissante entre en action. Il s'agit d'un mécanisme de fixation de l'extrémité extérieure du ressort à la paroi du tambour. Elle permet au ressort de glisser contre la paroi intérieure du tambour plutôt que de forcer davantage. Ce glissement limite le couple maximal transmissible et protège le mouvement contre tout surarmage. Le mécanisme de remontage complet (rochet et cliquet d'armage) est visible à la figure~\ref{fig:v2_remontoir}.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.85\textwidth]{assets/figures/Principes théoriques/Mécanisme du remontoir image.png}
-  \caption{Mécanisme de remontage : rochet et cliquet d'armage \cite{Horopedia_rochet}}
-  \label{fig:v2_remontoir}
-\end{figure}
-
-Une fois remonté, le ressort du barillet cherche à se détendre, ce qui génère une force dans le train de rouages. Celui-ci est retenu d'un côté par le cliquet d'armage ; de l'autre côté, l'échappement à ancre suisse permet au barillet de se dévider, mais uniquement sous la forme de petites impulsions. La figure~\ref{fig:v2_echappement_ancre} illustre un échappement à ancre suisse.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.6\textwidth]{assets/figures/Principes théoriques/echappement a ancre suisse 2.png}
-  \caption{Échappement à ancre suisse \cite{Worldtempus}}
-  \label{fig:v2_echappement_ancre}
-\end{figure}
-
-Ces impulsions font tourner le balancier de quelques tours autour de son axe, avant que celui-ci ne soit rappelé par son ressort spiral. Ce mouvement se répète, faisant osciller le balancier à une fréquence quasi constante qui permet de battre la seconde, et ce jusqu'à ce que le ressort du barillet soit entièrement détendu, ce qui empêche le balancier d'osciller et la montre de fonctionner. La figure~\ref{fig:v2_balancier} illustre un balancier-spiral.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.5\textwidth]{assets/figures/Principes théoriques/Balancier-spiral.jpg}
-  \caption{Balancier-spiral \cite{Worldtempus}}
-  \label{fig:v2_balancier}
-\end{figure}
-
 La détente progressive du ressort du barillet dure plusieurs heures et correspond à la réserve de marche du mouvement, jusqu'à ce que l'énergie restante ne suffise plus à vaincre les inerties et les frottements du mécanisme, entraînant l'arrêt de la montre.
 
 \section{Mesure accélérée de la réserve de marche par dévidage}
 \label{sec:mesure_acceleree}
 
-Le couple fourni par le barillet varie en fonction du temps avec une allure similaire à la courbe théorique présentée à la figure~\ref{fig:couple_barillet}.
+Le couple fourni par le barillet varie en fonction du temps, ou de manière équivalente en fonction du nombre de tours effectués par le barillet, ces deux grandeurs étant directement proportionnelles, avec une allure similaire à la courbe théorique présentée à la figure~\ref{fig:couple_barillet}.
 
 \begin{figure}[H]
   \centering
@@ -125,10 +137,10 @@ Le couple fourni par le barillet varie en fonction du temps avec une allure simi
   \label{fig:couple_barillet}
 \end{figure}
 
-La fréquence d'oscillation du balancier dépend directement du couple transmis par le ressort du barillet à travers le train de rouages et l'échappement. Durant la majeure partie de la réserve de marche, ce couple est élevé et quasi constant, ce qui rend la fréquence d'oscillation régulière et donc la marche de la montre précise~: le barillet se dévide alors d'un nombre de tours connu et constant par heure de fonctionnement. En revanche, durant les 24 dernières heures de la réserve de marche, le couple chute fortement, ce qui rend le comportement de la montre moins prévisible. C'est donc cette dernière portion de la réserve de marche qui varie de manière significative d'un mouvement à l'autre.
+Ce couple détermine directement la fréquence d'oscillation du balancier. Tant que le couple reste élevé et quasi constant, la fréquence demeure donc régulière, ce qui rend le mouvement précis~: le barillet se dévide alors d'un nombre de tours connu et constant par heure de fonctionnement. Ce n'est que durant les 24 dernières heures de la réserve de marche que le couple chute fortement, rendant le comportement de la montre moins prévisible. Cette allure, un plateau à couple élevé et quasi constant suivi d'une chute brusque, se retrouve d'un mouvement à l'autre. Ce qui diffère réellement d'un mouvement à l'autre n'est donc pas la forme de la courbe, mais l'instant où survient cette chute, ainsi que le couple minimal en dessous duquel le mouvement s'arrête. Ce seuil dépend des inerties propres à chaque mouvement. C'est donc uniquement cette dernière portion de la réserve de marche qui varie d'un mouvement à l'autre.
 
 Le principe de la méthode de mesure accélérée, utilisée lors de ce travail de Bachelor, consiste à ne mesurer que cette portion variable, en dévidant artificiellement le barillet plutôt qu'en laissant le mouvement fonctionner normalement durant plusieurs dizaines d'heures. Pour cela, le cliquet d'armage, qui empêche normalement le barillet de se dévider, est retiré du mouvement. Ce retrait supprime toutefois la retenue qui maintient le ressort sous tension~: sans elle, celui-ci se détendrait instantanément et de manière incontrôlée. Il est donc nécessaire de retenir la tige de remontoir pendant toute la durée de la mesure, afin de ne libérer le ressort que progressivement.
 
-En pratique, la mesure se déroule de la manière suivante~: le mouvement est d'abord remonté jusqu'à armage complet, puis le barillet est dévidé d'un nombre de tours connu, de manière à atteindre le point où il reste normalement 24 heures de réserve de marche. La tige de remontoir est alors bloquée et le mouvement est laissé libre de fonctionner normalement, ce qui permet d'observer et de mesurer directement la durée pendant laquelle il continue de battre, correspondant à cette dernière portion non linéaire de la réserve de marche. Cette durée mesurée est ensuite additionnée à celle de la phase linéaire connue, car jugée presque identique pour tous les mouvements, pour obtenir la réserve de marche totale du mouvement.
+En pratique, la mesure se déroule de la manière suivante~: le mouvement est d'abord remonté jusqu'à armage complet, puis le barillet est dévidé d'un nombre de tours connu, de manière à atteindre le point où il reste normalement 24 heures de réserve de marche. La tige de remontoir est alors bloquée et le mouvement est laissé libre de fonctionner normalement, ce qui permet d'observer et de mesurer directement la durée pendant laquelle il continue de fonctionner, correspondant à cette dernière portion variable de la réserve de marche. Cette durée mesurée est ensuite additionnée à celle de la phase constante, jugée quasi identique pour tous les mouvements puisque son allure ne dépend ni de l'instant ni du niveau de couple auquel survient la chute finale, pour obtenir la réserve de marche totale du mouvement.
 
 Ainsi, le temps de mesure de la réserve de marche se retrouve réduit à environ 24 heures.
