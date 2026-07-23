@@ -62,7 +62,7 @@ Cette sous-section valide les exigences suivantes du cahier des charges~:
           cycle ».
 \end{itemize}
 
-Le moteur a pu être commandé avec succès depuis l'application, qui exécute
+Le moteur a pu être commandé avec succès depuis l'application, il exécute
 correctement les profils de vitesse demandés. Pour valider la vitesse, la
 méthode suivante a été utilisée~: la rotation du moteur a été filmée à l'aide
 d'un téléphone, puis, depuis la vidéo, le nombre de tours effectués a été
@@ -71,6 +71,19 @@ d'arrivée comparées afin de vérifier que le déplacement exercé par le moteu
 correspondait bien à la consigne. Cette méthode a permis d'obtenir des
 résultats convaincants, confirmant que le moteur se déplaçait bien du nombre de
 tours voulu à la vitesse souhaitée.
+
+Cette validation ne porte toutefois que sur la vitesse moyenne sur
+l'ensemble du déplacement (nombre de tours rapporté au temps total), et non
+sur la vitesse instantanée. Or, l'analyse de la saccade due au
+désalignement de l'accouplement (section~\ref{sec:dim-accouplement}) a
+montré que la vitesse instantanée peut s'écarter de la consigne de
+$+34{,}1\ \%$ à $-20{,}3\ \%$ à chaque changement de goupille active. Pour
+le mode réserve de marche, cela signifie que la vitesse peut ponctuellement
+atteindre environ $67\ \mathrm{tr/min}$, dépassant la limite de
+$50\ \mathrm{tr/min}$ fixée par le cahier des charges, alors même que la
+vitesse moyenne mesurée reste conforme. Une piste permettant de réduire ce
+désalignement, et donc cet écart, est proposée au
+chapitre~\ref{ch:ameliorations}.
 
 De plus, les informations relatives au mouvement sont chargées automatiquement
 depuis l'application~: il n'est pas nécessaire de les saisir à chaque test, il
@@ -88,7 +101,7 @@ Cette sous-section valide les exigences suivantes du cahier des charges~:
 \end{itemize}
 
 Contrairement à la vitesse, le couple du moteur ne peut pas être observé
-simplement, ce qui rend sa mesure plus complexe. Une mesure qualitative aurait
+simplement, ce qui rend sa mesure plus complexe. Une mesure précise aurait
 nécessité un banc de test dédié, dans lequel le moteur pas à pas entraînerait
 un moteur à courant continu, permettant de mesurer le courant généré par ce
 dernier et d'en déduire le couple. La réalisation d'un tel banc pouvant prendre
@@ -106,17 +119,15 @@ correctement.
 Concernant l'absence d'effort radial ou axial sur la tige (FC1-E3), aucun
 essai dédié n'a été réalisé pour la mesurer directement. Le dimensionnement
 théorique du système d'accouplement (section~\ref{sec:dim-accouplement})
-garantit toutefois cette exigence par construction~: le principe
-d'accouplement à jeu angulaire entre la fourche en T et la fourche en U
-transmet le couple de rotation tout en découplant mécaniquement les axes
-radiaux, si bien qu'aucune charge radiale ni effort de flexion n'est
-transmis à la tige. Cette exigence est donc considérée comme conforme, bien
+garantit toutefois cette exigence par construction~: En théorie, le principe
+d'accouplement entre la fourche en T et la fourche en U
+transmet uniquement le couple de rotation et non les forces axiales ou radiales pouvant endommager la tige.
+Cette exigence est donc considérée comme conforme, bien
 que non vérifiée expérimentalement.
 
-Ces différents résultats semblent satisfaire l'ensemble des exigences du
-cahier des charges pour le système de motorisation.
-
-Deux points initialement envisagés n'ont toutefois pas pu être réalisés. Le
+Ces différents résultats semblent satisfaire la majorité des exigences du
+cahier des charges pour le système de motorisation. 
+Néanmoins, deux points initialement envisagés n'ont toutefois pas pu être réalisés. Le
 premier concerne l'utilisation du processus StallGuard~\cite{Trinamic_StallGuard},
 qui permet en théorie de mesurer le courant dans la bobine non utilisée du
 driver pour estimer les déplacements du moteur (vitesse, couple). Après essai,
@@ -125,7 +136,7 @@ application~: les vitesses utilisées sont trop faibles pour générer un couran
 mesurable.
 
 Le second point concerne l'accouplement automatique, dont l'objectif était de
-faire tourner le moteur à un couple suffisamment faible pour l'entraîner
+faire tourner le moteur à un couple suffisamment faible pour s'entraîner 
 lui-même sans entraîner le mouvement, évitant ainsi d'avoir à réaliser
 l'accouplement à la main. Cette automatisation n'a pas pu être conservée~;
 la tentative réalisée et la cause de son échec sont détaillées à la
@@ -167,34 +178,17 @@ Pour tester l'algorithme, il aurait fallu pouvoir contrôler à quel moment le m
 
 La solution trouvée est d'exploiter la périodicité de l'aiguille des secondes, qui est le seul élément visible en mouvement sur les calibres testés. En jouant sur l'intervalle entre deux captures, on peut simuler les deux états que l'algorithme doit distinguer.
 
-\subsection{Simulation d'un mouvement arrêté}
+\subsection*{Simulation d'un mouvement arrêté}
 
 En prenant des photos toutes les 60 secondes, l'aiguille des secondes a effectué exactement un tour complet entre deux captures et se retrouve au même endroit. Les deux images sont donc pratiquement identiques et le MSE obtenu est proche de zéro, ce qui correspond exactement à ce qu'on observe quand un mouvement est à l'arrêt.
 
-\subsection{Simulation d'un mouvement en marche (cas critique)}
+\subsection*{Simulation d'un mouvement en marche}
 
 Pour le cas inverse, des photos ont été prises toutes les 59 secondes. L'aiguille des secondes est alors décalée d'une seconde par rapport à la capture précédente, soit 6° de rotation. C'est le plus petit déplacement possible à mesurer avec les paramètres de capture du système, et donc le cas où le MSE sera le plus bas tout en restant non nul.
 
-C'est le cas le plus difficile à détecter. Si l'algorithme le détecte correctement, il fonctionnera sans problème pour tous les déplacements plus grands. Il aurait été possible de tester à 1 seconde d'intervalle, qui constitue également un cas critique, mais les délais fixes du système (stabilisation de la caméra, sauvegarde de l'image) ne permettent pas un intervalle aussi court sans modifier le code.
+C'est le cas le plus difficile à détecter. Si l'algorithme le détecte correctement, il fonctionnera sans problème pour tous les déplacements plus grands. Il aurait aussi été possible de tester à 1 seconde d'intervalle, mais les délais fixes du système (stabilisation de la caméra, sauvegarde de l'image) ne permettent pas un intervalle aussi court sans modifier le code.
 
-\subsection{Résultats}
-
-Le tableau~\ref{tab:resultats_detection} présente les résultats des deux tests.
-
-\begin{table}[H]
-    \centering
-    \caption{Résultats de la validation de la détection}
-    \label{tab:resultats_detection}
-    \begin{tabular}{|l|c|c|c|}
-        \hline
-        \textbf{Scénario} & \textbf{Intervalle} & \textbf{MSE mesuré} & \textbf{Résultat} \\
-        \hline
-        Arrêt simulé (aiguille alignée)         & 60 s & $\approx 0$         & Arrêt détecté \checkmark \\
-        \hline
-        Mouvement simulé (décalage de 1 s)      & 59 s & $> \text{seuil}$    & Mouvement détecté \checkmark \\
-        \hline
-    \end{tabular}
-\end{table}
+\subsection*{Résultats des tests}
 
 Les deux tests ont donné le résultat attendu. Le seuil est donc calibré de façon à distinguer un déplacement d'une seconde d'une image fixe, ce qui couvre tous les cas rencontrés en utilisation normale.
 
@@ -286,7 +280,7 @@ FS5-E14.
 
 \begin{figure}[H]
     \centering
-    \fbox{\parbox{0.65\textwidth}{\centering\vspace{2.5cm}\textit{[Capture d'écran : sélection du calibre parmi les 7 mouvements du tableau fabricant]}\vspace{2.5cm}}}
+    \includegraphics[width= 1\textwidth]{assets/figures/Resultats/interface_module.png}
     \caption{Sélection du mouvement depuis l'interface}
     \label{fig:ihm_mouvements}
 \end{figure}
@@ -298,24 +292,15 @@ toutefois être en mesure de fournir les informations présentes dans le
 tableau transmis par Breitling.
 
 Le mode de test, réserve de marche ou vieillissement, est également
-sélectionnable depuis l'interface (figure~\ref{fig:ihm_mode}), et ce choix
-conditionne correctement le comportement du système, validant l'exigence
-FS5-E15.
-
-\begin{figure}[H]
-    \centering
-    \fbox{\parbox{0.65\textwidth}{\centering\vspace{2.5cm}\textit{[Capture d'écran : sélection du mode réserve de marche / vieillissement]}\vspace{2.5cm}}}
-    \caption{Sélection du mode de test depuis l'interface}
-    \label{fig:ihm_mode}
-\end{figure}
+sélectionnable depuis l'interface, et ce choix conditionne correctement le
+comportement du système, validant l'exigence FS5-E15.
 
 Enfin, à l'issue d'un test, la réserve de marche mesurée est affichée à
-l'écran sous la forme heures et minutes (figure~\ref{fig:ihm_resultat}),
-conformément à l'exigence FS5-E16.
+l'écran (figure~\ref{fig:ihm_resultat}), conformément à l'exigence FS5-E16.
 
 \begin{figure}[H]
     \centering
-    \fbox{\parbox{0.65\textwidth}{\centering\vspace{2.5cm}\textit{[Capture d'écran : affichage du résultat de réserve de marche en heures et minutes]}\vspace{2.5cm}}}
+    \includegraphics[width=1\textwidth]{assets/figures/Resultats/Resultat RM.png}
     \caption{Affichage du résultat de la réserve de marche}
     \label{fig:ihm_resultat}
 \end{figure}
@@ -421,10 +406,18 @@ plusieurs modules en parallèle (FC6-E13), et cela n'a pas du tout été testé.
 Pour y parvenir, il faudrait d'abord implémenter une connectivité des postes
 de test via un bus USB, puis adapter le code afin de piloter les différents
 ports correspondants. En résumé, l'interface actuelle permet de se représenter
-à quoi ressemblerait le logiciel une fois cette fonctionnalité implémentée,
-mais celle-ci n'a pas été réalisée, la maquette actuelle ne permettant de
-toute façon pas de la tester (un seul poste physique étant disponible).
-Cette exigence n'est donc pas satisfaite en l'état.
+à quoi ressemblerait le logiciel une fois cette fonctionnalité implémentée
+(figure~\ref{fig:ihm_nb_modules}), mais celle-ci n'a pas été réalisée, la
+maquette actuelle ne permettant de toute façon pas de la tester (un seul
+poste physique étant disponible). Cette exigence n'est donc pas satisfaite
+en l'état.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{assets/figures/Resultats/gestion_modules.png}
+    \caption{Réglage du nombre de modules depuis l'interface}
+    \label{fig:ihm_nb_modules}
+\end{figure}
 
 % ─── 9. SÉCURITÉ DE L'OPÉRATEUR ──────────────────────────────────────────────
 
@@ -451,7 +444,7 @@ d'entraînement valant $R = 12{,}5\ \text{mm}$ (section~\ref{sec:dim-accouplemen
 Le couple de maintien $C_{\text{maintien}} = 55\ \text{mN·m}$
 (tableau~\ref{tab:specs_moteur}) n'est pas le couple maximal que le moteur
 peut délivrer~: il ne correspond qu'au palier nominal $CS = 18$ du driver
-(section~\ref{sec:dim-accouplement}, équation~\eqref{eq:couple_moteur_cs}).
+(section~\ref{sec:dim-driver}, équation~\eqref{eq:couple_moteur_cs}).
 Le registre $CS$ pouvant être poussé jusqu'à sa valeur maximale $CS = 31$, le
 couple maximal réellement atteignable par l'ensemble moteur-driver est~:
 \[
@@ -643,8 +636,8 @@ décrits au tableau~\ref{tab:legende-couleurs}.
     & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E4} Nombre de pas paramétrable
     & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}L'application exécute correctement les profils demandés depuis l'interface (§~\ref{sec:valid-moteur}). \\
 \cline{3-4}
- & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E5} Vitesse $\leq 50\ \mathrm{tr/min}$
-    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Vitesse vérifiée par analyse vidéo (comptage de tours rapporté au temps) (§~\ref{sec:valid-moteur}). \\
+ & & \cellcolor{resAFaire}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E5} Vitesse $\leq 50\ \mathrm{tr/min}$
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Vitesse moyenne conforme (analyse vidéo), mais la vitesse instantanée peut dépasser la consigne à cause de la saccade due au désalignement de l'accouplement~; piste de correction proposée (§~\ref{sec:valid-moteur}, chapitre~\ref{ch:ameliorations}). \\
 \cline{3-4}
  & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E6} Sens de rotation sélectionnable (horaire / anti-horaire)
     & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Fonctionnalité utilisée sans problème lors des essais de commande du moteur (§~\ref{sec:valid-moteur}). \\
@@ -723,8 +716,8 @@ décrits au tableau~\ref{tab:legende-couleurs}.
     & \cellcolor{resPartiel}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E1} Couple limité par contrôle du courant moteur (valeur min. issue du tableau fabricant et valeur maximum de 15\,mN\,m)
     & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Validation qualitative uniquement (retenue manuelle de l'arbre moteur) ; cohérente avec les calculs théoriques mais aucune mesure quantitative du couple (§~\ref{sec:valid-moteur}). \\
 \cline{3-4}
- & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E2} Vitesse $\leq 50\ \mathrm{tr/min}$ en mode réserve de marche, $\leq 350\ \mathrm{tr/min}$ en mode vieillissement
-    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Vérifiée par analyse vidéo pour les deux modes (§~\ref{sec:valid-moteur}). \\
+ & & \cellcolor{resAFaire}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E2} Vitesse $\leq 50\ \mathrm{tr/min}$ en mode réserve de marche, $\leq 350\ \mathrm{tr/min}$ en mode vieillissement
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Vitesse moyenne conforme pour les deux modes (analyse vidéo), mais la vitesse instantanée peut ponctuellement dépasser la consigne à cause de la saccade due au désalignement de l'accouplement~; piste de correction proposée (§~\ref{sec:valid-moteur}, chapitre~\ref{ch:ameliorations}). \\
 \cline{3-4}
  & & \cellcolor{resPartiel}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E3} Aucun effort radial ou axial exercé sur la tige
     & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Non mesuré expérimentalement, mais garanti par le dimensionnement théorique du découplage angulaire de l'accouplement (§~\ref{sec:valid-moteur}). \\
@@ -789,8 +782,8 @@ FC8 & Assurer un éclairage indépendant du milieu
 \end{longtable}
 \end{landscape}
 
-Sur les 36~exigences du cahier des charges, 28 sont pleinement conformes (soit
-environ 78~\%), dont la hauteur d'accès aux éléments de la machine (FC7-E16),
+Sur les 36~exigences du cahier des charges, 26 sont pleinement conformes (soit
+environ 72~\%), dont la hauteur d'accès aux éléments de la machine (FC7-E16),
 validée par la mesure du prototype. Six exigences sont considérées comme
 conformes sans garantie à 100~\%~: le couple moteur (FC1-E1), l'absence
 d'effort radial ou axial sur la tige (FC1-E3, garantie par le dimensionnement
@@ -803,10 +796,12 @@ la norme ISO/TS 15066 payante. Pour ces six exigences, une vérification
 qualitative, une justification par conception ou une extrapolation à partir
 du prototype a été apportée, sans qu'aucun élément ne laisse penser à une
 non-conformité. Une seule exigence n'a fait l'objet d'aucune vérification,
-même partielle~: la
-reproductibilité de la mesure de réserve de marche (FS1-E3). Enfin, une seule
-exigence n'est aujourd'hui pas satisfaite~:
-FC6-E13 (mesure simultanée sur 10 postes), non pas pour une raison de
-conception, mais faute d'avoir encore implémenté le pilotage parallèle de
-plusieurs modules. Aucune exigence n'est jugée non conforme de manière
-irrémédiable.
+même partielle~: la reproductibilité de la mesure de réserve de marche
+(FS1-E3). Enfin, trois exigences ne sont aujourd'hui pas satisfaites, mais
+pour lesquelles une piste de correction a déjà été identifiée~: la vitesse
+du moteur (FS2-E5, FC1-E2), dont la vitesse instantanée peut ponctuellement
+dépasser la consigne à cause de la saccade due au désalignement de
+l'accouplement, malgré une vitesse moyenne conforme, et FC6-E13 (mesure
+simultanée sur 10 postes), non pas pour une raison de conception, mais
+faute d'avoir encore implémenté le pilotage parallèle de plusieurs modules.
+Aucune exigence n'est jugée non conforme de manière irrémédiable.

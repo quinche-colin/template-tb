@@ -2,14 +2,9 @@
 
 \section{Organisation du dossier ARMAGE}
 
-Le dossier \texttt{ARMAGE} contient l'ensemble du code source de
-l'application de pilotage du banc de test, ainsi que les ressources et
-outils nécessaires à son fonctionnement et à sa distribution. Chaque
-sous-dossier regroupe les fichiers liés à une couche fonctionnelle précise
-(matériel, traitement d'image, interface graphique, utilitaires), ce qui
-permet de localiser rapidement le code concerné par une modification~: tout
-ce qui touche la caméra se trouve dans \texttt{camera/}, tout ce qui touche
-le moteur dans \texttt{motor/}.
+Le dossier \texttt{ARMAGE}, représenté sur la figure~\ref{fig:armage-arborescence},
+contient l'ensemble du code source de l'application, ainsi que les
+ressources nécessaires à son fonctionnement.
 
 \begin{figure}[H]
     \DTsetlength{0.2em}{1em}{0.2em}{0.4pt}{1.6pt}
@@ -55,71 +50,23 @@ le moteur dans \texttt{motor/}.
     \label{fig:armage-arborescence}
 \end{figure}
 
-\subsection{Fichiers à la racine}
+Le fichier \texttt{main.py} initialise l'application avant de l'ouvrir. Le
+reste du programme est ensuite séparé en plusieurs dossiers, chacun dédié à
+une fonction précise~: un pour piloter la caméra (\texttt{camera/}), un
+pour piloter le moteur (\texttt{motor/}), un pour le traitement d'image
+(\texttt{processing/}), un pour l'interface du logiciel (\texttt{gui/}), et
+un pour les fonctions transverses comme la configuration ou la génération
+des rapports PDF (\texttt{utils/}). Cette séparation facilite la
+compréhension et le dépannage du code, en évitant d'avoir à parcourir
+plusieurs milliers de lignes avant de trouver la fonction à dépanner.
 
-Le point d'entrée est \texttt{main.py}~: il configure le logging, désactive
-la mise en veille de l'ordinateur pendant la durée d'un test, force le thème
-clair de l'interface Qt et lance la fenêtre principale. Les dépendances
-Python sont listées dans \texttt{requirements.txt}, installables via
-\texttt{pip install -r requirements.txt}. \texttt{settings.json} est un
-fichier de configuration persistante (port moteur, index caméra, mouvements
-personnalisés, nombre de modules), lu et écrit par
-\texttt{gui/settings\_manager.py}.
-
-\texttt{ARMAGE.spec}, avec les scripts \texttt{build\_windows.bat} et
-\texttt{build\_linux.sh}, servent à empaqueter l'application en exécutable
-via PyInstaller~; \texttt{GxIAPI.dll} (le SDK caméra Daheng) est embarquée
-dans cet exécutable pour Windows. Enfin, \texttt{Mode\_emploi\_ARMAGE.pdf}
-est généré par \texttt{utils/user\_manual.py}, \texttt{README.md} contient
-la documentation technique du projet, et \texttt{app.log} est le journal
-d'exécution.
-
-\subsection{Dossiers de code source}
-
-Chaque périphérique a son propre dossier, isolé de l'interface~:
-\texttt{camera/} pilote la caméra Daheng via le SDK \texttt{gxipy}
-(connexion, exposition, gain, capture), et \texttt{motor/} pilote le moteur
-TMCM-1021 via le protocole TMCL et la bibliothèque \texttt{pytrinamic}
-(connexion, remontage, dévidage, impulsions, limites de couple).
-\texttt{processing/} compare les images successives (métrique MSE) pour
-détecter l'arrêt réel du mouvement et en déduire la réserve de marche.
-
-\texttt{gui/} contient l'interface graphique PySide6/Qt qui orchestre ces
-trois couches~: la fenêtre principale, la page listant les modules actifs,
-le widget de module individuel, les boîtes de dialogue, et la gestion des
-paramètres persistants. \texttt{utils/} regroupe les fonctions transverses~:
-\texttt{config.py} centralise les constantes du projet, tandis que
-\texttt{report\_generator.py} et \texttt{user\_manual.py} génèrent
-respectivement le rapport PDF de fin de test et le mode d'emploi, via
-\texttt{fpdf2}.
-
-Enfin, \texttt{gxipy/} est le SDK caméra fourni par Daheng (code tiers, non
-modifié), et \texttt{assets/} regroupe les icônes de l'application.
-
-\subsection{Dossiers générés automatiquement}
-
-Les dossiers \texttt{captures/}, \texttt{build/}, \texttt{dist/} et
-\texttt{\_\_pycache\_\_/} ne contiennent que du contenu généré
-automatiquement et ne doivent pas être édités manuellement~:
-\texttt{captures/} sert d'historique des essais (images et rapports PDF),
-\texttt{build/} et \texttt{dist/} sont produits par PyInstaller lors de
-l'empaquetage (ce dernier contenant l'exécutable final), et
-\texttt{\_\_pycache\_\_/} contient le bytecode Python compilé.
-
-\subsection{Logique de rangement}
-
-Le dossier suit trois principes. D'abord, une séparation entre le matériel,
-la logique et l'interface~: chaque périphérique physique (caméra, moteur) a
-son propre module isolé, indépendant de l'interface graphique, ce qui
-facilite le test en mode simulation (sans matériel branché) et la
-maintenance. Ensuite, une centralisation de la configuration~: un seul
-fichier (\texttt{utils/config.py}) regroupe les constantes ajustables, ce
-qui évite de disperser des valeurs « magiques » dans le code. Enfin, une
-séparation entre le code source et les artefacts générés~: les dossiers
-\texttt{build/}, \texttt{dist/}, \texttt{captures/} et les
-\texttt{\_\_pycache\_\_/} ne contiennent que du contenu généré
-automatiquement (compilation, exécutable, résultats de tests) et pourraient
-être supprimés puis régénérés sans perte de code.
+Le dossier contient enfin un certain nombre de fichiers annexes~: des PDF
+que l'application peut ouvrir (\texttt{Mode\_emploi\_ARMAGE.pdf},
+\texttt{README.md}), des fichiers pour stocker des paramètres ou des
+journaux d'exécution (\texttt{settings.json}, \texttt{app.log}), et les
+fichiers servant à installer ou empaqueter l'application
+(\texttt{requirements.txt}, \texttt{ARMAGE.spec},
+\texttt{build\_windows.bat}, \texttt{build\_linux.sh}, \texttt{GxIAPI.dll}).
 
 % ─── 1. FIXATION ────────────────────────────────────────────────────────────
 
@@ -127,13 +74,23 @@ automatiquement (compilation, exécutable, résultats de tests) et pourraient
 
 \subsection{Saisie des informations de test}
 
-Avant de lancer une mesure, l'opérateur renseigne dans l'interface quatre
+Avant de lancer une mesure, l'opérateur renseigne dans l'interface cinq
 informations obligatoires : la référence du test, le numéro de série de la
-montre, le nom de l'opérateur et le type de mouvement horloger. Le bouton
-de démarrage reste désactivé tant que les trois premiers champs textuels ne
-sont pas remplis, empêchant tout lancement sans identification complète du
-test. Ces informations sont ensuite intégrées au rapport PDF généré en fin
-de mesure.
+montre et le nom de l'opérateur, saisis librement dans des champs textuels,
+ainsi que le type de mouvement horloger et le mode de test (réserve de
+marche ou vieillissement), sélectionnés depuis des menus déroulants qui
+proposent toujours une valeur par défaut et ne peuvent donc jamais rester
+vides. Le bouton de démarrage reste désactivé tant que les trois champs
+textuels ne sont pas remplis, empêchant tout lancement sans identification
+complète du test. Ces informations sont ensuite intégrées au rapport PDF
+généré en fin de mesure.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{assets/figures/Resultats/interface_module.png}
+    \caption{Champs de saisie des informations de test dans l'interface}
+    \label{fig:gui_saisie_test}
+\end{figure}
 
 \subsection{Base de données des mouvements}
 
@@ -177,25 +134,32 @@ mouvements actuellement disponibles dans le système.
     \end{tabular}
 \end{table}
 
-\subsection{Chargement automatique des paramètres}
+Lorsqu'un mouvement est sélectionné, ses paramètres sont chargés
+automatiquement au lancement du test (sans être affichés à l'écran),
+garantissant que les calculs de tours et de couple restent cohérents même
+si la sélection est modifiée après une première tentative.
 
-Lorsque l'opérateur sélectionne un mouvement dans la liste déroulante,
-l'identifiant du mouvement est immédiatement enregistré dans l'état interne
-du module. Les paramètres associés ne sont pas affichés à l'écran mais sont
-chargés automatiquement au moment du lancement du test, à la demande des
-étapes de remontage et de dévidage décrites à la section précédente.
+Cette liste peut être modifiée par l'opérateur directement depuis
+l'interface~: le menu glissant sur la droite de l'application
+(figure~\ref{fig:gui_menu}) donne accès à la fenêtre « Gestion des
+mouvements » (figure~\ref{fig:gui_mouvements}), qui permet d'ajouter ou de
+supprimer un mouvement de la liste. Les mouvements ajoutés sont enregistrés
+dans un fichier de configuration JSON et rechargés automatiquement à chaque
+démarrage de l'application, au même titre que les mouvements intégrés.
 
-Ce mécanisme de chargement à la demande garantit que les calculs de tours
-et de couple sont toujours cohérents avec le mouvement sélectionné au
-moment du démarrage, sans risque de décalage si l'opérateur modifie sa
-sélection après une première tentative.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{assets/figures/Implementation/menu_navigation.png}
+    \caption{Menu latéral de navigation de l'application}
+    \label{fig:gui_menu}
+\end{figure}
 
-La liste des mouvements disponibles peut être étendue par l'opérateur
-directement depuis l'interface, via la fenêtre de paramètres. Les mouvements
-ainsi ajoutés sont persistés dans un fichier de configuration JSON et
-rechargés automatiquement à chaque démarrage de l'application, au même
-titre que les mouvements intégrés.
-
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{assets/figures/Implementation/gestion_mouvements.png}
+    \caption{Fenêtre de gestion des mouvements}
+    \label{fig:gui_mouvements}
+\end{figure}
 
 % ─── 2. ACCOUPLEMENT ET MOTORISATION ────────────────────────────────────────
 
@@ -376,16 +340,39 @@ de l'application et configure les paramètres suivants :
           colorimétrique entre images successives.
 \end{itemize}
 
+La figure~\ref{fig:image_camera} montre une image telle que capturée par la
+caméra avec ces réglages, sur laquelle se base l'algorithme de détection
+(section~\ref{sec:detection}). L'horodatage est incrusté directement par la
+caméra en haut de l'image, et la teinte bleutée provient du filtre
+polarisant croisé utilisé pour supprimer les reflets spéculaires
+(figure~\ref{fig:filtres_polarisants}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{assets/figures/Implementation/image_mouvement_par_camera.jpg}
+    \caption{Image du mouvement telle que capturée par la caméra}
+    \label{fig:image_camera}
+\end{figure}
+
 En l'absence de la caméra ou du SDK, l'application bascule
 automatiquement en mode simulation : des images de test synthétiques
 sont générées, ce qui permet de développer et tester le logiciel sans
-matériel connecté.
+matériel connecté. Une fenêtre dédiée (figure~\ref{fig:gui_connexion})
+permet par ailleurs de forcer une reconnexion du moteur ou de la caméra,
+par exemple après un débranchement.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{assets/figures/Implementation/connexion_appareils.png}
+    \caption{Fenêtre de connexion des appareils}
+    \label{fig:gui_connexion}
+\end{figure}
 
 \subsection{Contrôle de l'éclairage par GPIO}
 
 L'éclairage du banc est piloté directement via le GPIO de la caméra
 (broche Line2), configurée en sortie numérique. Ce choix présente deux
-avantages : il n'nécessite aucun câblage supplémentaire ni
+avantages : il ne nécessite aucun câblage supplémentaire ni
 microcontrôleur dédié, et il garantit une synchronisation exacte entre
 l'allumage de l'éclairage et la séquence d'acquisition, puisque les
 deux sont pilotés par la même interface logicielle.
@@ -424,8 +411,8 @@ d'acquisition.
 \subsection{Horodatage et sauvegarde sur disque}
 
 Immédiatement après l'acquisition, l'heure exacte de la prise de vue
-est gravée directement dans l'image sous la forme d'un bandeau
-semi-transparent en haut du cadre, affichant la date et l'heure au
+est ajoutée directement sur l'image sous la forme d'une bande
+semi-transparente en haut du cadre, affichant la date et l'heure au
 format \texttt{JJ/MM/AAAA HH:MM:SS}. Cette information est ainsi
 indissociable de l'image elle-même, quelle que soit la façon dont
 elle est consultée ultérieurement.
@@ -440,8 +427,7 @@ convention de nommage suivante :
 où \texttt{\{id\}} est l'identifiant numérique du module de test et
 \texttt{\{AAAAMMJJ\}\_\{HHMMSS\}} l'horodatage de la capture. Ce
 nommage permet un tri chronologique naturel des fichiers et l'extraction
-automatique de l'heure de prise de vue à partir du nom de fichier seul,
-sans métadonnées supplémentaires.
+automatique de l'heure de prise de vue à partir uniquement du nom de fichier.
 
 L'ensemble des images d'un test est regroupé dans un répertoire
 \texttt{captures/} situé à la racine de l'application. Aucune
@@ -518,7 +504,7 @@ pour caractériser un mouvement horloger.
 \subsection{Détermination du temps de réserve de marche}
 
 L'arrêt du mouvement est détecté lorsque la comparaison entre l'image actuelle $I_n$ et l'image précédente $I_{n-1}$ donne un MSE inférieur au seuil fixé.
-Cela signifie que les aiguilles occupent la même position à $t_n$ et à $t_{n-1}$, ce qui signifie que la montre s'est arrêtée dans l'intervalle $[t_{n-2},\, t_{n-1}]$.
+Cela signifie que les aiguilles occupent la même position à $t_n$ et à $t_{n-1}$, ce qui signifie que la montre s'est arrêtée dans l'intervalle $[t_{n-2},\, t_{n-1}]$. En effet, la comparaison précédente, entre $I_{n-2}$ et $I_{n-1}$, avait nécessairement donné un MSE supérieur au seuil -- sans quoi l'arrêt aurait déjà été détecté à cette étape précédente -- ce qui prouve que les aiguilles se sont bien déplacées entre $t_{n-2}$ et $t_{n-1}$, mais sans indiquer à quel instant précis de cet intervalle ce déplacement a eu lieu.
 Par conséquent, le seul instant pour lequel le système peut garantir avec certitude que le mouvement fonctionnait encore est $t_{n-2}$.
 
 La réserve de marche mesurée est donc définie par :

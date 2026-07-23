@@ -46,14 +46,11 @@
 
 \addbibresource{bibliography.bib}
 
-\input{backmatter/acronyms}
-\input{backmatter/glossary}
 \input{meta}
 
 \surroundwithmdframed{minted}
 
-% Glossaires et index - doivent être dans le préambule
-\makenoidxglossaries
+% Index - doit être dans le préambule
 \makeindex
 
 % Utilisé par la nomenclature
@@ -108,18 +105,12 @@
 \appendixpage
 \addappheadtotoc
 
-% Désactivé temporairement pour accélérer la compilation (nombreux \includepdf)
-% \inputdir[order=natural]{appendix}
+\inputdir[order=natural]{appendix}
 
 \let\cleardoublepage\clearpage
 \backmatter
 
-\label{glossaire}
-\printnoidxglossary
 \label{index}
 \printindex
-
-\input{backmatter/colophon}
-
 
 \end{document}
