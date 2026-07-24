@@ -1,5 +1,11 @@
 \chapter{Implémentation logicielle}
 
+ARMAGE, pour « Acquisition de Réserve de Marche Accélérée avec Gestion de
+l'Entraînement », est le nom donné au logiciel développé dans le cadre de ce
+travail. Au-delà de l'acronyme, ce nom est aussi un clin d'œil au cliquet
+d'armage (section~\ref{sec:mesure_acceleree}), la pièce du mouvement qu'il
+faut retirer pour pouvoir dévider le barillet par la tige de remontoir.
+
 \section{Organisation du dossier ARMAGE}
 
 Le dossier \texttt{ARMAGE}, représenté sur la figure~\ref{fig:armage-arborescence},
@@ -67,6 +73,24 @@ journaux d'exécution (\texttt{settings.json}, \texttt{app.log}), et les
 fichiers servant à installer ou empaqueter l'application
 (\texttt{requirements.txt}, \texttt{ARMAGE.spec},
 \texttt{build\_windows.bat}, \texttt{build\_linux.sh}, \texttt{GxIAPI.dll}).
+
+\section{Installation et utilisation}
+
+Deux étapes sont nécessaires avant de pouvoir utiliser l'application sur un
+nouveau poste.
+
+La première consiste à installer les pilotes du port USB de la caméra, sans
+lesquels l'ordinateur ne la reconnaît pas. Ces pilotes sont fournis avec le
+Galaxy SDK du fabricant Daheng Imaging, téléchargeable sur son site
+\cite{daheng_galaxy_sdk}~: lors de l'installation, il suffit de sélectionner
+les pilotes correspondant à une caméra USB3.
+
+La seconde consiste simplement à récupérer l'exécutable \texttt{ARMAGE}
+généré dans le dossier \texttt{dist/} (figure~\ref{fig:armage-arborescence})
+à l'issue de l'empaquetage de l'application, puis à le placer à
+l'emplacement souhaité sur l'ordinateur~: aucune installation supplémentaire
+n'est requise, l'application peut être lancée directement depuis cet
+exécutable.
 
 % ─── 1. FIXATION ────────────────────────────────────────────────────────────
 
@@ -504,7 +528,7 @@ pour caractériser un mouvement horloger.
 \subsection{Détermination du temps de réserve de marche}
 
 L'arrêt du mouvement est détecté lorsque la comparaison entre l'image actuelle $I_n$ et l'image précédente $I_{n-1}$ donne un MSE inférieur au seuil fixé.
-Cela signifie que les aiguilles occupent la même position à $t_n$ et à $t_{n-1}$, ce qui signifie que la montre s'est arrêtée dans l'intervalle $[t_{n-2},\, t_{n-1}]$. En effet, la comparaison précédente, entre $I_{n-2}$ et $I_{n-1}$, avait nécessairement donné un MSE supérieur au seuil -- sans quoi l'arrêt aurait déjà été détecté à cette étape précédente -- ce qui prouve que les aiguilles se sont bien déplacées entre $t_{n-2}$ et $t_{n-1}$, mais sans indiquer à quel instant précis de cet intervalle ce déplacement a eu lieu.
+Cela signifie que les aiguilles occupent la même position à $t_n$ et à $t_{n-1}$, ce qui signifie que la montre s'est arrêtée dans l'intervalle $[t_{n-2},\, t_{n-1}]$. En effet, la comparaison précédente, entre $I_{n-2}$ et $I_{n-1}$, avait nécessairement donné un MSE supérieur au seuil (sans quoi l'arrêt aurait déjà été détecté à cette étape précédente), ce qui prouve que les aiguilles se sont bien déplacées entre $t_{n-2}$ et $t_{n-1}$, mais sans indiquer à quel instant précis de cet intervalle ce déplacement a eu lieu.
 Par conséquent, le seul instant pour lequel le système peut garantir avec certitude que le mouvement fonctionnait encore est $t_{n-2}$.
 
 La réserve de marche mesurée est donc définie par :
@@ -538,12 +562,3 @@ contradictoires :
 La valeur retenue a été déterminée expérimentalement à partir de plusieurs
 essais.
 
-\subsection{Robustesse et limites}
-
-La méthode est robuste aux variations d'exposition grâce à la
-conversion en niveaux de gris et à l'éclairage contrôlé et reproductible.
-Une limite a néanmoins été identifiée : des vibrations mécaniques extérieures
-importantes, provoquées par exemple par un choc ou une machine voisine,
-peuvent modifier légèrement la position relative du cadran dans le champ de
-la caméra et élever artificiellement le MSE, masquant temporairement un arrêt
-réel.

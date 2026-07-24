@@ -1,7 +1,5 @@
 \chapter{Conclusion}
 
-\section{Bilan du projet}
-
 Ce travail de Bachelor visait à concevoir et réaliser un prototype capable
 de mesurer la réserve de marche d'un mouvement horloger de manière
 accélérée, tout en explorant un mode de vieillissement complémentaire. Le
@@ -9,6 +7,27 @@ prototype réalisé remplit cet objectif~: le remontage, le dévidage contrôlé
 du barillet, la détection optique de l'arrêt et le calcul de la réserve de
 marche fonctionnent de manière cohérente, et ont été validés
 expérimentalement sur le mouvement de référence.
+
+Au-delà de la validation du cahier des charges, l'intérêt principal de cette
+approche réside dans le gain de temps qu'elle permet~: en ne mesurant que les
+24 dernières heures de réserve de marche plutôt que sa totalité, la méthode
+de dévidage contrôlé du barillet permet de réduire la durée d'un test de
+76 heures pour certains mouvements. C'est le cas du Mvt19, dont la réserve de
+marche totale de 100 heures (tableau~\ref{tab:caracteristiques_mouvements})
+est ainsi ramenée à 24 heures de mesure effective.
+
+Comparée aux solutions industrielles existantes recensées dans l'état de
+l'art, en particulier le Chronoscope RDM de Witschi Electronic
+(section~\ref{sec:sota-chronoscope-rdm}), cette approche présente toutefois
+deux inconvénients. D'une part, elle impose de placer préalablement le
+mouvement dans une configuration particulière avant de démarrer la mesure~: cette étape occupe
+l'horloger pendant un temps certes inférieur au temps gagné par la méthode accélérée, mais actif, ce qui n'est pas
+comparable au fait d'attendre qu'un dévidage se termine de lui-même. D'autre part,
+contrairement à un appareil générique, cette machine ne peut fonctionner que
+sur des mouvements dont les caractéristiques (réserve de marche totale,
+rapport tige/barillet, nombre de tours à dévider pour les 24 dernières
+heures) sont connues et renseignées au préalable, telles que celles du
+tableau~\ref{tab:caracteristiques_mouvements}.
 
 La grande majorité des exigences du cahier des charges sont satisfaites,
 souvent avec une marge confortable~: précision de la mesure, protection du
@@ -31,22 +50,6 @@ l'adaptation du logiciel qui va avec. Le système de fixation du mouvement
 devra également être revu pour intégrer la boîte du mouvement plutôt que de
 le serrer directement. En effet, il s'agit d'une piste identifiée trop tard pour être intégrée à ce prototype, mais facilement réalisable sur une machine conçue avec cette
 solution dès le départ.
-
-\section{Regard personnel}
-
-Ce travail de fin de formation s'est montré plus qu'intéressant. Mettre en
-pratique, dans le cadre d'un projet concret, les compétences acquises durant
-ces trois années est à mes yeux une belle manière de clôturer mon Bachelor.
-J'ai particulièrement apprécié la pluridisciplinarité de ce travail~:
-électronique, informatique, mécanique.
-D'un point de vue personnel, je suis très satisfait du travail que j'ai pu
-réaliser durant le temps mis à disposition.
-
-Ce travail a également constitué mon premier contact avec le milieu
-professionnel, n'ayant jamais travaillé auparavant. Je pense qu'il m'a déjà
-permis d'apprendre et d'évoluer, notamment en ce qui concerne la gestion de
-projet.
-
 
 % La signature est optionnelle et pas forcément nécessaire...
 \vfil

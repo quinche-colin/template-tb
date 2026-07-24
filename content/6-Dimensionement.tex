@@ -644,6 +644,7 @@ La profondeur de champ maximale atteignable, obtenue à cette ouverture $N = 11$
 En pratique, il n'est pas utile de fermer le diaphragme jusqu'à cette valeur extrême, ce qui limiterait inutilement la quantité de lumière atteignant le capteur.
 
 \subsection{Système d'éclairage}
+\label{sec:dim-eclairage}
 \subsubsection{Justification du choix d'une ring light}
 L'observation du mouvement de montre en fonctionnement requiert un éclairage homogène et sans ombres. 
 La ring light, montée coaxialement à l'objectif, fournit un éclairage diffus et uniforme du champ observé. 
@@ -733,7 +734,7 @@ Les composants optiques de filtration sélectionnés sont présentés au tableau
     \bottomrule
   \end{tabular}
 \end{table}
-\textbf{Résumé de l'acquisition~:} Le système optique offre une résolution de 15,4 $\mu$m/pixel sur un champ de 40 x 40 mm, avec une distance de travail de 250 mm et un éclairage rasant homogène.
+\textbf{Résumé de l'acquisition~:} Le système optique offre une résolution de 18,6 $\mu$m/pixel sur un champ de 48 x 48 mm, avec une distance de travail de 250 mm et un éclairage rasant homogène.
 Ces caractéristiques permettent une détection fiable et reproductible du mouvement.
 
 
@@ -762,19 +763,18 @@ En revanche, un désalignement résiduel entre les deux axes introduit une varia
 Afin d'analyser cette saccade, il est nécessaire de connaitre la différence de hauteur de tige des différents mouvements, car il s'agit de la seule dimension pouvant varier d'un mouvement à l'autre avec cette solution de fixation. 
 Les différents mouvements n'ayant pas les mêmes dimensions, la hauteur de la tige peut varier lors du montage dépendamment du mouvement.
 \begin{align*}
-  \text{Mouvement 1} &: 8{,}73 - 4{,}1 = 4{,}63\ \text{mm} \\
-  \text{Mouvement 2} &: 7{,}23 - 2{,}8 = 4{,}43\ \text{mm} \\
-  \text{Mouvement 3} &: 6{,}63 - 2{,}2 = 4{,}43\ \text{mm} \\
-  \text{Mouvement 4} &: 8{,}63 - 4{,}2 = 4{,}43\ \text{mm} \\
-  \text{Mouvement 5} &: 3{,}80 - 1{,}5 = 2{,}30\ \text{mm} \\
-  \text{Mouvement 6} &: 3{,}05 - 1{,}0 = 2{,}05\ \text{mm} \\
-  \text{Mouvement 7} &: 9{,}33 - 4{,}1 = 5{,}23\ \text{mm}
+  \text{Mvt19} &: 8{,}73 - 4{,}1 = 4{,}63\ \text{mm} \\
+  \text{Mvt01} &: 7{,}23 - 2{,}8 = 4{,}43\ \text{mm} \\
+  \text{Mvt200} &: 6{,}63 - 2{,}2 = 4{,}43\ \text{mm} \\
+  \text{Mvt200.1} &: 8{,}63 - 4{,}2 = 4{,}43\ \text{mm} \\
+  \text{Mvt110} &: 3{,}80 - 1{,}5 = 2{,}30\ \text{mm} \\
+  \text{Mvt111} &: 3{,}05 - 1{,}0 = 2{,}05\ \text{mm}
 \end{align*}
 
-La différence entre la hauteur maximale (Mouvement 7 : $5{,}23\ \text{mm}$) et minimale (Mouvement 6 : $2{,}05\ \text{mm}$) s'élève à :
+La différence entre la hauteur maximale (Mvt19 : $4{,}63\ \text{mm}$) et minimale (Mvt111 : $2{,}05\ \text{mm}$) s'élève à :
 
 \begin{equation}
-  \Delta h = 5{,}23 - 2{,}05 = 3{,}18\ \text{mm}
+  \Delta h = 4{,}63 - 2{,}05 = 2{,}58\ \text{mm}
   \label{eq:delta_h}
 \end{equation}
 
@@ -797,8 +797,8 @@ L'angle $\beta$ de la fourche en T peut alors être exprimé en fonction de $\al
 \end{equation}
 
 \paragraph{Symétrie de la fourche en U.} La fourche en U possède deux
-goupilles diamétralement opposées, qui viennent alternativement entrainer la fourche en T~: 
-sur un tour moteur complet, une goupille entraine la fourche en T durant 180°, puis c'est au tour de la seconde goupille, et ainsi de suite.
+goupilles diamétralement opposées, qui viennent alternativement entraîner la fourche en T~:
+sur un tour moteur complet, une goupille entraîne la fourche en T durant 180°, puis c'est au tour de la seconde goupille, et ainsi de suite.
 L'équation \eqref{eq:beta_alpha} se prolonge donc au-delà de l'ensemble $[0°,180°)$ par cette périodicité de 180° :
 
 \begin{equation}
@@ -811,23 +811,23 @@ tour complet.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.62\textwidth]{assets/figures/Implementation/fig_positions_angle.png}
+  \includegraphics[width=0.7\textwidth]{assets/figures/Implementation/fig_positions_angle.png}
   \caption{Position de la tige (bleu, angle $\beta$) en fonction de la
   position du moteur (orange, angle $\alpha$), tous les 45° sur un tour
   complet, en deux colonnes de quatre panneaux. Les axes $O_1$ (moteur) et
   $O_2$ (tige) et leur désalignement $e$ sont indiqués sur le premier
   panneau ; la goupille active de la fourche en U est entourée. $R=12{,}5$~mm,
-  $e=\Delta h=3{,}18$~mm.}
+  $e=\Delta h=2{,}58$~mm.}
   \label{fig:positions_angle}
 \end{figure}
 
 Une fois le modèle géométrique défini, il est possible de représenter l'évolution de l'angle $\beta$ en fonction de $\alpha$ le tout pour différentes valeurs de désalignement.
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.75\textwidth]{assets/figures/Implementation/fig_beta_evolution.png}
+  \includegraphics[width=1\textwidth]{assets/figures/Implementation/fig_beta_evolution.png}
   \caption{Évolution de l'angle tige $\beta$ sur un demi-tour, pour
   différentes valeurs du désalignement $e$ (0 à 5~mm). Le désalignement réel
-  ($\Delta h = 3{,}18$~mm) se situe entre les courbes $e=3$~mm et $e=4$~mm.
+  ($\Delta h = 2{,}58$~mm) se situe entre les courbes $e=2$~mm et $e=3$~mm.
   Le comportement se répète à l'identique sur chaque demi-tour suivant.}
   \label{fig:beta_evolution}
 \end{figure}
@@ -841,7 +841,7 @@ De plus, il est également possible de représenter la différence entre ces deu
 \end{equation}
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{assets/figures/Implementation/fig_delta_evolution.png}
+  \includegraphics[width=1\textwidth]{assets/figures/Implementation/fig_delta_evolution.png}
   \caption{Écart angulaire $\Delta\theta=\beta-\alpha$ sur un demi-tour, pour
   différentes valeurs du désalignement $e$ (0 à 5~mm). Ce motif se répète à
   l'identique tous les 180° (et non tous les 360°), conséquence directe de
@@ -875,11 +875,11 @@ Les valeurs de $R$ et $e$ étant des constantes seul les termes en $\cos\alpha$ 
   \label{eq:eps_bounds}
 \end{equation}
 
-Avec $e = \Delta h = 3{,}18\ \text{mm}$ et $R=12{,}5\ \text{mm}$ :
+Avec $e = \Delta h = 2{,}58\ \text{mm}$ et $R=12{,}5\ \text{mm}$ :
 
 \begin{equation}
-  \varepsilon_{\text{min}} = -\frac{3{,}18}{15{,}68} \approx -20{,}3\ \%, \qquad
-  \varepsilon_{\text{max}} = \frac{3{,}18}{9{,}32} \approx 34{,}1\ \%
+  \varepsilon_{\text{min}} = -\frac{2{,}58}{15{,}08} \approx -17{,}1\ \%, \qquad
+  \varepsilon_{\text{max}} = \frac{2{,}58}{9{,}92} \approx 26{,}0\ \%
   \label{eq:eps_bounds_calc}
 \end{equation}
 
@@ -888,7 +888,7 @@ c'est-à-dire \emph{juste avant} le changement de bras actif~: $\beta$ reste
 continue à cet instant (\autoref{fig:beta_evolution}), mais $d\beta/d\alpha$
 y est discontinue, puisque le bras qui prend le relais redémarre son propre
 cycle à $\varepsilon_{\text{min}}$. La vitesse de la tige subit donc un saut
-brusque de $+34{,}1\ \%$ à $-20{,}3\ \%$ toutes les 180° de rotation moteur
+brusque de $+26{,}0\ \%$ à $-17{,}1\ \%$ toutes les 180° de rotation moteur
 (\autoref{fig:profil_remontage}, \autoref{fig:profil_vieillissement}). Ce saut est absorbé mécaniquement par le jeu angulaire de
 l'accouplement.
 
@@ -900,9 +900,9 @@ profil réel obtenu est le suivant :
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{assets/figures/Implementation/fig_profil_remontage.png}
+  \includegraphics[width=1\textwidth]{assets/figures/Implementation/fig_profil_remontage.png}
   \caption{Profil de vitesse réel en mode réserve de marche (Mvt01), avec
-  saccade périodique due au désalignement $e=\Delta h=3{,}18$~mm.}
+  saccade périodique due au désalignement $e=\Delta h=2{,}58$~mm.}
   \label{fig:profil_remontage}
 \end{figure}
 
@@ -916,16 +916,16 @@ la forme trapézoïdale~; ce n'est pas la valeur réelle du système.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.8\textwidth]{assets/figures/Implementation/fig_profil_vieillissement.png}
+  \includegraphics[width=1\textwidth]{assets/figures/Implementation/fig_profil_vieillissement.png}
   \caption{Profil de vitesse illustratif en mode vieillissement accéléré
   (accélération de $100\,000$~tr/min\textsuperscript{2}, non représentative
   du système réel), avec saccade périodique due au désalignement
-  $e=\Delta h=3{,}18$~mm.}
+  $e=\Delta h=2{,}58$~mm.}
   \label{fig:profil_vieillissement}
 \end{figure}
 
-Dans les deux cas, la vitesse instantanée croît jusqu'à $+34\ \%$ au-dessus de
-la consigne puis chute à $-20\ \%$ en dessous, à chaque changement de
+Dans les deux cas, la vitesse instantanée croît jusqu'à $+26\ \%$ au-dessus de
+la consigne puis chute à $-17\ \%$ en dessous, à chaque changement de
 goupille active (tous les 180° de rotation moteur).
 
 \subsection{Analyse de la précision de la mesure}
@@ -941,24 +941,24 @@ L'écart angulaire $\Delta\theta(\alpha)$ atteint un extremum quand sa dérivée
 s'annule, c'est-à-dire quand $d\beta/d\alpha=1$. D'après
 l'équation~\eqref{eq:omega_ratio}, cela se produit lorsque $\cos\alpha=-e/R$.
 En remplaçant cette valeur dans l'équation~\eqref{eq:beta_alpha}, avec
-$e=\Delta h=3{,}18\ \text{mm}$ et $R=12{,}5\ \text{mm}$, on obtient les
+$e=\Delta h=2{,}58\ \text{mm}$ et $R=12{,}5\ \text{mm}$, on obtient les
 valeurs de $\beta$ et $\alpha$ à cet instant :
 
 \begin{align}
   \beta &= \operatorname{atan2}\!\Big(R\sin\alpha,\ \underbrace{e+R\cos\alpha}_{=\,e+R(-e/R)\,=\,0}\Big)
   = \operatorname{atan2}\big(R\sin\alpha,\ 0\big) = 90° \\
-  \alpha &= \arccos\!\left(-\frac{e}{R}\right) = \arccos\!\left(-\frac{3{,}18}{12{,}5}\right) \approx 104{,}74°
+  \alpha &= \arccos\!\left(-\frac{e}{R}\right) = \arccos\!\left(-\frac{2{,}58}{12{,}5}\right) \approx 101{,}91°
   \label{eq:alpha_extremum}
 \end{align}
 
 En substituant ces deux valeurs dans $\Delta\theta=\beta-\alpha$ :
 
 \begin{equation}
-  \Delta\theta_{\text{max}} = 90° - 104{,}74° = -14{,}74°
+  \Delta\theta_{\text{max}} = 90° - 101{,}91° = -11{,}91°
   \label{eq:delta_max}
 \end{equation}
 
-Cet extremum est atteint 2 fois lors d'un tour lorsque $\alpha=104{,}7°$ et $\alpha=284{,}7°$.
+Cet extremum est atteint 2 fois lors d'un tour lorsque $\alpha=101{,}9°$ et $\alpha=281{,}9°$.
 
 \subsubsection{Conversion en imprécision temporelle}
 
@@ -985,13 +985,13 @@ tige pour un type de mouvement donné :
 \end{equation}
 
 \textbf{3. Erreur maximale sur la réserve de marche.\\} L'écart
-$\Delta\theta_{\text{max}}=14{,}74°$ (équation~\eqref{eq:delta_max})
+$\Delta\theta_{\text{max}}=11{,}91°$ (équation~\eqref{eq:delta_max})
 représente une fraction de tour de $\Delta\theta_{\text{max}}/360°$, d'où
 l'imprécision de mesure :
 
 \begin{equation}
   \Delta t_{\text{max}} = \frac{\Delta\theta_{\text{max}}}{360°}\times\frac{RM}{N_{\text{tige}}}
-  = \frac{14{,}74}{360}\times 2{,}33 \approx 0{,}0955\ \text{h} \approx 5{,}73\ \text{min}
+  = \frac{11{,}91}{360}\times 2{,}33 \approx 0{,}0771\ \text{h} \approx 4{,}63\ \text{min}
   \label{eq:dt_max}
 \end{equation}
 
@@ -1000,24 +1000,24 @@ l'ensemble des mouvements.
 
 \begin{table}[H]
   \centering
-  \caption{Imprécision de mesure induite par le désalignement réel ($e=\Delta h=3{,}18$~mm)}
+  \caption{Imprécision de mesure induite par le désalignement réel ($e=\Delta h=2{,}58$~mm)}
   \label{tab:precision_desalignement}
   \begin{tabular}{|c|c|c|c|}
     \hline
     \textbf{Mouvement} & $\boldsymbol{RM}$ \textbf{[h]} & $\boldsymbol{N_{\text{tige}}}$ \textbf{[tr]} & $\boldsymbol{\Delta t_{\text{max}}}$ \textbf{[min]} \\
     \hline
-    Mvt19    & 100 & 47{,}12 & 5{,}21 \\
-    Mvt01    & 80  & 34{,}30 & 5{,}73 \\
-    Mvt200   & 90  & 43{,}96 & 5{,}03 \\
-    Mvt200.1 & 90  & 43{,}96 & 5{,}03 \\
-    Mvt110   & 90  & 68{,}16 & 3{,}24 \\
-    Mvt111   & 89  & 41{,}44 & 5{,}28 \\
+    Mvt19    & 100 & 47{,}12 & 4{,}21 \\
+    Mvt01    & 80  & 34{,}30 & 4{,}63 \\
+    Mvt200   & 90  & 43{,}96 & 4{,}06 \\
+    Mvt200.1 & 90  & 43{,}96 & 4{,}06 \\
+    Mvt110   & 90  & 68{,}16 & 2{,}62 \\
+    Mvt111   & 89  & 41{,}44 & 4{,}26 \\
     \hline
   \end{tabular}
 \end{table}
 
 L'imprécision de mesure induite par le désalignement réel de l'accouplement
-reste comprise entre $3{,}2$ et $5{,}7$ minutes selon le mouvement, ce qui
+reste comprise entre $2{,}6$ et $4{,}6$ minutes selon le mouvement, ce qui
 respecte l'exigence de 15 minutes présente dans le cahier des
 charges.
 
@@ -1043,15 +1043,15 @@ $e=-R\cos\alpha$), on obtient le désalignement radial limite pour le Mvt01 :
 \end{equation}
 
 La \autoref{fig:precision_e_limite} compare, pour le Mvt01, l'imprécision de
-mesure sur un tour moteur complet au désalignement réel ($e=3{,}18$~mm) à
+mesure sur un tour moteur complet au désalignement réel ($e=2{,}58$~mm) à
 ce désalignement limite ($e=7{,}80$~mm)~: la courbe limite touche tout juste
-$-15$~min, contre $-5{,}7$~min pour le cas réel.
+$-15$~min, contre $-4{,}6$~min pour le cas réel.
 
 \begin{figure}[H]
   \centering
-  \includegraphics[width=0.9\textwidth]{assets/figures/Implementation/fig_precision_e_limite.png}
+  \includegraphics[width=1\textwidth]{assets/figures/Implementation/fig_precision_e_limite.png}
   \caption{Imprécision de mesure sur un tour moteur complet pour le Mvt01
-  (cas le plus défavorable), au désalignement réel ($e=3{,}18$~mm) et au
+  (cas le plus défavorable), au désalignement réel ($e=2{,}58$~mm) et au
   désalignement limite pour l'exigence E2 ($e=7{,}80$~mm). Le motif se
   répète tous les 180° de rotation moteur.}
   \label{fig:precision_e_limite}

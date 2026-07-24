@@ -7,12 +7,12 @@
 
 D'après le cahier des charges, le posage doit répondre aux exigences suivantes~:
 \begin{itemize}
-      \item \textbf{FS3-E8} : « Compatible avec les 7 mouvements du tableau
+      \item \textbf{FS3-E8} : « Compatible avec les 6 mouvements du tableau
           fabricant » ;
       \item \textbf{FS3-E9} : « Montage effectué en $< 2\ \mathrm{min}$ » ;
       \item \textbf{FS3-E10} : « Aucune marque laissée sur le mouvement après
           démontage » ;
-      \item \textbf{FC4-E8} : « Dimensions compatibles avec les 7 mouvements du
+      \item \textbf{FC4-E8} : « Dimensions compatibles avec les 6 mouvements du
           tableau donné par le fabricant » ;
       \item \textbf{FC4-E9} : « Support réglable sans outillage ».
 \end{itemize}
@@ -77,9 +77,9 @@ l'ensemble du déplacement (nombre de tours rapporté au temps total), et non
 sur la vitesse instantanée. Or, l'analyse de la saccade due au
 désalignement de l'accouplement (section~\ref{sec:dim-accouplement}) a
 montré que la vitesse instantanée peut s'écarter de la consigne de
-$+34{,}1\ \%$ à $-20{,}3\ \%$ à chaque changement de goupille active. Pour
+$+26{,}0\ \%$ à $-17{,}1\ \%$ à chaque changement de goupille active. Pour
 le mode réserve de marche, cela signifie que la vitesse peut ponctuellement
-atteindre environ $67\ \mathrm{tr/min}$, dépassant la limite de
+atteindre environ $63\ \mathrm{tr/min}$, dépassant la limite de
 $50\ \mathrm{tr/min}$ fixée par le cahier des charges, alors même que la
 vitesse moyenne mesurée reste conforme. Une piste permettant de réduire ce
 désalignement, et donc cet écart, est proposée au
@@ -224,6 +224,17 @@ la section~\ref{sec:intervalle_capture}. Cet intervalle reste par ailleurs
 paramétrable~: un opérateur souhaitant une précision accrue peut le réduire en
 conséquence.
 
+Il convient toutefois de rappeler qu'à cette erreur liée à l'intervalle de
+capture s'ajoute une erreur supplémentaire pouvant aller jusqu'à
+$4{,}63\ \mathrm{min}$ (Mvt01, cas le plus défavorable), causée par le
+désalignement de l'accouplement (section~\ref{sec:dim-accouplement}) mis en
+évidence par l'analyse de la saccade. Pour
+rester dans la limite de 15 minutes fixée par l'exigence, il suffit de
+réduire l'intervalle de capture à 10 minutes, ce qui reste tout à fait
+réalisable~: l'exigence FS1-E2 est donc considérée comme validée. À plus
+long terme, la solution proposée au chapitre~\ref{ch:ameliorations}, permettrait de
+supprimer cette source d'erreur, rendant cette marge inutile.
+
 La stabilité de l'intervalle entre deux prises d'image (FC2-E4) est vérifiable
 sur les images des rapports de test, sur lesquelles l'heure de la prise de vue
 est incrustée~; les écarts observés confirment un intervalle fiable. Cette
@@ -263,7 +274,7 @@ reste à démontrer lors d'essais ultérieurs.
 
 Cette section valide les exigences suivantes du cahier des charges~:
 \begin{itemize}
-    \item \textbf{FS5-E14} : « Les 7 types de mouvements (tableau fabricant)
+    \item \textbf{FS5-E14} : « Les 6 types de mouvements (tableau fabricant)
           sont sélectionnables sur l'interface » ;
     \item \textbf{FS5-E15} : « Le mode de test est sélectionnable (Réserve de
           marche ou Vieillissement) » ;
@@ -274,7 +285,7 @@ Cette section valide les exigences suivantes du cahier des charges~:
 Les tests réalisés sur l'interface confirment que ces trois exigences sont
 satisfaites.
 
-Les 7 calibres du tableau fabricant sont bien sélectionnables depuis
+Les 6 calibres du tableau fabricant sont bien sélectionnables depuis
 l'interface (figure~\ref{fig:ihm_mouvements}), conformément à l'exigence
 FS5-E14.
 
@@ -492,9 +503,9 @@ douleur, pour différentes zones de la main~:
 \end{table}
 
 La borne inférieure (moyenne moins un écart-type) représente une estimation
-conservative du seuil de douleur, en tenant compte de la variabilité
-inter-individuelle observée dans l'étude. La valeur critique -- la plus
-faible de toutes les zones -- est celle de l'éminence thénar~:
+conservatrice du seuil de douleur, en tenant compte de la variabilité
+inter-individuelle observée dans l'étude. La valeur critique (la plus
+faible de toutes les zones) est celle de l'éminence thénar~:
 
 \begin{equation}
   F_{\text{critique}} = 100 - 62 = 38\ \text{N}
@@ -534,23 +545,23 @@ contraintes d'encombrement du produit final. Toutefois, son architecture permet 
 les dimensions clés nécessaires pour dimensionner l'architecture d'une machine
 à 10 postes.
 
-Le porte-mouvement Bergeon \No 4040 (section~\ref{sec:dim-fixation})
-mesure 38~mm de large et constitue, parmi l'ensemble des composants d'un poste
-de mesure (moteur, accouplement, support caméra, etc.), l'élément le plus
-large. En alignant 10 postes côte à côte, la largeur occupée par les seuls
-porte-mouvements est donc de~:
-\[
-    10 \times 38 = 380\ \text{mm}.
-\]
-En ajoutant l'armature (structure porteuse, fixations, marges de montage),
-cette largeur passe à environ 500~mm.
+L'élément le plus large parmi les composants d'un poste de mesure
+(porte-mouvement, moteur, accouplement, éclairage, etc.) est l'éclairage
+annulaire retenu (section~\ref{sec:dim-eclairage}), dont le
+diamètre atteint 70~mm.
 
-Pour la profondeur, un poste de mesure complet occupe 139~mm. En ajoutant les
+En alignant les 10 postes côte à côte sur une seule rangée, la largeur
+occupée par les seuls éclairages est donc de~:
+\[
+    10 \times 70 = 700\ \text{mm}.
+\]
+Ce qui laisse une marge suffisante pour
+respecter la limite de 800~mm fixée par l'exigence FC7-E15.
+
+Pour la profondeur, un poste de mesure complet occupe 139~mm. Même en ajoutant les
 alimentations (moteur et éclairage), qui peuvent être disposées à l'arrière des postes, cette profondeur reste inférieure à la limite de 800~mm.
 Une machine à 10 postes rentrant dans une zone de 800~mm par 800~mm, apparaît donc
-réalisable sans problème particulier, laissant même une marge confortable par
-rapport à la limite fixée par l'exigence
-FC7-E15.
+réalisable.
 
 \subsection{Hauteur de la machine}
 
@@ -563,10 +574,8 @@ représentative de celle du produit final.
 Or, la maquette réalisée dans le cadre de ce travail mesure moins de
 $350\ \mathrm{mm}$ de hauteur. Cette valeur est très largement inférieure à la
 limite de $1000\ \mathrm{mm}$ fixée par l'exigence FC7-E15, et également
-inférieure à la limite de $700\ \mathrm{mm}$ fixée par l'exigence FC7-E16~:
-aucun élément de la machine ne se trouve à une hauteur qui nécessiterait à
-l'utilisateur d'aller le chercher en hauteur. Les exigences FC7-E15 (volet
-hauteur) et FC7-E16 sont par conséquent considérées comme validées.
+inférieure à la limite de $700\ \mathrm{mm}$ fixée par l'exigence FC7-E16. 
+Toutes les exigences d'encombrement fixées par le cahier des charges sont par conséquent considérées comme validées.
 
 % ─── 11. SYNTHÈSE ────────────────────────────────────────────────────────────
 
@@ -594,7 +603,7 @@ décrits au tableau~\ref{tab:legende-couleurs}.
     \hline
     \cellcolor{resNonVerifie} & Non testé & Aucune vérification, même partielle, n'a été réalisée. \\
     \hline
-    \cellcolor{resAFaire} & À finir & L'exigence n'est pas satisfaite en l'état, non pas en raison d'un problème de conception, mais faute d'avoir encore implémenté ou testé la fonctionnalité correspondante. \\
+    \cellcolor{resAFaire} & À finir & L'exigence n'est pas satisfaite en l'état, car elle n'a pas encore été implémenté ou testé, ou parce qu'une piste de résolution a déjà été identifiée mais n'a pas encore été mise en œuvre. \\
     \hline
     \cellcolor{resNonConforme} & Non conforme & L'exigence n'est pas satisfaite et le problème est jugé irrémédiable en l'état. \\
     \hline
@@ -647,8 +656,8 @@ décrits au tableau~\ref{tab:legende-couleurs}.
 \hline
 
 \multirow{3}{*}{FS3} & \multirow{3}{4cm}{Permettre le montage du mouvement}
-    & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E8} Compatible avec les 7 mouvements du tableau fabricant
-    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Testé expérimentalement sur Mvt01 (avec et sans masse oscillante) ; compatibilité dimensionnelle avec les 7 calibres issue du dimensionnement du posage (§~\ref{sec:valid-posage}). \\
+    & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E8} Compatible avec les 6 mouvements du tableau fabricant
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Testé expérimentalement sur Mvt01 (avec et sans masse oscillante) ; compatibilité dimensionnelle avec les 6 calibres issue du dimensionnement du posage (§~\ref{sec:valid-posage}). \\
 \cline{3-4}
  & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E9} Montage effectué en $< 2\ \mathrm{min}$
     & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Montage réalisé en nettement moins de 2 minutes lors des essais (§~\ref{sec:valid-posage}). \\
@@ -669,8 +678,8 @@ décrits au tableau~\ref{tab:legende-couleurs}.
 \hline
 
 \multirow{3}{*}{FS5} & \multirow{3}{4cm}{Fournir une interface utilisateur}
-    & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E14} Les 7 types de mouvements (tableau fabricant) sont sélectionnables sur l'interface
-    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Sélection des 7 calibres du tableau fabricant vérifiée depuis l'interface (§~\ref{sec:valid-ihm}). \\
+    & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E14} Les 6 types de mouvements (tableau fabricant) sont sélectionnables sur l'interface
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Sélection des 6 calibres du tableau fabricant vérifiée depuis l'interface (§~\ref{sec:valid-ihm}). \\
 \cline{3-4}
  & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E15} Le mode de test est sélectionnable (Réserve de marche ou Vieillissement)
     & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Sélection du mode vérifiée ; le choix conditionne correctement le comportement du système (§~\ref{sec:valid-ihm}). \\
@@ -736,12 +745,12 @@ décrits au tableau~\ref{tab:legende-couleurs}.
 
 FC3 & Garantir la sécurité de l'opérateur
     & \cellcolor{resPartiel}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E7} Les couples appliqués et les formes des pièces ne peuvent pas blesser l'opérateur
-    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Calcul de la force au doigt coincé dans la fourche ($F \leq 7{,}4$ N) très inférieure à la valeur critique conservative (moyenne $-$ écart-type) mesurée expérimentalement par une étude ouverte (38 N, marge $\times 5$), en l'absence d'accès à la norme ISO/TS 15066 payante (§~\ref{sec:valid-securite}). \\
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Calcul de la force au doigt coincé dans la fourche ($F \leq 7{,}4$ N) très inférieure à la valeur critique conservatrice (moyenne $-$ écart-type) mesurée expérimentalement par une étude ouverte (38 N, marge $\times 5$), en l'absence d'accès à la norme ISO/TS 15066 payante (§~\ref{sec:valid-securite}). \\
 \hline
 
 \multirow{2}{*}{FC4} & \multirow{2}{4.5cm}{Assurer la compatibilité des mouvements}
-    & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E8} Dimensions compatibles avec les 7 mouvements du tableau donné par le fabricant
-    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Testé expérimentalement sur Mvt01 ; compatibilité dimensionnelle des 7 calibres issue du dimensionnement (§~\ref{sec:valid-posage}). \\
+    & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E8} Dimensions compatibles avec les 6 mouvements du tableau donné par le fabricant
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Testé expérimentalement sur Mvt01 ; compatibilité dimensionnelle des 6 calibres issue du dimensionnement (§~\ref{sec:valid-posage}). \\
 \cline{3-4}
  & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E9} Support réglable sans outillage
     & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Montage réalisé sans outillage lors des essais (§~\ref{sec:valid-posage}). \\
@@ -768,7 +777,7 @@ FC3 & Garantir la sécurité de l'opérateur
 
 \multirow{2}{*}{FC7} & \multirow{2}{4.5cm}{Respecter un encombrement maximal}
     & \cellcolor{resPartiel}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E15} Dimensions $\leq 800\ \mathrm{mm} \times 800\ \mathrm{mm}$ et $\leq 1000\ \mathrm{mm}$ en hauteur
-    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Hauteur mesurée sur le prototype ($< 350$ mm) largement conforme ; surface au sol estimée par extrapolation à partir du composant le plus large ($\approx 800\times800$ mm), non construite ni mesurée sur un produit final (§~\ref{sec:valid-encombrement}). \\
+    & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Hauteur mesurée sur le prototype ($< 350$ mm) largement conforme ; largeur estimée par extrapolation à partir du composant le plus large (éclairage, 70~mm), pour 10 postes alignés ($\approx 780$ mm), non construite ni mesurée sur un produit final (§~\ref{sec:valid-encombrement}). \\
 \cline{3-4}
  & & \cellcolor{resConforme}\rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}\textbf{E16} L'utilisateur ne doit pas avoir besoin d'accéder à des éléments disposés à plus de $700\ \mathrm{mm}$ au-dessus de la table
     & \rule[-0.4\baselineskip]{0pt}{1.8\baselineskip}Hauteur du prototype mesurée $< 350\ \mathrm{mm}$, très inférieure à la limite de 700 mm (§~\ref{sec:valid-encombrement}). \\
